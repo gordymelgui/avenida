@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Carrito - AVENIDA.</title>
+
+    <link rel="icon" type="image/png" href="favicom.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css?v=4.3">
+
+
+
+    <style>
+        /* Mejoras de diseño para títulos y contenido */
+
+        .page-title {
+
+            background: linear-gradient(135deg, #8357C5 0%, #6e48a9 100%);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+
+
+        .section-title {
+
+            position: relative;
+
+            padding-bottom: 0.5rem;
+
+        }
+
+
+
+        .section-title::after {
+
+            content: '';
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            width: 60px;
+
+            height: 3px;
+
+            background: linear-gradient(90deg, #8357C5, #6e48a9);
+
+            border-radius: 2px;
+
+        }
+
+
+
+        .content-section {
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+            padding: 2rem;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        /* Mejorar espaciado general */
+
+        .improved-spacing {
+
+            margin-top: 2rem;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        /* Mejorar contraste de texto */
+
+        .text-content {
+
+            color: #374151;
+
+            line-height: 1.7;
+
+        }
+
+
+
+        /* Botones de cantidad responsivos - layout fijo */
+
+        .cart-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 1rem;
+
+            padding: 1.5rem;
+
+            background: white;
+
+            border-radius: 0.5rem;
+
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+            margin-bottom: 1rem;
+
+        }
+
+
+
+        .cart-item img {
+
+            width: 6rem;
+
+            height: 6rem;
+
+            object-fit: contain;
+
+            border-radius: 0.5rem;
+
+            flex-shrink: 0;
+
+            background-color: #f9fafb;
+
+        }
+
+
+
+        .cart-item .product-info {
+
+            flex: 1;
+
+            min-width: 0;
+
+        }
+
+
+
+        .cart-item .quantity-section {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.5rem;
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        .quantity-btn {
+
+            width: 2rem;
+
+            height: 2rem;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: bold;
+
+            transition: all 0.3s ease;
+
+            border: none;
+
+            cursor: pointer;
+
+            background-color: #e5e7eb;
+
+        }
+
+
+
+        .quantity-btn:hover:not(:disabled) {
+
+            background-color: #d1d5db;
+
+        }
+
+
+
+        .quantity-btn:disabled {
+
+            background-color: #f3f4f6;
+
+            color: #9ca3af;
+
+            cursor: not-allowed;
+
+        }
+
+
+
+        .quantity-display {
+
+            min-width: 2rem;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            font-size: 1rem;
+
+        }
+
+
+
+        /* FORZAR visibilidad global del botón + */
+
+        .quantity-btn[data-action="increase"] {
+
+            display: flex !important;
+
+            visibility: visible !important;
+
+            opacity: 1 !important;
+
+        }
+
+
+
+        /* Adaptación para móvil */
+
+        @media (max-width: 768px) {
+
+            .cart-item {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 1rem;
+
+            }
+
+
+
+            .cart-item img {
+
+                width: 100%;
+
+                height: 16rem;
+
+                align-self: center;
+
+                object-fit: contain;
+
+                background-color: #f9fafb;
+
+            }
+
+
+
+            .cart-item .product-info {
+
+                text-align: center;
+
+            }
+
+
+
+            .cart-item .quantity-section {
+
+                justify-content: center;
+
+                gap: 1rem;
+
+            }
+
+
+
+            .quantity-btn {
+
+                width: 3rem;
+
+                height: 3rem;
+
+                font-size: 1.25rem;
+
+            }
+
+
+
+            .quantity-display {
+
+                min-width: 3rem;
+
+                font-size: 1.25rem;
+
+            }
+
+
+
+            /* FORZAR visibilidad del botón + en móvil */
+
+            .quantity-btn[data-action="increase"] {
+
+                display: flex !important;
+
+                visibility: visible !important;
+
+                opacity: 1 !important;
+
+                width: 3rem !important;
+
+                height: 3rem !important;
+
+                font-size: 1.25rem !important;
+
+                background-color: #e5e7eb !important;
+
+            }
+
+
+
+            .quantity-btn[data-action="increase"]:disabled {
+
+                background-color: #f3f4f6 !important;
+
+                color: #9ca3af !important;
+
+                cursor: not-allowed !important;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+
+
+<body class="bg-white" id="cart-page">
+
+    <!-- ======================= HEADER UNIFICADO ======================= -->
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-2 px-3 md:py-4 md:px-6 h-16 md:h-24">
+
+            <!-- Izquierda (Menú y Desktop Links) - flex-1 keeps both sides exactly equal width to center logo -->
+            <div class="flex-1 flex items-center justify-start space-x-3 md:space-x-6 z-20">
+                <!-- Menú hamburguesa -->
+                <button id="menu-toggle" class="icon-link shrink-0">
+                    <i class="fas fa-bars text-lg md:text-2xl"></i>
+                </button>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#product-grid" class="nav-link">Ropa</a>
+                </nav>
+            </div>
+
+            <!-- Centro (Logo) - Centrado perfecto usando flex-none sin superposición absolute -->
+            <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                <a href="index.html" class="logo-link">
+                    <span id="header-logo-text"
+                        class="text-[14px] sm:text-[16px] md:text-2xl leading-none tracking-normal md:tracking-widest font-black">AVENIDA</span>
+                </a>
+            </div>
+
+            <!-- Derecha (Botones) - Se limitan los espacios para no chocar -->
+            <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-6 z-20">
+                <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                    <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-2xl"></i>
+                    <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                </a>
+                <!-- Botón de registrarse compacto (limite de ancho en celulares súper chicos) -->
+                <button id="register-btn"
+                    class="bg-white text-[#8357C5] px-2 py-1 md:px-4 md:py-2 rounded font-semibold hover:bg-gray-100 transition-colors duration-300 text-[9px] sm:text-[11px] md:text-base whitespace-nowrap shrink-0 max-w-[130px] sm:max-w-none overflow-hidden text-ellipsis">
+                    Registrarse
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+
+    <!-- Barra lateral desplegable UNIFICADA -->
+
+    <div id="sidebar"
+        class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+
+        <div class="p-6">
+
+            <!-- Cabecera del sidebar -->
+
+            <div class="flex justify-between items-center mb-8">
+
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+
+                <button id="close-sidebar" class="text-white hover:text-gray-200" title="Cerrar menú">
+
+                    <i class="fas fa-times text-2xl"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Navegación del sidebar -->
+
+            <nav class="space-y-4">
+
+                <a href="index.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-home mr-3"></i>
+
+                    Inicio
+
+                </a>
+
+                <a href="index.html#product-grid"
+                    class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-tshirt mr-3"></i>
+
+                    Productos
+
+                </a>
+
+                <a href="index.html#lookbook-section"
+                    class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-images mr-3"></i>
+
+                    Lookbook
+
+                </a>
+
+                <a href="about.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-info-circle mr-3"></i>
+
+                    Sobre Nosotros
+
+                </a>
+
+                <a href="cart.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-shopping-cart mr-3"></i>
+
+                    Carrito
+
+                </a>
+
+                <a href="profile.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-user mr-3"></i>
+
+                    Mi Perfil
+
+                </a>
+
+
+
+                <!-- Sección Legal y Ayuda -->
+
+                <div class="pt-4 mt-4 border-t border-white/20">
+
+                    <p class="text-xs text-white/60 uppercase tracking-wider mb-3 font-semibold">Legal y Ayuda</p>
+
+                    <a href="help.html"
+                        class="block text-white hover:text-gray-200 transition-colors duration-300 py-2 text-sm">
+
+                        <i class="fas fa-question-circle mr-3"></i>
+
+                        Ayuda
+
+                    </a>
+
+                    <a href="privacy.html"
+                        class="block text-white hover:text-gray-200 transition-colors duration-300 py-2 text-sm">
+
+                        <i class="fas fa-shield-alt mr-3"></i>
+
+                        Privacidad
+
+                    </a>
+
+                    <a href="terms.html"
+                        class="block text-white hover:text-gray-200 transition-colors duration-300 py-2 text-sm">
+
+                        <i class="fas fa-file-contract mr-3"></i>
+
+                        Términos
+
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Overlay del sidebar -->
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+
+
+    <!-- ======================= SECCIÓN DEL CARRITO ======================= -->
+
+    <main class="container mx-auto pt-36 px-6">
+
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Breadcrumb -->
+
+            <nav class="text-sm text-gray-600 mb-8">
+
+                <a href="index.html" class="hover:text-[#8357C5]">Inicio</a>
+
+                <span class="mx-2">/</span>
+
+                <span class="text-gray-900">Carrito</span>
+
+            </nav>
+
+
+
+            <h1
+                class="text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-center bg-gradient-to-r from-[#8357C5] to-[#6e48a9] bg-clip-text text-transparent">
+
+                Tu Carrito</h1>
+
+
+
+            <!-- Indicador de carga -->
+
+            <div id="loading-cart" class="text-center py-20">
+
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#8357C5]"></div>
+
+                <p class="mt-4 text-gray-600">Cargando carrito...</p>
+
+            </div>
+
+
+
+            <!-- Contenido del carrito -->
+
+            <div id="cart-content" class="max-w-4xl mx-auto hidden">
+
+                <!-- Carrito vacío -->
+
+                <div id="empty-cart" class="text-center py-20 hidden">
+
+                    <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-6"></i>
+
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Tu carrito
+
+                        está vacío</h2>
+
+                    <p class="text-gray-500 mb-8">Agrega algunos productos para comenzar</p>
+
+                    <a href="index.html"
+                        class="bg-[#8357C5] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6e48a9] transition-colors duration-300">
+
+                        Continuar Comprando
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- Carrito con productos -->
+
+                <div id="cart-items" class="hidden">
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                        <!-- Lista de productos -->
+
+                        <div class="lg:col-span-2">
+
+                            <div id="cart-products-list" class="space-y-4">
+
+                                <!-- Los productos se renderizarán aquí -->
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Resumen del pedido -->
+
+                        <div class="lg:col-span-1">
+
+                            <div class="bg-gray-50 rounded-lg p-6 sticky top-24">
+
+                                <h3 class="text-xl font-semibold text-gray-900 mb-6">Resumen del Pedido</h3>
+
+
+
+                                <div class="space-y-3 mb-6">
+
+                                    <div class="flex justify-between text-sm">
+
+                                        <span>Subtotal:</span>
+
+                                        <span id="subtotal">\u20B20</span>
+
+                                    </div>
+
+                                    <div class="flex justify-between text-sm">
+
+                                        <span>Envío (moto):</span>
+
+                                        <span id="shipping" class="text-blue-600">Consultar por el precio</span>
+
+                                    </div>
+
+                                    <div class="border-t pt-3">
+
+                                        <div class="flex justify-between font-semibold text-lg">
+
+                                            <span>Total:</span>
+
+                                            <span id="total">\u20B20 + delivery</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <button id="clear-cart-btn" onclick="clearCart()"
+                                    class="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors duration-300 mb-4">
+
+                                    Limpiar Carrito
+
+                                </button>
+
+
+
+                                <button id="checkout-btn" onclick="continueToCheckout()"
+                                    class="w-full bg-[#8357C5] text-white py-3 rounded-lg font-semibold hover:bg-[#6e48a9] transition-colors duration-300 mb-4">
+
+                                    Continuar con la Compra
+
+                                </button>
+
+
+
+                                <a href="index.html" class="block text-center text-[#8357C5] hover:underline">
+
+                                    Continuar Comprando
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- Footer -->
+
+    <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+
+        <div class="container mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+
+                <!-- Brand Column -->
+
+                <div class="space-y-6">
+
+                    <img src="logo/logo blanco.png" alt="AVENIDA" class="h-12">
+
+                    <p class="text-gray-400 text-sm leading-relaxed">
+
+                        Redefiniendo el estilo urbano con calidad premium y diseño exclusivo. Tu destino para la moda
+
+                        contemporánea.
+
+                    </p>
+
+                    <div class="flex space-x-4">
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-facebook-f"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-tiktok"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Shop Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        TIENDA
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Ver Todo</a></li>
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Novedades</a></li>
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Más Vendidos</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- Help Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        AYUDA
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="help.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Centro de Ayuda</a>
+
+                        </li>
+
+                        <li><a href="returns.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Cambios y
+
+                                Devoluciones</a></li>
+
+                        <li><a href="shipping.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Envíos</a></li>
+
+                        <li><a href="contact.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Contacto</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- Legal Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        LEGAL
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="terms.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Términos y
+
+                                Condiciones</a></li>
+
+                        <li><a href="privacy.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Política de
+
+                                Privacidad</a></li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Bottom Footer -->
+
+            <div class="border-t border-white/10 pt-8 mt-8">
+
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+
+                    <p class="text-gray-500 text-sm">
+
+                        &copy; 2026 AVENIDA. Todos los derechos reservados.
+
+                    </p>
+
+                    <div class="flex items-center space-x-2">
+
+                        <span class="text-gray-500 text-sm mr-2">Pagos seguros con:</span>
+
+                        <div class="flex space-x-2 opacity-70 grayscale hover:grayscale-0 transition-all duration-300">
+
+                            <i class="fab fa-cc-visa text-2xl text-white"></i>
+
+                            <i class="fab fa-cc-mastercard text-2xl text-white"></i>
+
+                            <i class="fab fa-cc-amex text-2xl text-white"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- WhatsApp Button -->
+
+    <a href="https://wa.me/595982713971?text=Hola! Me gustaría consultar sobre mis productos en el carrito"
+        class="whatsapp-button" target="_blank" rel="noopener" title="Contactar por WhatsApp">
+
+        <i class="fab fa-whatsapp text-4xl"></i>
+
+    </a>
+
+
+
+    <!-- Scripts -->
+
+    <!-- Firebase SDK -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+    <script src="firebase-config.js"></script>
+
+    <script src="realtime-stock-listeners.js"></script>
+
+    <script src="script.js?v=7" defer></script>
+
+
+
+    <!-- Script específico para carrito -->
+
+    <script>
+
+        // Función para formatear precios correctamente
+
+        function formatPrice(price) {
+
+            if (typeof price === 'number') {
+
+                return `\u20B2${price.toLocaleString('es-PY')}`;
+
+            } else if (typeof price === 'string') {
+
+                // Si ya tiene el símbolo \u20B2, mantenerlo; si no, agregarlo
+
+                if (!price.includes('\u20B2')) {
+
+                    const numericPrice = parseFloat(price.replace(/[\u20B2\s]/g, '').replace(/\./g, '')) || 0;
+
+                    return `\u20B2${numericPrice.toLocaleString('es-PY')}`;
+
+                }
+
+                return price;
+
+            }
+
+            return '\u20B20';
+
+        }
+
+
+
+        // Función para verificar que los datos estén completamente cargados
+
+        function waitForDataToLoad() {
+
+            return new Promise((resolve) => {
+
+                const maxAttempts = 20;
+
+                let attempts = 0;
+
+
+
+                const checkData = () => {
+
+                    attempts++;
+
+                    console.log(`🔄 Verificando datos (intento ${attempts}/${maxAttempts})...`);
+
+
+
+                    // Verificar que al menos una fuente de datos esté disponible
+
+                    const hasAdminProducts = !!localStorage.getItem('avenidaAdminProducts');
+
+                    const hasSavedProducts = !!localStorage.getItem('avenidaProducts');
+
+                    const hasWindowProducts = !!(window.products && window.products.length > 0);
+
+
+
+                    console.log('📊 Estado de datos:', {
+
+                        adminProducts: hasAdminProducts,
+
+                        savedProducts: hasSavedProducts,
+
+                        windowProducts: hasWindowProducts,
+
+                        totalSources: [hasAdminProducts, hasSavedProducts, hasWindowProducts].filter(Boolean).length
+
+                    });
+
+
+
+                    // Si tenemos al menos una fuente de datos, proceder
+
+                    if (hasAdminProducts || hasSavedProducts || hasWindowProducts) {
+
+                        console.log('✅ Datos disponibles, procediendo...');
+
+                        resolve(true);
+
+                        return;
+
+                    }
+
+
+
+                    // Si no hay datos después de varios intentos, usar fallback
+
+                    if (attempts >= maxAttempts) {
+
+                        console.log('⚠️ No se encontraron datos después de varios intentos, usando fallback');
+
+                        resolve(false);
+
+                        return;
+
+                    }
+
+
+
+                    // Reintentar en 200ms
+
+                    setTimeout(checkData, 200);
+
+                };
+
+
+
+                checkData();
+
+            });
+
+        }
+
+
+
+        // Función para verificar stock de un item específico
+
+        function checkItemStock(productId, size, design = null) {
+
+            try {
+
+                console.log(`🔍 Verificando stock para producto ${productId}, talla ${size}${design ? ', diseño ' + design : ''}`);
+
+                const internalSize = design ? `${design}_${size}` : size;
+
+                const checkStockSize = (product, sz) => {
+                    if (!product || !product.stock) return undefined;
+                    return product.stock[internalSize] !== undefined ? product.stock[internalSize] : product.stock[sz];
+                };
+
+
+                // 1. Buscar en avenidaAdminProducts (datos del panel de admin) - PRIORIDAD ALTA
+
+                const adminProducts = localStorage.getItem('avenidaAdminProducts');
+
+                if (adminProducts) {
+
+                    try {
+
+                        const products = JSON.parse(adminProducts);
+
+                        const product = products.find(p => p.id == productId);
+
+                        const stockVal = checkStockSize(product, size);
+                        if (stockVal !== undefined) {
+
+                            const stock = parseInt(stockVal) || 0;
+
+                            console.log(`✅ Stock encontrado en avenidaAdminProducts: ${stock}`);
+
+                            return stock;
+
+                        }
+
+                    } catch (e) {
+
+                        console.log('⚠️ Error al parsear avenidaAdminProducts:', e);
+
+                    }
+
+                }
+
+
+
+                // 2. Buscar en avenidaProducts (datos locales) - PRIORIDAD MEDIA
+
+                const savedProducts = localStorage.getItem('avenidaProducts');
+
+                if (savedProducts) {
+
+                    try {
+
+                        const products = JSON.parse(savedProducts);
+
+                        const product = products.find(p => p.id == productId);
+
+                        const stockVal = checkStockSize(product, size);
+                        if (stockVal !== undefined) {
+
+                            const stock = parseInt(stockVal) || 0;
+
+                            console.log(`✅ Stock encontrado en avenidaProducts: ${stock}`);
+
+                            return stock;
+
+                        }
+
+                    } catch (e) {
+
+                        console.log('⚠️ Error al parsear avenidaProducts:', e);
+
+                    }
+
+                }
+
+
+
+                // 3. Buscar en window.products (datos de Firebase) - PRIORIDAD BAJA (puede no estar disponible)
+
+                if (window.products && Array.isArray(window.products)) {
+
+                    const product = window.products.find(p => p.id == productId);
+
+                    const stockVal = checkStockSize(product, size);
+                    if (stockVal !== undefined) {
+
+                        const stock = parseInt(stockVal) || 0;
+
+                        console.log(`✅ Stock encontrado en window.products: ${stock}`);
+
+                        return stock;
+
+                    }
+
+                }
+
+
+
+                // 4. DEBUG DETALLADO para Hostinger
+
+                const isHostinger = window.location.hostname.includes('hostinger') ||
+
+                    window.location.hostname.includes('000webhost') ||
+
+                    !window.location.hostname.includes('localhost');
+
+
+
+                if (isHostinger) {
+
+                    console.log(`🌐 DEBUG HOSTINGER - Producto ${productId} talla ${size}:`);
+
+                    console.log('• window.products disponible:', !!window.products);
+
+                    console.log('• window.products length:', window.products ? window.products.length : 'N/A');
+
+                    console.log('• avenidaAdminProducts disponible:', !!localStorage.getItem('avenidaAdminProducts'));
+
+                    console.log('• avenidaProducts disponible:', !!localStorage.getItem('avenidaProducts'));
+
+
+
+                    if (window.products) {
+
+                        console.log('• Productos en window.products:', window.products.map(p => ({ id: p.id, name: p.name })));
+
+                    }
+
+                    if (adminProducts) {
+
+                        try {
+
+                            const parsed = JSON.parse(adminProducts);
+
+                            console.log('• Productos en avenidaAdminProducts:', parsed.map(p => ({ id: p.id, name: p.name })));
+
+                        } catch (e) {
+
+                            console.log('• Error al parsear avenidaAdminProducts:', e);
+
+                        }
+
+                    }
+
+                    if (savedProducts) {
+
+                        try {
+
+                            const parsed = JSON.parse(savedProducts);
+
+                            console.log('• Productos en avenidaProducts:', parsed.map(p => ({ id: p.id, name: p.name })));
+
+                        } catch (e) {
+
+                            console.log('• Error al parsear avenidaProducts:', e);
+
+                        }
+
+                    }
+
+                }
+
+
+
+                // 5. Si no se encuentra en ninguna fuente, usar un valor por defecto CONSERVADOR
+
+                console.log(`⚠️ Stock no encontrado para producto ${productId} talla ${size}, usando valor por defecto: 0`);
+
+                console.log(`🔍 Debug final - Producto ${productId}:`, {
+
+                    adminProducts: !!adminProducts,
+
+                    savedProducts: !!savedProducts,
+
+                    windowProducts: !!window.products,
+
+                    productId: productId,
+
+                    size: size,
+
+                    timestamp: new Date().toISOString()
+
+                });
+
+                return 0; // Valor conservador por defecto para evitar sobreventa
+
+            } catch (error) {
+
+                console.error('Error al verificar stock:', error);
+
+                console.log(`🔍 Error en checkItemStock - Producto ${productId}:`, error);
+
+                return 999; // Valor alto por defecto en caso de error
+
+            }
+
+        }
+
+
+
+        // Función para cargar información del carrito
+
+        function loadCartInfo() {
+
+            const savedCart = localStorage.getItem('avenidaCart');
+
+            let cart = savedCart ? JSON.parse(savedCart) : [];
+
+
+
+            // Sanitize cart: Fix undefined quantities
+
+            let cartModified = false;
+
+            cart = cart.map(item => {
+
+                if (item.quantity === undefined || item.quantity === null || isNaN(item.quantity)) {
+
+                    console.warn(`⚠️ Corrigiendo cantidad inválida para producto ${item.id}: ${item.quantity} -> 1`);
+
+                    item.quantity = 1;
+
+                    cartModified = true;
+
+                }
+
+                return item;
+
+            });
+
+
+
+            if (cartModified) {
+
+                localStorage.setItem('avenidaCart', JSON.stringify(cart));
+
+            }
+
+
+
+            console.log('🔄 loadCartInfo ejecutándose con carrito:', cart);
+
+
+
+            const cartCount = document.getElementById('cart-count');
+
+            const loadingCart = document.getElementById('loading-cart');
+
+            const cartContent = document.getElementById('cart-content');
+
+            const emptyCart = document.getElementById('empty-cart');
+
+            const cartItems = document.getElementById('cart-items');
+
+            const cartProductsList = document.getElementById('cart-products-list');
+
+            const subtotalElement = document.getElementById('subtotal');
+
+            const totalElement = document.getElementById('total');
+
+
+
+            // Actualizar contador del header
+
+            if (cartCount) {
+
+                const totalItems = cart.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0);
+
+                cartCount.textContent = totalItems;
+
+
+
+                // Mostrar u ocultar el contador según si hay items
+
+                if (totalItems > 0) {
+
+                    cartCount.style.display = 'flex';
+
+                } else {
+
+                    cartCount.style.display = 'none';
+
+                }
+
+            }
+
+
+
+            // Ocultar loading
+
+            if (loadingCart) {
+
+                loadingCart.classList.add('hidden');
+
+            }
+
+
+
+            if (cart.length === 0) {
+
+                // Mostrar carrito vacío
+
+                console.log('📭 Mostrando carrito vacío');
+
+                if (cartContent) cartContent.classList.remove('hidden');
+
+                if (emptyCart) emptyCart.classList.remove('hidden');
+
+                if (cartItems) cartItems.classList.add('hidden');
+
+            } else {
+
+                // Mostrar productos del carrito
+
+                console.log('📦 Mostrando productos del carrito:', cart.length);
+
+                if (cartContent) cartContent.classList.remove('hidden');
+
+                if (emptyCart) emptyCart.classList.add('hidden');
+
+                if (cartItems) cartItems.classList.remove('hidden');
+
+
+
+                // Renderizar productos
+
+                if (cartProductsList) {
+
+                    cartProductsList.innerHTML = '';
+
+                    cart.forEach((item, index) => {
+
+                        const itemElement = document.createElement('div');
+
+                        itemElement.className = 'cart-item';
+
+                        // Formatear el precio correctamente
+
+                        const formattedPrice = formatPrice(item.price);
+
+
+
+                        // Verificar stock disponible para el botón "+"
+
+                        const availableStock = checkItemStock(item.id, item.size, item.design);
+
+                        const canIncrease = availableStock > item.quantity;
+
+
+
+                        console.log(`📦 Producto ${item.id} (${item.size}${item.design ? ' - ' + item.design : ''}): Stock disponible: ${availableStock}, Cantidad actual: ${item.quantity}, Puede aumentar: ${canIncrease}`);
+
+
+
+                        // Sin aviso de stock bajo
+
+                        let stockWarning = '';
+
+
+
+                        itemElement.innerHTML = `
+
+                            <img src="${item.image}" alt="${item.name}">
+
+                            <div class="product-info">
+
+                                <h3 class="text-lg font-semibold text-gray-900">${item.name}</h3>
+
+                                <p class="text-gray-600">Talle: ${item.size}</p>
+
+                                <p class="text-[#8357C5] font-semibold">${formattedPrice}</p>
+
+                                ${stockWarning}
+
+                            </div>
+
+                            <div class="quantity-section">
+
+                                <button class="quantity-btn" data-index="${index}" data-action="decrease" title="Disminuir cantidad">-</button>
+
+                                <span class="quantity-display">${item.quantity}</span>
+
+                                <button class="quantity-btn" 
+
+                                        data-index="${index}" 
+
+                                        data-action="increase" 
+
+                                        ${!canIncrease ? 'disabled title="No hay más stock disponible"' : 'title="Aumentar cantidad"'}>+</button>
+
+                                <button class="remove-item-btn text-red-500 hover:text-red-700 ml-2" data-index="${index}" title="Eliminar producto">
+
+                                    <i class="fas fa-trash"></i>
+
+                                </button>
+
+                            </div>
+
+                        `;
+
+                        cartProductsList.appendChild(itemElement);
+
+                    });
+
+
+
+                    // Configurar eventos para los botones recién creados
+
+                    setupCartButtons();
+
+                }
+
+
+
+                // Actualizar totales
+
+                if (subtotalElement && totalElement) {
+
+                    console.log('💰 Calculando subtotal para', cart.length, 'productos...');
+
+
+
+                    const subtotal = cart.reduce((sum, item) => {
+
+                        console.log('📦 Item:', item.name, 'Precio:', item.price, 'Cantidad:', item.quantity);
+
+
+
+                        // Asegurar que el precio sea un número
+
+                        let price = item.price;
+
+                        if (typeof price === 'string') {
+
+                            // Remover símbolos de moneda y espacios
+
+                            price = price.replace(/[\u20B2\s]/g, '');
+
+                            // Remover puntos de miles (separadores de miles)
+
+                            price = price.replace(/\./g, '');
+
+                            console.log('🔢 Precio después de limpiar:', price);
+
+                        }
+
+                        price = parseFloat(price) || 0;
+
+
+
+                        // Asegurar que la cantidad sea un número
+
+                        const quantity = parseInt(item.quantity) || 1;
+
+
+
+                        const itemTotal = price * quantity;
+
+                        console.log('💵 Precio parseado:', price, 'Cantidad:', quantity, 'Total item:', itemTotal);
+
+
+
+                        return sum + itemTotal;
+
+                    }, 0);
+
+
+
+                    console.log('📊 Subtotal final calculado:', subtotal);
+
+
+
+                    if (isNaN(subtotal) || subtotal === 0) {
+
+                        subtotalElement.textContent = '\u20B20';
+
+                        totalElement.textContent = '\u20B20 + delivery';
+
+                        console.warn('⚠️ Subtotal inválido, usando \u20B20');
+
+                    } else {
+
+                        subtotalElement.textContent = `\u20B2${subtotal.toLocaleString('es-PY')}`;
+
+                        totalElement.textContent = `\u20B2${subtotal.toLocaleString('es-PY')} + delivery`;
+
+                        console.log('✅ Subtotal actualizado correctamente:', subtotal);
+
+                    }
+
+                }
+
+            }
+
+
+
+            console.log('✅ loadCartInfo completado');
+
+        }
+
+
+
+        // Función para configurar los botones del carrito
+
+        function setupCartButtons() {
+
+            console.log('🔧 Configurando botones del carrito...');
+
+
+
+            // Botones de cantidad
+
+            const quantityBtns = document.querySelectorAll('.quantity-btn');
+
+            quantityBtns.forEach(btn => {
+
+                btn.addEventListener('click', function () {
+
+                    const action = this.dataset.action;
+
+                    const index = parseInt(this.dataset.index);
+
+                    const cart = JSON.parse(localStorage.getItem('avenidaCart') || '[]');
+
+
+
+                    if (action === 'increase') {
+
+                        // Verificar stock antes de aumentar
+
+                        const item = cart[index];
+
+                        const availableStock = checkItemStock(item.id, item.size, item.design);
+
+
+
+                        console.log(`🔍 Verificando stock para aumentar: Producto ${item.id}, Talla ${item.size}${item.design ? ', diseño ' + item.design : ''}, Stock disponible: ${availableStock}, Cantidad actual: ${item.quantity}`);
+
+
+
+                        if (availableStock > item.quantity) {
+
+                            cart[index].quantity += 1;
+
+                            console.log('✅ Cantidad aumentada para índice', index, 'Nueva cantidad:', cart[index].quantity);
+
+                        } else {
+
+                            console.log('❌ No hay más stock disponible');
+
+                            // Solo mostrar alerta si realmente no hay stock
+
+                            if (availableStock <= 0) {
+
+                                alert(`No hay stock disponible para este producto en talla ${item.size}`);
+
+                            } else {
+
+                                alert(`Has llegado al límite de stock disponible (${availableStock} unidades)`);
+
+                            }
+
+                            return;
+
+                        }
+
+                    } else if (action === 'decrease') {
+
+                        if (cart[index].quantity > 1) {
+
+                            cart[index].quantity -= 1;
+
+                            console.log('➖ Cantidad disminuida para índice', index, 'Nueva cantidad:', cart[index].quantity);
+
+                        } else {
+
+                            // Si la cantidad llega a 0, eliminar el item
+
+                            cart.splice(index, 1);
+
+                            console.log('🗑️ Item eliminado del carrito (cantidad 0)');
+
+                        }
+
+                    }
+
+
+
+                    // Guardar y recargar
+
+                    localStorage.setItem('avenidaCart', JSON.stringify(cart));
+
+                    loadCartInfo();
+
+                });
+
+            });
+
+
+
+            // Botones de eliminar
+
+            const removeBtns = document.querySelectorAll('.remove-item-btn');
+
+            removeBtns.forEach(btn => {
+
+                btn.addEventListener('click', function () {
+
+                    const index = parseInt(this.dataset.index);
+
+                    const cart = JSON.parse(localStorage.getItem('avenidaCart') || '[]');
+
+
+
+                    cart.splice(index, 1);
+
+                    console.log('🗑️ Item eliminado del carrito, índice:', index);
+
+
+
+                    // Guardar y recargar
+
+                    localStorage.setItem('avenidaCart', JSON.stringify(cart));
+
+                    loadCartInfo();
+
+                });
+
+            });
+
+
+
+            console.log('✅ Botones del carrito configurados');
+
+        }
+
+
+
+        // Función para limpiar carrito
+
+        function clearCart() {
+
+            // Limpiar localStorage
+
+            localStorage.removeItem('avenidaCart');
+
+
+
+            // Limpiar el carrito global
+
+            if (window.cart) {
+
+                window.cart = [];
+
+            }
+
+
+
+            // Limpiar contador del header
+
+            const cartCount = document.getElementById('cart-count');
+
+            if (cartCount) {
+
+                cartCount.textContent = '0';
+
+            }
+
+
+
+            // Recargar la información del carrito
+
+            loadCartInfo();
+
+
+
+            console.log('🗑️ Carrito limpiado completamente');
+
+        }
+
+
+
+        // Función para continuar con la compra
+
+        function continueToCheckout() {
+
+            console.log('🚀 Continuando con la compra...');
+
+            window.location.href = 'checkout.html';
+
+        }
+
+
+
+
+
+        // Función para recargar stock desde Firebase
+
+        async function reloadStock() {
+
+            try {
+
+                console.log('🔄 Recargando stock desde Firebase...');
+
+
+
+                // Verificar que Firebase esté disponible
+
+                if (typeof firebase === 'undefined') {
+
+                    console.log('⚠️ Firebase no disponible, usando datos locales');
+
+                    loadCartInfo();
+
+                    return;
+
+                }
+
+
+
+                // Cargar datos desde Firebase
+
+                if (window.loadRealStockFromFirebase && typeof window.loadRealStockFromFirebase === 'function') {
+
+                    try {
+
+                        await window.loadRealStockFromFirebase();
+
+                        console.log('✅ Stock recargado desde Firebase');
+
+                        loadCartInfo();
+
+                    } catch (firebaseError) {
+
+                        console.log('⚠️ Error al cargar desde Firebase:', firebaseError);
+
+                        loadCartInfo(); // Usar datos locales como fallback
+
+                    }
+
+                } else {
+
+                    console.log('⚠️ loadRealStockFromFirebase no disponible, usando datos locales');
+
+                    loadCartInfo();
+
+                }
+
+
+
+            } catch (error) {
+
+                console.error('❌ Error al recargar stock:', error);
+
+                loadCartInfo(); // Cargar con datos locales si falla
+
+            }
+
+        }
+
+
+
+        // Función para forzar recarga de datos en Hostinger
+
+        function forceReloadData() {
+
+            const isHostinger = window.location.hostname.includes('hostinger') ||
+
+                window.location.hostname.includes('000webhost') ||
+
+                !window.location.hostname.includes('localhost');
+
+
+
+            if (isHostinger) {
+
+                console.log('🌐 Forzando recarga de datos en Hostinger...');
+
+
+
+                // Intentar cargar desde Firebase
+
+                if (typeof window.loadRealStockFromFirebase === 'function') {
+
+                    window.loadRealStockFromFirebase().then(() => {
+
+                        console.log('✅ Datos recargados desde Firebase en Hostinger');
+
+                        loadCartInfo();
+
+                    }).catch(error => {
+
+                        console.log('⚠️ Error al recargar desde Firebase en Hostinger:', error);
+
+                        loadCartInfo();
+
+                    });
+
+                } else {
+
+                    console.log('⚠️ Firebase no disponible en Hostinger, usando datos locales');
+
+                    loadCartInfo();
+
+                }
+
+            }
+
+        }
+
+
+
+        // Inicializar cuando la página esté lista
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            console.log('🚀 Página del carrito cargada');
+
+
+
+            // Debug simple para Hostinger
+
+            const isHostinger = window.location.hostname.includes('hostinger') ||
+
+                window.location.hostname.includes('000webhost') ||
+
+                !window.location.hostname.includes('localhost');
+
+
+
+            console.log('🌐 Hostinger detectado:', isHostinger, 'Hostname:', window.location.hostname);
+
+
+
+            // Recargar stock (funciona con o sin Firebase)
+
+            reloadStock();
+
+
+
+            // Verificación tardía específica para Hostinger
+
+            if (isHostinger) {
+
+                setTimeout(() => {
+
+                    console.log('🌐 Verificación tardía Hostinger:');
+
+                    console.log('• Firebase disponible:', typeof firebase !== 'undefined');
+
+                    console.log('• Productos en carrito:', cart.length);
+
+                    console.log('• Botones + encontrados:', document.querySelectorAll('.quantity-btn[data-action="increase"]').length);
+
+                    console.log('• Botones + deshabilitados:', document.querySelectorAll('.quantity-btn[data-action="increase"]:disabled').length);
+
+
+
+                    // Recargar si Firebase está disponible
+
+                    if (typeof firebase !== 'undefined') {
+
+                        console.log('✅ Firebase disponible en verificación tardía, recargando...');
+
+                        reloadStock();
+
+                    }
+
+                }, 2000);
+
+            }
+
+
+
+            // Configurar botones
+
+            const clearCartBtn = document.getElementById('clear-cart-btn');
+
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+
+
+            if (clearCartBtn) {
+
+                clearCartBtn.addEventListener('click', clearCart);
+
+            }
+
+
+
+            if (checkoutBtn) {
+                console.log('✅ Botón de checkout encontrado y configurado');
+                checkoutBtn.addEventListener('click', function () {
+                    console.log('✅ Click detectado en el botón de checkout!');
+                    continueToCheckout();
+                });
+            } else {
+                console.error('❌ ERROR: No se encontró el botón de checkout (id="checkout-btn")');
+            }
+
+
+
+            // Configurar funcionalidad del sidebar
+
+            const menuToggle = document.getElementById('menu-toggle');
+
+            const sidebar = document.getElementById('sidebar');
+
+            const closeSidebar = document.getElementById('close-sidebar');
+
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+
+
+            if (menuToggle && sidebar) {
+
+                menuToggle.addEventListener('click', function () {
+
+                    sidebar.classList.add('open');
+
+                    if (sidebarOverlay) {
+
+                        sidebarOverlay.classList.remove('hidden');
+
+                        sidebarOverlay.classList.add('active');
+
+                    }
+
+                });
+
+            }
+
+
+
+            if (closeSidebar && sidebar) {
+
+                closeSidebar.addEventListener('click', function () {
+
+                    sidebar.classList.remove('open');
+
+                    if (sidebarOverlay) {
+
+                        sidebarOverlay.classList.add('hidden');
+
+                        sidebarOverlay.classList.remove('active');
+
+                    }
+
+                });
+
+            }
+
+
+
+            if (sidebarOverlay) {
+
+                sidebarOverlay.addEventListener('click', function () {
+
+                    sidebar.classList.remove('open');
+
+                    sidebarOverlay.classList.add('hidden');
+
+                    sidebarOverlay.classList.remove('active');
+
+                });
+
+            }
+
+
+
+            console.log('✅ Configuración del carrito completada');
+
+        });
+
+    </script>
+
+
+
+    <!-- Script para establecer el logo inicial inmediatamente -->
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Logo logic removed as it is now text-based
+
+        });
+
+    </script>
+
+
+
+    <!-- Scripts de corrección eliminados para evitar conflictos -->
+
+    <!-- Las funcionalidades están integradas en script.js -->
+
+
+
+    <!-- Script para listeners de stock en tiempo real -->
+
+    <script src="realtime-stock-listeners.js"></script>
+
+</body>
+
+
+
+</html>

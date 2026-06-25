@@ -1,0 +1,1481 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AVENIDA.</title>
+
+    <!-- Favicon - Logo de AVENIDA en la pesta├▒a del navegador -->
+    <link rel="icon" type="image/png" href="favicom.png">
+    <link rel="apple-touch-icon" href="favicom.png">
+
+    <!-- Preload de la fuente principal para evitar parpadeos -->
+    <link rel="preload" href="rip-Regular.ttf" as="font" type="font/ttf" crossorigin>
+
+
+
+    <!-- Script para asegurar que la p├ígina se cargue correctamente -->
+
+    <script>
+
+        // Asegurar que la p├ígina se cargue correctamente desde cualquier URL
+
+        if (window.location.pathname === '/') {
+
+            window.location.pathname = '/index.html';
+
+        }
+
+    </script>
+
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css?v=4.3">
+
+    <style>
+        /* Asegurar que las animaciones funcionen inmediatamente */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+    </style>
+
+    <!-- Preload del Poster del Video para carga instant├ínea -->
+    <link rel="preload" as="image" href="banner/nuevo banner 2026/DSC_0214.webp">
+
+
+
+    <!-- Firebase SDK -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+
+
+    <!-- L├│gica del modal y productos centralizada en script.js -->
+
+</head>
+
+<body class="bg-[#8357C5] text-white" style="cursor: url('AP/cursor_mano_AP_32.png'), auto;">
+    <style>
+        a, button, [onclick], .icon-link, .category-link, .whatsapp-button {
+            cursor: url('AP/cursor_mano_AP_32.png'), pointer !important;
+        }
+    </style>
+
+    <!-- ======================= MAINTENANCE OVERLAY ======================= -->
+    <div id="maintenance-overlay" class="fixed inset-0 z-[9999] bg-[#1a1a1a] overflow-y-auto text-white">
+
+        <div class="min-h-full w-full flex flex-col items-center justify-center py-12 px-4 relative">
+            <div class="w-full max-w-lg mx-auto flex flex-col items-center">
+                <!-- Logo con animaci├│n suave (BLANCO) -->
+                <div class="mb-10 animate-fade-in-up flex-shrink-0">
+                    <img src="logo/logo blanco.png" alt="AVENIDA"
+                        class="w-48 md:w-64 h-auto object-contain opacity-100">
+                </div>
+
+                <!-- Mensaje / Password Gate -->
+                <div id="password-gate" class="text-center w-full animate-fade-in-up flex flex-col items-center"
+                    style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+
+                    <!-- Countdown Integrado -->
+                    <div class="mb-12 w-full flex flex-col items-center">
+                        <h3 class="text-white text-[10px] md:text-xs font-mono tracking-[0.4em] uppercase mb-6 opacity-60 flex items-center justify-center gap-3">
+                            <span class="w-8 h-[1px] bg-white/30"></span>
+                            PR├ôXIMO DROP EN
+                            <span class="w-8 h-[1px] bg-white/30"></span>
+                        </h3>
+                        <div class="flex items-center justify-center gap-2 md:gap-4 font-rip text-4xl md:text-6xl tracking-widest text-white leading-none">
+                            <div class="flex flex-col items-center min-w-[60px] md:min-w-[100px]">
+                                <span id="cd-days" class="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">00</span>
+                                <span class="text-[9px] md:text-[10px] font-mono tracking-[0.3em] mt-2 opacity-50">D├ìAS</span>
+                            </div>
+                            <span class="opacity-30 animate-pulse pb-6 md:pb-8 text-2xl md:text-4xl">:</span>
+                            <div class="flex flex-col items-center min-w-[60px] md:min-w-[100px]">
+                                <span id="cd-hours" class="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">00</span>
+                                <span class="text-[9px] md:text-[10px] font-mono tracking-[0.3em] mt-2 opacity-50">HRS</span>
+                            </div>
+                            <span class="opacity-30 animate-pulse pb-6 md:pb-8 text-2xl md:text-4xl">:</span>
+                            <div class="flex flex-col items-center min-w-[60px] md:min-w-[100px]">
+                                <span id="cd-mins" class="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">00</span>
+                                <span class="text-[9px] md:text-[10px] font-mono tracking-[0.3em] mt-2 opacity-50">MIN</span>
+                            </div>
+                            <span class="opacity-30 animate-pulse pb-6 md:pb-8 text-2xl md:text-4xl">:</span>
+                            <div class="flex flex-col items-center min-w-[60px] md:min-w-[100px]">
+                                <span id="cd-secs" class="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">00</span>
+                                <span class="text-[9px] md:text-[10px] font-mono tracking-[0.3em] mt-2 opacity-50 text-red-400">SEG</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        // L├│gica de Cuenta Regresiva
+                        function updateCountdown() {
+                            const now = new Date();
+                            const year = now.getFullYear();
+                            const month = now.getMonth() + 1;
+                            const endDate = new Date(year, month, 0, 23, 59, 59).getTime();
+
+                            const timeleft = endDate - now.getTime();
+
+                            if (timeleft > 0) {
+                                const days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+                                const seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+                                const elDays = document.getElementById("cd-days");
+                                const elHours = document.getElementById("cd-hours");
+                                const elMins = document.getElementById("cd-mins");
+                                const elSecs = document.getElementById("cd-secs");
+
+                                if(elDays) elDays.innerText = days.toString().padStart(2, '0');
+                                if(elHours) elHours.innerText = hours.toString().padStart(2, '0');
+                                if(elMins) elMins.innerText = minutes.toString().padStart(2, '0');
+                                if(elSecs) elSecs.innerText = seconds.toString().padStart(2, '0');
+                            }
+                        }
+                        setInterval(updateCountdown, 1000);
+                        updateCountdown();
+                    </script>
+
+                    <h1 class="text-2xl md:text-5xl font-bold mb-4 tracking-[0.2em] text-white uppercase leading-tight">
+                        ┬┐sos uno de los<br>afortunados?
+                    </h1>
+
+                    <p
+                        class="text-white/70 text-xs md:text-sm font-mono mb-8 tracking-widest uppercase text-center px-4">
+                        ingres├í tu clave de acceso exclusivo
+                    </p>
+
+                    <!-- Input Password (CENTRAL) -->
+                    <div class="relative w-full max-w-[320px] mb-4 group">
+                        <input type="password" id="access-password" placeholder="INTRODUCIR CLAVE"
+                            autocomplete="new-password"
+                            class="w-full bg-transparent border-b-2 border-white/40 text-white text-center py-4 px-4 focus:outline-none focus:border-[#8357C5] transition-all duration-300 tracking-[0.2em] placeholder:text-white/30 placeholder:text-sm font-mono text-lg">
+
+                        <button id="access-btn"
+                            class="absolute right-0 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#8357C5] transition-colors p-3">
+                            <i class="fas fa-arrow-right text-xl"></i>
+                        </button>
+
+                        <!-- Linea animada al focus -->
+                        <div
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-[#8357C5] transition-all duration-500 group-focus-within:w-full">
+                        </div>
+                    </div>
+
+                    <p id="access-error"
+                        class="text-red-500 text-[10px] tracking-[0.2em] uppercase hidden animate-pulse mb-4">
+                        CLAVE INCORRECTA
+                    </p>
+
+                    <!-- Separador -->
+                    <div class="w-full max-w-sm flex items-center gap-4 mt-8 mb-8 opacity-50">
+                        <div class="h-[1px] flex-grow bg-white/30"></div>
+                        <span class="text-white text-[10px] font-mono uppercase tracking-widest text-center">┬┐Sin clave?
+                            Quiero participar</span>
+                        <div class="h-[1px] flex-grow bg-white/30"></div>
+                    </div>
+
+                    <p class="text-white/60 text-[11px] md:text-xs font-mono mb-6 tracking-wide px-6 text-center">
+                        ├Ünete a la lista de espera para obtener la contrase├▒a.
+                    </p>
+
+                    <!-- Formulario Suscripci├│n -->
+                    <form id="newsletter-form" class="w-full max-w-[320px] flex flex-col gap-3">
+                        <input type="text" id="newsletter-name" placeholder="TU NOMBRE" required
+                            class="w-full bg-white/5 border border-white/10 rounded-md text-white text-center py-3 px-4 focus:outline-none focus:border-[#8357C5] focus:bg-white/10 transition-all duration-300 tracking-[0.1em] placeholder:text-white/30 placeholder:text-xs font-mono">
+                        <input type="email" id="newsletter-email" placeholder="TU@CORREO.COM" required
+                            class="w-full bg-white/5 border border-white/10 rounded-md text-white text-center py-3 px-4 focus:outline-none focus:border-[#8357C5] focus:bg-white/10 transition-all duration-300 tracking-[0.1em] placeholder:text-white/30 placeholder:text-xs font-mono">
+
+                        <button type="submit" id="newsletter-submit"
+                            class="w-full bg-white/10 text-white border border-white/20 font-bold py-3 px-4 rounded-md hover:bg-[#8357C5] hover:border-[#8357C5] transition-all duration-300 tracking-[0.1em] uppercase text-xs mt-2 shadow-sm">
+                            <span id="newsletter-btn-text">Aceptar</span>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Redes Sociales AL FINAL DEL SCROLL -->
+            <div class="mt-16 flex items-center gap-6 animate-fade-in-up"
+                style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                <a href="https://www.instagram.com/aaavenidaaa/" target="_blank"
+                    class="text-gray-500 hover:text-white transition-colors text-2xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@aaavenidaaa" target="_blank"
+                    class="text-gray-500 hover:text-white transition-colors text-2xl">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <!-- Bot├│n WhatsApp -->
+                <a href="https://wa.me/595982713971" target="_blank"
+                    class="text-[#25D366] hover:text-[#128C7E] transition-all duration-300 hover:scale-110 text-2xl">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURACI├ôN DE ACCESO SEGURA
+        // Solo almacenamos el HASH (sha256) de la contrase├▒a, no la palabra pura devestir19
+        // Esto evita que cualquiera que vea el c├│digo fuente o inspeccione en consola pueda ver
+        // cu├íl es la contrase├▒a real. Solo si adivina la palabra correcta, producir├í este hash.
+        const VALID_HASH = "34901268d5b71a86abd37eb10b127b6cc18947ac4855ac59df6f3c81780bf137";
+        const SESSION_KEY = "avenida_unlocked";
+
+        // Elementos
+        const overlay = document.getElementById('maintenance-overlay');
+        const passwordInput = document.getElementById('access-password');
+        const submitBtn = document.getElementById('access-btn');
+        const errorMsg = document.getElementById('access-error');
+
+        // === APERTURA AUTOM├üTICA AL LANZAMIENTO P├ÜBLICO ===
+        // Configuramos la fecha de lanzamiento para el final del mes actual
+        const nowSetup = new Date();
+        const LAUNCH_DATE = new Date(nowSetup.getFullYear(), nowSetup.getMonth() + 1, 0, 23, 59, 59);
+        const isAfterLaunch = new Date() >= LAUNCH_DATE;
+
+        if (isAfterLaunch) {
+            // Ya es lanzamiento p├║blico: saltar overlay sin contrase├▒a
+            overlay.style.display = 'none';
+            document.body.classList.remove('overflow-hidden');
+            document.body.style.overflow = 'auto';
+            sessionStorage.setItem(SESSION_KEY, VALID_HASH);
+        } else {
+            // Antes del lanzamiento: l├│gica normal de acceso anticipado
+
+            // Utils para Hashear la contrase├▒a que escribe el usuario
+            async function sha256(message) {
+                const msgBuffer = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+
+            // 1. Verificar si ya accedi├│ previamente en esta sesi├│n
+            if (sessionStorage.getItem(SESSION_KEY) === VALID_HASH) {
+                overlay.style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // 2. Funci├│n de desbloqueo Seguro
+            async function attemptUnlock() {
+                const inputVal = passwordInput.value.trim();
+                const computedHash = await sha256(inputVal);
+
+                if (computedHash === VALID_HASH) {
+                    sessionStorage.setItem(SESSION_KEY, VALID_HASH);
+                    overlay.style.transition = 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out';
+                    overlay.style.opacity = '0';
+                    overlay.style.transform = 'translateY(-100%)';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        document.body.classList.remove('overflow-hidden');
+                        document.body.style.overflow = 'auto';
+                    }, 800);
+                } else {
+                    errorMsg.classList.remove('hidden');
+                    passwordInput.classList.add('border-red-500');
+                    passwordInput.value = '';
+                    setTimeout(() => {
+                        errorMsg.classList.add('hidden');
+                        passwordInput.classList.remove('border-red-500');
+                    }, 3000);
+                }
+            }
+
+            submitBtn.addEventListener('click', attemptUnlock);
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') attemptUnlock();
+            });
+        } // fin del bloque else (antes del lanzamiento)
+    </script>
+
+    <style>
+        @keyframes loading {
+            0% {
+                transform: scaleX(0);
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0);
+                transform-origin: right;
+            }
+        }
+    </style>
+    </div>
+
+
+
+    <!-- ======================= HEADER ======================= -->
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-500">
+        <div class="container mx-auto">
+            <!-- Fila Superior: Logo y Utilidades -->
+            <div class="flex justify-between items-center py-2 px-3 md:py-3 md:px-6 h-14 md:h-20">
+                <!-- Izquierda (Men├║) -->
+                <div class="flex-1 flex items-center justify-start z-20">
+                    <button id="menu-toggle" class="icon-link shrink-0">
+                        <i class="fas fa-bars text-lg md:text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Centro (Logo) -->
+                <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                    <a href="index.html" class="logo-link">
+                        <span id="header-logo-text"
+                            class="text-[14px] sm:text-[16px] md:text-3xl leading-none font-black uppercase">AVENIDA</span>
+                    </a>
+                </div>
+
+                <!-- Derecha (Botones) -->
+                <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-5 z-20">
+                    <a href="#" id="user-btn" class="icon-link flex items-center justify-center shrink-0">
+                        <i class="fas fa-user text-[16px] sm:text-lg md:text-xl"></i>
+                    </a>
+                    <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                        <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-xl"></i>
+                        <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fila Inferior: Categor├¡as (Solo Desktop) -->
+            <nav id="category-nav" class="hidden md:flex items-center justify-center space-x-14 pb-4 transition-all duration-300">
+                <a href="#" onclick="filterProducts('Nuevo Drop', event)" class="category-link active-category">Nuevo Drop</a>
+                <a href="#" onclick="filterProducts('Superior', event)" class="category-link">Superior</a>
+                <a href="#" onclick="filterProducts('Inferior', event)" class="category-link">Inferior</a>
+                <a href="#" onclick="filterProducts('Todas las prendas', event)" class="category-link">Todas las prendas</a>
+            </nav>
+        </div>
+    </header>
+
+
+
+    <!-- Barra lateral desplegable -->
+
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 overflow-y-auto">
+
+        <div class="p-6">
+
+            <!-- Cabecera del sidebar -->
+
+            <div class="flex justify-between items-center mb-8">
+
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+
+                    <i class="fas fa-times text-2xl"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Secci├│n de usuario -->
+
+            <div class="user-section mb-8">
+
+                <div class="flex items-center space-x-4 mb-4">
+
+                    <div class="w-16 h-24 rounded-full bg-white/20 flex items-center justify-center">
+
+                        <i class="fas fa-user text-white text-2xl"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-white text-lg font-semibold" id="user-display-name">Usuario</h3>
+
+                        <p class="text-white/70" id="user-display-email">usuario@email.com</p>
+
+                    </div>
+
+                </div>
+
+                <div class="rounded-lg p-0">
+
+                    <ul class="space-y-3">
+
+                        <li>
+
+                            <a href="profile.html">
+
+                                <i class="fas fa-user-circle mr-3"></i>
+
+                                <span>Mi Perfil</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="orders.html">
+
+                                <i class="fas fa-shopping-bag mr-3"></i>
+
+                                <span>Mis Pedidos</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="favorites.html">
+
+                                <i class="fas fa-heart mr-3"></i>
+
+                                <span>Favoritos</span>
+
+                            </a>
+
+                        </li>
+
+                        <!-- Bot├│n de logout -->
+
+                        <li>
+
+                            <button id="logout-btn"
+                                class="flex items-center text-white hover:text-red-300 w-full text-left transition-colors duration-300"
+                                style="display: none;">
+
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+
+                                <span>Cerrar Sesi├│n</span>
+
+                            </button>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Navegaci├│n principal -->
+
+            <nav class="mb-8">
+
+                <ul class="space-y-4">
+
+                    <li>
+
+                        <a href="index.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-home mr-3"></i>
+
+                            <span>Inicio</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="filterProducts('Todas las prendas', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-th-large mr-3"></i>
+                            <span>Todas las prendas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="filterProducts('Nuevo Drop', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-star mr-3"></i>
+                            <span>Nuevo Drop</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="filterProducts('Superior', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-tshirt mr-3"></i>
+                            <span>Superior</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="filterProducts('Inferior', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-tshirt mr-3"></i>
+                            <span>Inferior</span>
+                        </a>
+                    </li>
+
+                    <li>
+
+                        <a href="#lookbook-section" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-images mr-3"></i>
+
+                            <span>Lookbook</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="about.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-info-circle mr-3"></i>
+
+                            <span>Sobre Nosotros</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <!-- Secci├│n de Legal y Ayuda -->
+            <div class="config-section mb-8">
+                <h3 class="text-white text-lg font-semibold mb-4">Legal y Ayuda</h3>
+                <ul class="space-y-3 bg-white/10 rounded-lg p-4">
+                    <li>
+                        <a href="terms.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-file-contract mr-3"></i>
+                            <span>T├®rminos y Condiciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="privacy.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-lock mr-3"></i>
+                            <span>Privacidad</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="returns.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-undo mr-3"></i>
+                            <span>Devoluciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="help.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-question-circle mr-3"></i>
+                            <span>Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        
+        <!-- EASTER EGG CONTAINER -->
+        <div id="easter-egg-container" class="relative mt-4 mb-0 w-full h-[80px] flex justify-center overflow-hidden transition-all duration-500">
+            <!-- Bot├│n Met├ílico -->
+            <img id="ee-btn" src="AP/boton_cierre.png" class="absolute top-2 w-16 h-auto z-30 cursor-pointer" alt="Secret Button">
+            
+            <div id="ee-zipper-wrapper" class="absolute inset-0 w-full h-full opacity-0 pointer-events-none transition-opacity duration-500 flex justify-center items-center">
+                <canvas id="ee-zipper-canvas" class="w-full h-full object-cover"></canvas>
+            </div>
+
+            <!-- Portal Sutil -->
+            <a id="ee-portal-btn" href="outfit.html" class="absolute inset-0 z-40 cursor-pointer pointer-events-none flex items-center justify-center" style="text-decoration: none;">
+                <div id="ee-portal-content" class="opacity-0 transform scale-50 transition-all duration-700 ease-out flex flex-col items-center justify-center hover:scale-110">
+                    <div class="relative group">
+                        <!-- Glow ring sutil -->
+                        <div class="absolute inset-0 bg-white rounded-full blur-sm opacity-10 animate-pulse"></div>
+                        <!-- Aspecto invisible/transl├║cido, m├ís peque├▒o -->
+                        <div class="relative w-14 h-14 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                            <!-- Icono de percha SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 text-white/50 drop-shadow-sm">
+                                <path d="M22 15L12 10 2 15h20z" />
+                                <path d="M12 10V6c0-1.1.9-2 2-2s2 .9 2 2" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+
+
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+
+
+    <!-- Envoltura principal para todo el contenido que se desplaza -->
+
+    <div id="page-content">
+
+        <!-- ======================= BANNER CAROUSEL ======================= -->
+        <section id="banner-carousel">
+
+            <div class="carousel-container">
+                <div class="carousel-slide" style="background-image: url('banner/nuevo banner 2026/DSC_0214.webp');">
+                </div>
+                <div class="carousel-slide" style="background-image: url('banner/nuevo banner 2026/DSC_0217.webp');">
+                </div>
+                <div class="carousel-slide"
+                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-18-18A.jpeg');"></div>
+                <div class="carousel-slide"
+                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-27-9A.jpeg');"></div>
+                <div class="carousel-slide"
+                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-33-3A.jpeg');"></div>
+            </div>
+
+
+
+            <!-- Botones de navegaci├│n -->
+
+            <button id="prev-btn" class="carousel-arrow" aria-label="Slide anterior">
+
+                <i class="fas fa-chevron-left"></i>
+
+            </button>
+
+            <button id="next-btn" class="carousel-arrow" aria-label="Slide siguiente">
+
+                <i class="fas fa-chevron-right"></i>
+
+            </button>
+
+
+
+            <!-- Indicadores de navegaci├│n -->
+
+            <div class="carousel-indicators">
+
+                <button class="carousel-indicator" data-slide="0" aria-label="Ir al slide 1"></button>
+                <button class="carousel-indicator" data-slide="1" aria-label="Ir al slide 2"></button>
+                <button class="carousel-indicator" data-slide="2" aria-label="Ir al slide 3"></button>
+                <button class="carousel-indicator" data-slide="3" aria-label="Ir al slide 4"></button>
+                <button class="carousel-indicator" data-slide="4" aria-label="Ir al slide 5"></button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================= CAT├üLOGO DE PRODUCTOS ======================= -->
+
+        <main class="container mx-auto py-24">
+
+
+
+            <!-- Video Hero Section -->
+            <div
+                class="hero-video-container relative w-full mb-16 overflow-hidden rounded-none md:rounded-xl shadow-2xl group">
+                <!-- Video de Fondo -->
+                <video id="hero-video" autoplay muted loop playsinline poster="banner/banner1.jpeg"
+                    class="w-full h-[50vh] md:h-[70vh] object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[2s]">
+                    <source src="videos/Avda TEASER I CORTE FINAL.mp4" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+
+                <!-- Overlay Oscuro (Mejora legibilidad) -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none">
+                </div>
+
+                <!-- Contenido Central (Texto y CTA) -->
+                <div
+                    class="absolute inset-0 flex flex-col items-center justify-center text-white z-10 text-center px-4">
+                    <span
+                        class="text-xs md:text-sm font-medium tracking-[0.5em] uppercase mb-4 opacity-0 animate-fade-in-up text-white/80"
+                        style="animation-delay: 0.5s; animation-fill-mode: forwards;">COLECCI├ôN 2026</span>
+                    <h2 class="font-rip text-4xl md:text-6xl mb-8 opacity-0 animate-fade-in-up leading-none tracking-tighter flex items-center justify-center gap-4"
+                        style="animation-delay: 0.7s; animation-fill-mode: forwards;">
+                        <span class="text-white">VERANO</span>
+                        <span class="text-gradient" style="text-shadow: 0 10px 30px rgba(131,87,197,0.3);">ETERNO</span>
+                    </h2>
+
+                    <a href="#product-grid"
+                        class="group/btn relative px-8 py-3 bg-white text-black font-bold uppercase tracking-wider overflow-hidden transition-all hover:bg-[#8357C5] hover:text-white opacity-0 animate-fade-in-up shadow-lg hover:shadow-purple-500/50 rounded-sm"
+                        style="animation-delay: 0.9s; animation-fill-mode: forwards;">
+                        <span class="relative z-10">Ver Cat├ílogo</span>
+                    </a>
+                </div>
+
+                <!-- Bot├│n de Sonido -->
+                <button id="video-sound-btn"
+                    class="absolute bottom-6 right-6 bg-black/40 hover:bg-black/70 text-white w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 backdrop-blur-md z-20 cursor-pointer border border-white/10 hover:scale-110">
+                    <i class="fas fa-volume-mute text-lg"></i>
+                </button>
+            </div>
+
+            <h2 id="product-grid-title" class="text-center text-4xl font-bold text-gray-900 mb-16 px-6 md:px-0">
+                Nuevo Drop</h2>
+
+            <section id="product-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
+                <!-- Las tarjetas de productos se generar├ín din├ímicamente desde script.js -->
+            </section>
+
+            <!-- Secci├│n Verano Eterno -->
+            <h2 id="old-grid-title" class="text-center text-4xl font-bold text-gray-900 mt-32 mb-16 px-6 md:px-0">
+                Verano Eterno</h2>
+
+            <section id="old-product-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
+                <!-- Las tarjetas de productos se generar├ín din├ímicamente desde script.js -->
+            </section>
+
+            <div id="view-all-container" class="flex justify-center mt-12 mb-20">
+                <button onclick="showOlderDrops(event)" 
+                    class="px-10 py-4 border-2 border-white text-white font-black uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-[#8357C5] transition-all duration-300 shadow-xl hover:shadow-white/20 text-sm">
+                    Ver todos los productos
+                </button>
+            </div>
+
+            <!-- Secci├│n Drops Antiguos (Oculta por defecto) -->
+            <div id="older-drops-section" style="display: none;">
+                <h2 class="text-center text-4xl font-bold text-gray-900 mt-16 mb-16 px-6 md:px-0">
+                    Primer Drop</h2>
+
+                <section id="older-product-grid"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
+                    <!-- Las tarjetas de productos se generar├ín din├ímicamente desde script.js -->
+                </section>
+            </div>
+
+        </main>
+
+
+        <!-- ======================= SECCI├ôN LOOKBOOK ======================= -->
+        <section id="lookbook-section" class="container mx-auto py-20 px-6">
+            <div class="bg-white text-gray-900 rounded-3xl shadow-2xl p-8 md:p-12 max-w-[900px] mx-auto">
+
+            <!-- Instagram Profile Header -->
+            <div class="max-w-[700px] mx-auto mb-8 text-[#262626]">
+                <div class="flex flex-col md:flex-row items-start md:gap-20 px-4 mb-8">
+                    <!-- Profile Picture -->
+                    <div class="flex-shrink-0 mx-auto md:mx-0 mb-6 md:mb-0">
+                        <div
+                            class="w-[150px] h-[150px] rounded-full p-[2px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] relative">
+                            <div
+                                class="w-full h-full rounded-full border-[3px] border-white overflow-hidden bg-[#8357C5] flex items-center justify-center">
+                                <img src="logo/logo blanco.png" alt="AVDA" class="w-[100px] h-auto object-contain">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Info Column -->
+                    <div class="flex-1 w-full">
+                        <!-- Top Row: Username + Actions (Desktop) -->
+                        <div class="flex flex-col md:flex-row items-center md:items-start gap-4 mb-5">
+                            <div class="flex items-center gap-4">
+                                <h2 class="text-xl md:text-2xl font-normal">aaavenidaaa</h2>
+                                <i class="fas fa-ellipsis-h text-sm cursor-pointer hover:opacity-50"></i>
+                            </div>
+                        </div>
+
+                        <!-- Info Block (Mobile Order) -->
+                        <div class="text-center md:text-left mb-6">
+                            <h3 class="font-bold text-[16px]">AVENIDA ┬«</h3>
+
+                            <!-- Stats Row -->
+                            <div class="flex justify-center md:justify-start gap-10 my-4 text-[16px]">
+                                <div><span class="font-bold">18</span> publicaciones</div>
+                                <div><span class="font-bold">1328</span> seguidores</div>
+                                <div><span class="font-bold">46</span> seguidos</div>
+                            </div>
+
+                            <p class="text-gray-500 font-medium">Ropa (marca)</p>
+                            <div class="text-[14px] whitespace-pre-line mt-1">ÔÅ│ ÔîÜ</div>
+                            <a href="https://aaavenidaaa.com"
+                                class="text-[#00376b] font-semibold text-[14px] hover:underline block mt-1">
+                                <i class="fas fa-link text-xs mr-1"></i>www.aaavenidaaa.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons (Mobile/Desktop consistent) -->
+                <div class="flex gap-2 px-4 mb-10 text-sm font-semibold">
+                    <button
+                        class="flex-1 bg-[#efefef] hover:bg-[#dbdbdb] py-1.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-1">
+                        Siguiendo <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <button class="flex-1 bg-[#efefef] hover:bg-[#dbdbdb] py-1.5 px-4 rounded-lg transition-colors">
+                        Enviar mensaje
+                    </button>
+                    <button class="bg-[#efefef] hover:bg-[#dbdbdb] py-1.5 px-3 rounded-lg transition-colors">
+                        <i class="fas fa-user-plus text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Story Highlights -->
+                <div class="flex gap-10 px-4 mb-12 overflow-x-auto pb-2 scrollbar-hide justify-start md:justify-start">
+                    <!-- Highlight 1 -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer min-w-[70px]">
+                        <div class="w-[77px] h-[77px] rounded-full p-[1px] border border-gray-300">
+                            <div class="w-full h-full rounded-full bg-gray-100 p-0.5">
+                                <img src="catalogo/boxer avenida/modelos/avda restock vertical op cmbyn-6.jpg"
+                                    class="w-full h-full object-cover rounded-full border border-gray-100">
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold truncate w-full text-center">Comunidad ­ƒÆ£</span>
+                    </div>
+
+                    <!-- Highlight 2 -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer min-w-[70px]">
+                        <div class="w-[77px] h-[77px] rounded-full p-[1px] border border-gray-300">
+                            <div class="w-full h-full rounded-full bg-gray-100 p-0.5">
+                                <img src="catalogo/jeans holgados/baggy tag.png"
+                                    class="w-full h-full object-cover rounded-full border border-gray-100">
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold truncate w-full text-center">Talles</span>
+                    </div>
+
+                    <!-- Highlight 3 -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer min-w-[70px]">
+                        <div class="w-[77px] h-[77px] rounded-full p-[1px] border border-gray-300">
+                            <div class="w-full h-full rounded-full bg-gray-100 p-0.5">
+                                <img src="catalogo/jeans rectos/straight etiqueta.png"
+                                    class="w-full h-full object-cover rounded-full border border-gray-100">
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold truncate w-full text-center">DROP #01</span>
+                    </div>
+                </div>
+
+                <!-- Feed Tabs -->
+                <div class="border-t border-gray-300">
+                    <div class="flex justify-center gap-14">
+                        <button
+                            class="flex items-center gap-2 py-4 border-t-2 border-black -mt-px text-xs font-semibold tracking-widest text-[#262626]">
+                            <svg aria-label="" class="_ab6-" color="#000000" fill="#000000" height="12" role="img"
+                                viewBox="0 0 24 24" width="12">
+                                <rect fill="none" height="18" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3"></rect>
+                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" x1="9.015" x2="9.015" y1="3" y2="21"></line>
+                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" x1="14.985" x2="14.985" y1="3" y2="21"></line>
+                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" x1="21" x2="3" y1="9.015" y2="9.015"></line>
+                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" x1="21" x2="3" y1="14.985" y2="14.985"></line>
+                            </svg>
+                            PUBLICACIONES
+                        </button>
+                        <button
+                            class="flex items-center gap-2 py-4 text-xs font-semibold tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img"
+                                viewBox="0 0 24 24" width="12">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
+                                </path>
+                                <path
+                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
+                                </path>
+                            </svg>
+                            REELS
+                        </button>
+                        <button
+                            class="flex items-center gap-2 py-4 text-xs font-semibold tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img"
+                                viewBox="0 0 24 24" width="12">
+                                <path
+                                    d="M10.201 3.797L12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465z"
+                                    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"></path>
+                                <path
+                                    d="M18.598 22.002V21.4a3.949 3.949 0 0 0-3.948-3.949H9.495A3.949 3.949 0 0 0 5.546 21.4v.603"
+                                    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"></path>
+                                <circle cx="12.072" cy="11.075" fill="none" r="3.556" stroke="currentColor"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                            </svg>
+                            ETIQUETAS
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instagram Grid -->
+            <div class="instagram-grid max-w-[700px] mx-auto mb-20">
+                <!-- Post 1 -->
+                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
+                    <img src="lookbook/avenida x 2004_nuevo.JPG" alt="Post" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
+                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 243</span>
+                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 12</span>
+                    </div>
+                    <!-- Multiple items icon -->
+                    <div class="absolute top-2 right-2 text-white/90 drop-shadow-sm">
+                        <svg aria-label="Carrusel" class="_ab6-" color="#ffffff" fill="#ffffff" height="15" role="img"
+                            viewBox="0 0 48 48" width="15">
+                            <path
+                                d="M34.8 29.7V11c0-2.9-2.3-5.2-5.2-5.2H11c-2.9 0-5.2 2.3-5.2 5.2v18.7c0 2.9 2.3 5.2 5.2 5.2h18.7c2.8-.1 5.1-2.4 5.1-5.2zM38.2 15H39c2.9 0 5.2 2.3 5.2 5.2v18.7c0 2.9-2.3 5.2-5.2 5.2H20.3c-2.9 0-5.2-2.3-5.2-5.2v-.8c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v.8c0 1.2 1 2.2 2.2 2.2h18.7c1.2 0 2.2-1 2.2-2.2V20.2c0-1.2-1-2.2-2.2-2.2h-.8c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Post 2 -->
+                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
+                    <img src="lookbook/avenida x 2004_29 (1).JPG" alt="Post" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
+                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 156</span>
+                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 8</span>
+                    </div>
+                </div>
+
+                <!-- Post 3 -->
+                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
+                    <img src="lookbook/avenida x 2004_27.JPG" alt="Post" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
+                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 342</span>
+                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 24</span>
+                    </div>
+                </div>
+
+                <!-- Post 4 -->
+                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
+                    <img src="lookbook/avenida x 2004_22.JPG" alt="Post" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
+                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 198</span>
+                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 15</span>
+                    </div>
+                    <div class="absolute top-2 right-2 text-white/90 drop-shadow-sm">
+                        <svg aria-label="Carrusel" class="_ab6-" color="#ffffff" fill="#ffffff" height="15" role="img"
+                            viewBox="0 0 48 48" width="15">
+                            <path
+                                d="M34.8 29.7V11c0-2.9-2.3-5.2-5.2-5.2H11c-2.9 0-5.2 2.3-5.2 5.2v18.7c0 2.9 2.3 5.2 5.2 5.2h18.7c2.8-.1 5.1-2.4 5.1-5.2zM38.2 15H39c2.9 0 5.2 2.3 5.2 5.2v18.7c0 2.9-2.3 5.2-5.2 5.2H20.3c-2.9 0-5.2-2.3-5.2-5.2v-.8c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v.8c0 1.2 1 2.2 2.2 2.2h18.7c1.2 0 2.2-1 2.2-2.2V20.2c0-1.2-1-2.2-2.2-2.2h-.8c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Post 5 -->
+                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
+                    <img src="lookbook/avenida x 2004_16.JPG" alt="Post" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
+                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 412</span>
+                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 32</span>
+                    </div>
+                </div>
+
+                <!-- Post 6 -->
+                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
+                    <img src="lookbook/avenida x 2004_50.JPG" alt="Post" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
+                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 287</span>
+                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 19</span>
+                    </div>
+                    <div class="absolute top-3 right-3 text-white drop-shadow-md">
+                        <i class="fas fa-images"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- ======================= SECCI├ôN TIKTOK ======================= -->
+        <section id="tiktok-section" class="py-20 px-6 bg-[#8357C5] text-white">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold mb-4">Conoce Nuestra Historia</h2>
+                    <p class="text-lg opacity-80 mb-8">Mira nuestro video en TikTok y descubre c├│mo surgi├│ AVENIDA</p>
+                </div>
+                <div class="flex justify-center">
+                    <div class="tiktok-video-container">
+                        <!-- Video HTML5 -->
+                        <video class="tiktok-video" autoplay muted loop playsinline preload="auto">
+                            <source src="videos/tiktok-video.mp4" type="video/mp4">
+                        </video>
+                        <div class="tiktok-overlay">
+                            <div class="play-button">
+                                <i class="fas fa-external-link-alt"></i>
+                            </div>
+                            <p class="tiktok-text">Haz clic para ver en TikTok</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCI├ôN COMUNIDAD ======================= -->
+        <section id="comunidad-section" class="py-24 bg-[#8357C5] border-t border-white/10">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto text-center text-white">
+                    <h2 class="text-5xl font-black mb-6 tracking-tighter">COMUNIDAD AVENIDA</h2>
+                    <p class="text-xl opacity-80 mb-12 font-medium">CONOCE NUESTROS PR├ôXIMOS LANZAMIENTOS EXCLUSIVOS
+                    </p>
+
+                    <form id="newsletter-form-main" class="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+                        <input type="text" id="newsletter-name-main" placeholder="TU NOMBRE" required
+                            class="flex-1 px-6 py-4 border-2 border-gray-100 rounded-xl focus:border-[#8357C5] outline-none transition-all text-lg font-medium">
+                        <input type="email" id="newsletter-email-main" placeholder="TU@EMAIL.COM" required
+                            class="flex-1 px-6 py-4 border-2 border-gray-100 rounded-xl focus:border-[#8357C5] outline-none transition-all text-lg font-medium">
+                        <button type="submit" id="newsletter-submit-main"
+                            class="bg-[#8357C5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-black transition-all shadow-lg hover:shadow-[#8357C5]/20">
+                            UNIRSE
+                        </button>
+                    </form>
+                    <p class="mt-6 text-white/40 text-sm">Al unirte, aceptas nuestra pol├¡tica de privacidad y t├®rminos
+                        de servicio.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= FOOTER ======================= -->
+        <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                    <!-- Columna 1: Info -->
+                    <div>
+                        <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-12 mb-6">
+                        <p class="text-gray-400 mb-6">
+                            Elevando el estilo urbano con dise├▒os exclusivos y calidad premium.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="https://www.instagram.com/aaavenidaaa/" target="_blank"
+                                class="text-white hover:text-[#8357C5] transition-colors">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@aaavenidaaa" target="_blank"
+                                class="text-white hover:text-[#8357C5] transition-colors">
+                                <i class="fab fa-tiktok text-xl"></i>
+                            </a>
+                            <a href="https://wa.me/595982713971" target="_blank"
+                                class="text-white hover:text-[#8357C5] transition-colors">
+                                <i class="fab fa-whatsapp text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Columna 2: Enlaces -->
+                    <div>
+                        <h4 class="text-lg font-bold mb-6">Enlaces R├ípidos</h4>
+                        <ul class="space-y-4">
+                            <li><a href="index.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Inicio</a>
+                            </li>
+                            <li><a href="about.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Nosotros</a>
+                            </li>
+                            <li><a href="#productos"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Productos</a></li>
+                            <li><a href="#" id="contacto-btn-footer"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Contacto</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna 3: Legal -->
+                    <div>
+                        <h4 class="text-lg font-bold mb-6">Legal</h4>
+                        <ul class="space-y-4">
+                            <li><a href="terms.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">T├®rminos y
+                                    Condiciones</a></li>
+                            <li><a href="privacy.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Pol├¡tica de
+                                    Privacidad</a></li>
+                            <li><a href="returns.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Pol├¡tica de
+                                    Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-800 pt-8 text-center">
+                    <p class="text-gray-500">&copy; 2026 AVENIDA. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+
+    <!-- Modales y otros elementos fijos -->
+
+    <div id="user-modal" class="modal-overlay"></div>
+
+    <div id="toast-notification"></div>
+
+
+
+    <!-- Modal de Registro -->
+
+    <div id="register-modal" class="modal-overlay">
+
+        <div class="modal-content w-11/12 max-w-md">
+
+            <div class="bg-white rounded-lg shadow-xl p-8">
+
+                <div class="flex justify-between items-center mb-6">
+
+                    <h2 class="text-2xl font-bold text-gray-900">Crear Cuenta</h2>
+
+                    <button id="close-register-btn" class="text-gray-400 hover:text-gray-600">
+
+                        <i class="fas fa-times text-xl"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <form id="register-form" class="space-y-4">
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+
+                        <input type="text" id="register-name" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+
+                        <input type="email" id="register-email" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contrase├▒a</label>
+
+                        <input type="password" id="register-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contrase├▒a</label>
+
+                        <input type="password" id="register-confirm-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div class="flex items-center">
+
+                        <input type="checkbox" id="register-terms" required
+                            class="h-4 w-4 text-[#8357C5] focus:ring-[#8357C5] border-gray-300 rounded">
+
+                        <label class="ml-2 block text-sm text-gray-900">
+
+                            Acepto los <a href="terms.html" class="text-[#8357C5] hover:underline">T├®rminos y
+                                Condiciones</a>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <button type="submit"
+                        class="w-full bg-[#8357C5] text-white py-3 px-4 rounded-md hover:bg-[#6e48a9] transition-colors duration-300 font-semibold">
+
+                        Crear Cuenta
+
+                    </button>
+
+                </form>
+
+
+
+                <div class="mt-6 text-center">
+
+                    <p class="text-sm text-gray-600">
+
+                        ┬┐Ya tienes cuenta?
+
+                        <a href="#" id="login-link" class="text-[#8357C5] hover:underline font-medium">Iniciar
+                            Sesi├│n</a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/595982713971?text=Hola! Me gustar├¡a consultar sobre sus productos" class="whatsapp-button"
+        target="_blank">
+        <i class="fab fa-whatsapp text-4xl"></i>
+    </a>
+
+
+
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+
+    <!-- Sidebar & Header Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeSidebar();
+            initializeHeader();
+        });
+
+        function initializeSidebar() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.add('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('hidden');
+                        sidebarOverlay.classList.add('active');
+                    }
+                });
+            }
+
+            if (closeSidebar && sidebar) {
+                closeSidebar.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                });
+            }
+
+            if (sidebarOverlay && sidebar) {
+                sidebarOverlay.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.add('hidden');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+
+            const sidebarLinks = sidebar?.querySelectorAll('a');
+            sidebarLinks?.forEach(link => {
+                link.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        function initializeHeader() {
+            const header = document.getElementById('main-header');
+            if (header) {
+                const onScroll = () => {
+                    const scrolled = window.scrollY > 50;
+                    header.classList.toggle('scrolled', scrolled);
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll();
+            }
+        }
+    </script>
+
+    <!-- Main Scripts -->
+    <script src="script.js?v=7" defer></script>
+    <script src="realtime-stock-listeners.js" defer></script>
+    <script async src="https://www.tiktok.com/embed.js"></script>
+
+    <!-- Hostinger & TikTok Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // TikTok Logic
+            const tiktokContainer = document.querySelector('.tiktok-video-container');
+            const video = document.querySelector('.tiktok-video');
+            const iframe = document.querySelector('.tiktok-iframe-fallback');
+
+            if (tiktokContainer) {
+                tiktokContainer.addEventListener('click', (e) => {
+                    if (e.target.closest('.tiktok-overlay')) {
+                        window.open('https://www.tiktok.com/@aaavenidaaa/video/7541185824721767686', '_blank');
+                    }
+                });
+
+                if (video) {
+                    video.addEventListener('error', () => {
+                        video.style.display = 'none';
+                        if (iframe) iframe.style.display = 'block';
+                    });
+                }
+            }
+
+            // Hostinger Verification & Force Render
+            setTimeout(() => {
+                const productGrid = document.getElementById('product-grid');
+                if (productGrid && productGrid.children.length === 0 && window.products?.length > 0) {
+                    if (typeof window.forceRenderProducts === 'function') {
+                        window.forceRenderProducts();
+                    }
+                }
+            }, 3000);
+        });
+    </script>
+
+    <!-- Modal Gu├¡a de Tallas -->
+    <div id="size-chart-modal"
+        class="fixed inset-0 bg-black/70 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+        <div
+            class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl transform transition-all duration-300 scale-100">
+            <button id="close-size-chart"
+                class="absolute top-4 right-4 bg-white/80 rounded-full p-2 text-gray-800 hover:text-[#8357C5] hover:bg-white transition-all duration-300 shadow-md z-10">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="p-4 md:p-8 flex justify-center bg-gray-50">
+                <img id="size-chart-img" src="" alt="Gu├¡a de Tallas" class="max-w-full h-auto rounded-lg shadow-sm">
+            </div>
+        </div>
+    </div>
+    <!-- Modal Promocional ┬íFelicidades! -->
+    <div id="promo-modal"
+        class="fixed inset-0 bg-black/60 z-[100] hidden overflow-y-auto backdrop-blur-sm transition-opacity duration-300">
+        <!-- Wrapper container inside to allow scrolling -->
+        <div class="flex min-h-screen p-4 py-12">
+            <!-- Contenedor relativo para posicionar el modal y emojis -->
+            <div class="relative w-full max-w-[360px] m-auto">
+                <!-- Emoji Arriba Izquierda -->
+                <div class="absolute -top-6 -left-6 z-10 transform -rotate-12 pointer-events-none">
+                    <span class="text-6xl" style="filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));">­ƒÆ£</span>
+                </div>
+
+                <!-- Emoji Abajo Derecha -->
+                <div class="absolute -bottom-6 -right-6 z-10 transform rotate-12 pointer-events-none">
+                    <span class="text-6xl" style="filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));">­ƒÆ£</span>
+                </div>
+
+                <!-- Caja Blanca del Modal -->
+                <div class="bg-white rounded-3xl p-8 py-10 text-center relative shadow-2xl z-0">
+                    <button id="close-promo"
+                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-300 text-3xl font-bold leading-none">&times;</button>
+
+                    <h2 class="text-[#8357C5] text-2xl md:text-3xl font-black mb-4 tracking-tight uppercase">
+                        ┬íFelicidades!
+                    </h2>
+                    <p class="text-gray-600 text-[15px] mb-8 leading-relaxed px-2 font-medium">
+                        Sos uno de los pocos elegidos. Descubr├¡ nuestra nueva temporada exclusiva de <strong
+                            class="text-gray-900 font-black">JORTS y CAMISAS</strong> antes que nadie.
+                    </p>
+                    <button id="promo-scroll-btn"
+                        class="w-full bg-[#8357C5] text-white py-4 rounded-xl font-bold text-sm tracking-wide hover:bg-[#6e48a9] transition-all duration-300 shadow-md">
+                        IR A LOS NUEVOS PRODUCTOS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Promocional -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const promoModal = document.getElementById('promo-modal');
+            const closePromo = document.getElementById('close-promo');
+            const scrollBtn = document.getElementById('promo-scroll-btn');
+
+            // Mostrar despu├®s de un peque├▒o retraso
+            // Solo mostrar el popup si todav├¡a no lleg├│ la fecha de lanzamiento p├║blico
+            const LAUNCH_DATE_POPUP = new Date('2026-03-01T18:00:00-03:00');
+            const isPublicLaunch = new Date() >= LAUNCH_DATE_POPUP;
+            setTimeout(() => {
+                if (promoModal && !sessionStorage.getItem('promoVistoAvenida') && !isPublicLaunch) {
+                    promoModal.classList.remove('hidden');
+                }
+            }, 800);
+
+            // Cerrar
+            const closeModal = () => {
+                promoModal.classList.add('hidden');
+                sessionStorage.setItem('promoVistoAvenida', 'true');
+            };
+
+            if (closePromo) closePromo.addEventListener('click', closeModal);
+
+            if (promoModal) {
+                promoModal.addEventListener('click', (e) => {
+                    if (e.target === promoModal) closeModal();
+                });
+            }
+
+            // Scroll y cerrar
+            if (scrollBtn) {
+                scrollBtn.addEventListener('click', () => {
+                    closeModal();
+                    // Buscar el grid de productos
+                    const productGrid = document.getElementById('product-grid');
+                    if (productGrid) {
+                        const targetSection = productGrid.closest('section') || productGrid;
+                        const headerOffset = 90; // Altura aproximada del header
+                        const elementPosition = targetSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

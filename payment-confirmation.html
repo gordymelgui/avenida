@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Confirmación de Pago - AVENIDA.</title>
+
+    <link rel="icon" type="image/png" href="favicom.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css?v=4.3">
+
+
+
+    <!-- Firebase SDK -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
+
+
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <!-- Scripts de la aplicación -->
+    <script src="firebase-config.js"></script>
+
+    <script src="script.js?v=7"></script>
+
+    <script src="email-service.js"></script>
+
+    <script src="emailjs-config.js"></script>
+
+
+
+    <style>
+        /* Mejoras de diseño para títulos y contenido */
+
+        .page-title {
+
+            background: linear-gradient(135deg, #8357C5 0%, #6e48a9 100%);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+
+
+        .section-title {
+
+            position: relative;
+
+            padding-bottom: 0.5rem;
+
+        }
+
+
+
+        .section-title::after {
+
+            content: '';
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            width: 60px;
+
+            height: 3px;
+
+            background: linear-gradient(90deg, #8357C5, #6e48a9);
+
+            border-radius: 2px;
+
+        }
+
+
+
+        .content-section {
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+            padding: 2rem;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        /* Mejorar espaciado general */
+
+        .improved-spacing {
+
+            margin-top: 2rem;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        /* Mejorar contraste de texto */
+
+        .text-content {
+
+            color: #374151;
+
+            line-height: 1.7;
+
+        }
+
+
+
+        /* Estilos para el estado de envío */
+
+        .email-status {
+
+            padding: 1rem;
+
+            border-radius: 8px;
+
+            margin: 1rem 0;
+
+        }
+
+
+
+        .email-status.success {
+
+            background-color: #d1fae5;
+
+            border: 1px solid #10b981;
+
+            color: #065f46;
+
+        }
+
+
+
+        .email-status.error {
+
+            background-color: #fee2e2;
+
+            border: 1px solid #ef4444;
+
+            color: #991b1b;
+
+        }
+
+
+
+        .email-status.loading {
+
+            background-color: #dbeafe;
+
+            border: 1px solid #3b82f6;
+
+            color: #1e40af;
+
+        }
+    </style>
+
+</head>
+
+
+
+<body class="bg-gray-100">
+
+
+
+    <!-- ======================= HEADER UNIFICADO ======================= -->
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-2 px-3 md:py-4 md:px-6 h-16 md:h-24">
+
+            <!-- Izquierda (Menú y Desktop Links) - flex-1 keeps both sides exactly equal width to center logo -->
+            <div class="flex-1 flex items-center justify-start space-x-3 md:space-x-6 z-20">
+                <!-- Menú hamburguesa -->
+                <button id="menu-toggle" class="icon-link shrink-0">
+                    <i class="fas fa-bars text-lg md:text-2xl"></i>
+                </button>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#product-grid" class="nav-link">Ropa</a>
+                </nav>
+            </div>
+
+            <!-- Centro (Logo) - Centrado perfecto usando flex-none sin superposición absolute -->
+            <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                <a href="index.html" class="logo-link">
+                    <span id="header-logo-text"
+                        class="text-[14px] sm:text-[16px] md:text-2xl leading-none tracking-normal md:tracking-widest font-black">AVENIDA</span>
+                </a>
+            </div>
+
+            <!-- Derecha (Botones) - Se limitan los espacios para no chocar -->
+            <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-6 z-20">
+                <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                    <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-2xl"></i>
+                    <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                </a>
+                <!-- Botón de registrarse compacto (limite de ancho en celulares súper chicos) -->
+                <button id="register-btn"
+                    class="bg-white text-[#8357C5] px-2 py-1 md:px-4 md:py-2 rounded font-semibold hover:bg-gray-100 transition-colors duration-300 text-[9px] sm:text-[11px] md:text-base whitespace-nowrap shrink-0 max-w-[130px] sm:max-w-none overflow-hidden text-ellipsis">
+                    Registrarse
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+
+    <!-- Barra lateral desplegable UNIFICADA -->
+
+    <div id="sidebar"
+        class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+
+        <div class="p-6">
+
+            <!-- Cabecera del sidebar -->
+
+            <div class="flex justify-between items-center mb-8">
+
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+
+                    <i class="fas fa-times text-2xl"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Navegación del sidebar -->
+
+            <nav class="space-y-4">
+
+                <a href="index.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-home mr-3"></i>
+
+                    Inicio
+
+                </a>
+
+                <a href="index.html#product-grid"
+                    class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-tshirt mr-3"></i>
+
+                    Productos
+
+                </a>
+
+                <a href="index.html#lookbook-section"
+                    class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-images mr-3"></i>
+
+                    Lookbook
+
+                </a>
+
+                <a href="about.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-info-circle mr-3"></i>
+
+                    Sobre Nosotros
+
+                </a>
+
+                <a href="cart.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-shopping-cart mr-3"></i>
+
+                    Carrito
+
+                </a>
+
+                <a href="profile.html" class="block text-white hover:text-gray-200 transition-colors duration-300 py-2">
+
+                    <i class="fas fa-user mr-3"></i>
+
+                    Mi Perfil
+
+                </a>
+
+
+
+                <!-- Sección Legal y Ayuda -->
+
+                <div class="pt-4 mt-4 border-t border-white/20">
+
+                    <p class="text-xs text-white/60 uppercase tracking-wider mb-3 font-semibold">Legal y Ayuda</p>
+
+                    <a href="help.html"
+                        class="block text-white hover:text-gray-200 transition-colors duration-300 py-2 text-sm">
+
+                        <i class="fas fa-question-circle mr-3"></i>
+
+                        Ayuda
+
+                    </a>
+
+                    <a href="privacy.html"
+                        class="block text-white hover:text-gray-200 transition-colors duration-300 py-2 text-sm">
+
+                        <i class="fas fa-shield-alt mr-3"></i>
+
+                        Privacidad
+
+                    </a>
+
+                    <a href="terms.html"
+                        class="block text-white hover:text-gray-200 transition-colors duration-300 py-2 text-sm">
+
+                        <i class="fas fa-file-contract mr-3"></i>
+
+                        Términos
+
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Overlay del sidebar -->
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+
+
+    <!-- ======================= SECCIí“N DE CONFIRMACIí“N ======================= -->
+
+    <main class="container mx-auto pt-56 px-6">
+
+        <div class="max-w-4xl mx-auto">
+
+            <h1
+                class="text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-center bg-gradient-to-r from-[#8357C5] to-[#6e48a9] bg-clip-text text-transparent">
+
+                ¡Pedido Confirmado!</h1>
+
+
+
+            <!-- Estado del envío del correo -->
+
+            <div id="email-status" class="email-status loading hidden">
+
+                <div class="flex items-center">
+
+                    <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-current mr-3"></div>
+
+                    <span>Procesando pedido y enviando confirmaciones...</span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Contenido principal -->
+
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                <div class="text-center mb-8">
+
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+
+                        <i class="fas fa-check text-3xl text-green-600"></i>
+
+                    </div>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-2">Pedido Realizado con Éxito</h2>
+
+                    <p class="text-gray-600">Tu pedido ha sido confirmado y procesado correctamente</p>
+
+                </div>
+
+
+
+                <!-- Resumen del pedido -->
+
+                <div class="border-t border-gray-200 pt-6 mb-6">
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Resumen del Pedido</h3>
+
+                    <div id="order-summary" class="space-y-3">
+
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+
+                    </div>
+
+
+
+                    <div class="border-t border-gray-300 pt-4 mt-4">
+
+                        <div class="flex justify-between items-center">
+
+                            <span class="text-gray-600">Subtotal:</span>
+
+                            <span id="cart-subtotal" class="font-semibold">&#8370;0</span>
+
+                        </div>
+
+                        <div class="flex justify-between items-center">
+
+                            <span class="text-gray-600">Delivery (Bolt):</span>
+
+                            <span class="font-semibold text-blue-600">Consultar por el precio</span>
+
+                        </div>
+
+                        <div class="border-t border-gray-300 pt-4">
+
+                            <div class="flex justify-between items-center">
+
+                                <span class="text-gray-600">Total:</span>
+
+                                <span id="cart-total" class="font-semibold text-lg">&#8370;0 + delivery</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Información del cliente -->
+
+                <div class="border-t border-gray-200 pt-6 mb-6">
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Información del Cliente</h3>
+
+                    <div id="customer-info" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <!-- La información del cliente se cargará aquí -->
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Próximos pasos -->
+
+                <div class="border-t border-gray-200 pt-6 mb-6">
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Próximos Pasos</h3>
+
+                    <div class="space-y-3 text-gray-700">
+
+                        <div class="flex items-start">
+
+                            <div
+                                class="w-6 h-6 bg-[#8357C5] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
+
+                                1</div>
+
+                            <p>Recibirás un email de confirmación con el código de tu pedido</p>
+
+                        </div>
+
+                        <div class="flex items-start">
+
+                            <div
+                                class="w-6 h-6 bg-[#8357C5] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
+
+                                2</div>
+
+                            <p>Envía el comprobante de pago por WhatsApp para finalizar</p>
+
+                        </div>
+
+                        <div class="flex items-start">
+
+                            <div
+                                class="w-6 h-6 bg-[#8357C5] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
+
+                                3</div>
+
+                            <p>Tu pedido será procesado y enviado en 7-15 días hábiles</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Botón de WhatsApp -->
+
+                <div class="text-center">
+
+                    <a href="https://wa.me/595982713971?text=Hola! Quiero enviar el comprobante de pago de mi pedido"
+                        target="_blank"
+                        class="inline-flex items-center bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold hover:bg-black transition-colors duration-300 text-lg">
+
+                        <i class="fab fa-whatsapp text-2xl mr-3"></i>
+
+                        Enviar Comprobante por WhatsApp
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Información de contacto -->
+
+            <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">¿Tienes alguna pregunta?</h3>
+
+                <div class="space-y-2 text-gray-600">
+
+                    <p><i class="fas fa-envelope mr-2"></i>aaavenidaaa@gmail.com</p>
+
+                    <p><i class="fas fa-phone mr-2"></i>+595 982 713971</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- Footer -->
+
+    <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+
+        <div class="container mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+
+                <!-- Brand Column -->
+
+                <div class="space-y-6">
+
+                    <img src="logo/logo blanco.png" alt="AVENIDA" class="h-12">
+
+                    <p class="text-gray-400 text-sm leading-relaxed">
+
+                        Redefiniendo el estilo urbano con calidad premium y diseño exclusivo. Tu destino para la moda
+
+                        contemporánea.
+
+                    </p>
+
+                    <div class="flex space-x-4">
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-facebook-f"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-tiktok"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Shop Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        TIENDA
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Ver Todo</a></li>
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Novedades</a></li>
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Más Vendidos</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- Help Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        AYUDA
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="help.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Centro de Ayuda</a>
+
+                        </li>
+
+                        <li><a href="returns.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Cambios y
+
+                                Devoluciones</a></li>
+
+                        <li><a href="shipping.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Envíos</a></li>
+
+                        <li><a href="contact.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Contacto</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- Legal Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        LEGAL
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="terms.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Términos y
+
+                                Condiciones</a></li>
+
+                        <li><a href="privacy.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Política de
+
+                                Privacidad</a></li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Bottom Footer -->
+
+            <div class="border-t border-white/10 pt-8 mt-8">
+
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+
+                    <p class="text-gray-500 text-sm">
+
+                        &copy; 2026 AVENIDA. Todos los derechos reservados.
+
+                    </p>
+
+                    <div class="flex items-center space-x-2">
+
+                        <span class="text-gray-500 text-sm mr-2">Pagos seguros con:</span>
+
+                        <div class="flex space-x-2 opacity-70 grayscale hover:grayscale-0 transition-all duration-300">
+
+                            <i class="fab fa-cc-visa text-2xl text-white"></i>
+
+                            <i class="fab fa-cc-mastercard text-2xl text-white"></i>
+
+                            <i class="fab fa-cc-amex text-2xl text-white"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- Scripts -->
+
+    <script src="firebase-config.js"></script>
+
+    <!-- EmailJS para envío real de emails -->
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <!-- <script src="script.js?v=7"></script> -->
+
+    <!-- Comentado porque payment-confirmation.html no necesita funcionalidades de script.js -->
+
+
+
+    <!-- Script específico para confirmación de pago con Firebase -->
+
+    <script>
+
+        // Función para cargar información del carrito
+
+        function loadCartInfo() {
+
+            const savedCart = localStorage.getItem('avenidaCart');
+
+            const savedCustomerData = localStorage.getItem('avenidaCheckoutData');
+
+
+
+            if (savedCart) {
+
+                try {
+
+                    const cart = JSON.parse(savedCart);
+
+                    const orderSummary = document.getElementById('order-summary');
+
+                    const cartSubtotal = document.getElementById('cart-subtotal');
+
+                    const cartTotal = document.getElementById('cart-total');
+
+                    const cartItemsCount = document.getElementById('cart-items-count');
+
+
+
+                    if (cartItemsCount) cartItemsCount.textContent = cart.length;
+
+
+
+                    if (orderSummary) {
+
+                        orderSummary.innerHTML = '';
+
+                        cart.forEach(item => {
+
+                            const itemElement = document.createElement('div');
+
+                            itemElement.className = 'flex justify-between items-center py-2';
+
+                            itemElement.innerHTML = `
+
+                                <div class="flex items-center space-x-3">
+
+                                    <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+
+                                    <div>
+
+                                        <p class="font-medium text-gray-900">${item.name}</p>
+
+                                        <p class="text-sm text-gray-500">Talle: ${item.size}</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="text-right">
+
+                                    <p class="font-medium">${item.price}</p>
+
+                                    <p class="text-sm text-gray-500">Cant: ${item.quantity}</p>
+
+                                </div>
+
+                            `;
+
+                            orderSummary.appendChild(itemElement);
+
+                        });
+
+                    }
+
+
+
+                    if (cartSubtotal && cartTotal) {
+
+                        console.log('🛒 Carrito completo:', cart);
+
+
+
+                        const subtotal = cart.reduce((sum, item) => {
+
+                            console.log(`\nðŸ” Procesando item:`, item);
+
+
+
+                            // Limpiar el precio: remover &#8370;, espacios y puntos de miles
+
+                            let cleanPrice = item.price.toString();
+
+                            console.log(`   Precio original: "${item.price}"`);
+
+
+
+                            cleanPrice = cleanPrice.replace(/\u20B2/g, '').replace(/\s/g, '').replace(/\./g, '');
+
+                            console.log(`   Precio después de limpiar &#8370;: "${cleanPrice}"`);
+
+
+
+                            const price = parseFloat(cleanPrice) || 0;
+
+                            const quantity = parseInt(item.quantity) || 1;
+
+
+
+                            console.log(`   Precio parseado: ${price}`);
+
+                            console.log(`   Cantidad: ${quantity}`);
+
+                            console.log(`   Subtotal item: ${price * quantity}`);
+
+
+
+                            return sum + (price * quantity);
+
+                        }, 0);
+
+
+
+                        console.log('📊 Subtotal calculado:', subtotal);
+
+
+
+                        if (isNaN(subtotal) || subtotal === 0) {
+
+                            cartSubtotal.textContent = '&#8370;0';
+
+                            cartTotal.textContent = '&#8370;0 + delivery';
+
+                            console.warn('âš ï¸ Subtotal inválido, usando &#8370;0');
+
+                        } else {
+
+                            cartSubtotal.textContent = `\u20B2${subtotal.toLocaleString('es-PY')}`;
+
+                            cartTotal.textContent = `\u20B2${subtotal.toLocaleString('es-PY')} + delivery`;
+
+                        }
+
+                    }
+
+
+
+                    console.log('📊 Información del carrito cargada');
+
+                } catch (error) {
+
+                    console.error('âŒ Error al cargar información del carrito:', error);
+
+                }
+
+            }
+
+
+
+            if (savedCustomerData) {
+
+                try {
+
+                    const customerData = JSON.parse(savedCustomerData);
+
+                    const customerInfo = document.getElementById('customer-info');
+
+
+
+                    if (customerInfo) {
+
+                        customerInfo.innerHTML = `
+
+                            <div>
+
+                                <p class="text-sm text-gray-500">Nombre</p>
+
+                                <p class="font-medium">${customerData.firstName} ${customerData.lastName}</p>
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-sm text-gray-500">Email</p>
+
+                                <p class="font-medium">${customerData.email}</p>
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-sm text-gray-500">Teléfono</p>
+
+                                <p class="font-medium">${customerData.phone}</p>
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-sm text-gray-500">Dirección</p>
+
+                                <p class="font-medium">${customerData.address}, ${customerData.city}</p>
+
+                            </div>
+
+                        `;
+
+                    }
+
+
+
+                    console.log('ðŸ‘¤ Información del cliente cargada');
+
+                } catch (error) {
+
+                    console.error('âŒ Error al cargar información del cliente:', error);
+
+                }
+
+            }
+
+        }
+
+
+
+        // Función para procesar el pedido completo con Firebase
+
+        async function processOrderWithFirebase() {
+
+            const emailStatus = document.getElementById('email-status');
+
+            const savedCart = localStorage.getItem('avenidaCart');
+
+            const savedCustomerData = localStorage.getItem('avenidaCheckoutData');
+
+
+
+            if (!savedCart || !savedCustomerData) {
+
+                console.error('âŒ No hay datos del carrito o cliente para procesar');
+
+                return;
+
+            }
+
+
+
+            try {
+
+                const cart = JSON.parse(savedCart);
+
+                const customerData = JSON.parse(savedCustomerData);
+
+
+
+                // Mostrar estado de carga
+
+                emailStatus.classList.remove('hidden');
+
+                emailStatus.className = 'email-status loading';
+
+                emailStatus.innerHTML = `
+
+                    <div class="flex items-center">
+
+                        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-current mr-3"></div>
+
+                        <span>Procesando pedido y enviando confirmaciones...</span>
+
+                    </div>
+
+                `;
+
+
+
+                console.log('🚀 Iniciando procesamiento del pedido con Firebase...');
+
+
+
+                // Usar la función completa de Firebase del script.js
+
+                const result = await window.completeCheckoutWithFirebase(customerData, cart);
+
+
+
+                if (result.success) {
+
+                    console.log('✅ Pedido procesado exitosamente:', result);
+
+
+
+                    // Mostrar éxito
+
+                    emailStatus.className = 'email-status success';
+
+                    emailStatus.innerHTML = `
+
+                        <div class="flex items-center">
+
+                            <i class="fas fa-check-circle mr-3"></i>
+
+                            <span>Pedido confirmado y emails enviados exitosamente</span>
+
+                        </div>
+
+                    `;
+
+
+
+                    // Mostrar ID del pedido
+
+                    setTimeout(() => {
+
+                        emailStatus.innerHTML = `
+
+                            <div class="flex items-center">
+
+                                <i class="fas fa-check-circle mr-3"></i>
+
+                                <span>Pedido #${result.orderId} confirmado - Emails enviados al cliente y empresa</span>
+
+                            </div>
+
+                        `;
+
+                    }, 2000);
+
+
+
+                } else {
+
+                    throw new Error(result.error || 'Error desconocido');
+
+                }
+
+
+
+            } catch (error) {
+
+                console.error('âŒ Error al procesar pedido:', error);
+
+
+
+                // Mostrar error pero confirmar que el pedido está guardado
+
+                emailStatus.className = 'email-status error';
+
+                emailStatus.innerHTML = `
+
+                    <div class="flex items-center">
+
+                        <i class="fas fa-exclamation-circle mr-3"></i>
+
+                        <span>Pedido confirmado. Error al enviar emails automáticos.</span>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // Inicializar cuando la página esté lista
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            console.log('🚀 Página de confirmación cargada');
+
+
+
+            // Cargar información del carrito
+
+            loadCartInfo();
+
+
+
+            // Procesar pedido con Firebase automáticamente
+
+            setTimeout(() => {
+
+                processOrderWithFirebase();
+
+            }, 1000);
+
+
+
+            // Configurar funcionalidad del sidebar
+
+            const menuToggle = document.getElementById('menu-toggle');
+
+            const sidebar = document.getElementById('sidebar');
+
+            const closeSidebar = document.getElementById('close-sidebar');
+
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+
+
+            if (menuToggle && sidebar) {
+
+                menuToggle.addEventListener('click', function () {
+
+                    sidebar.classList.add('open');
+
+                    if (sidebarOverlay) {
+
+                        sidebarOverlay.classList.remove('hidden');
+
+                        sidebarOverlay.classList.add('active');
+
+                    }
+
+                });
+
+            }
+
+
+
+            if (closeSidebar && sidebar) {
+
+                closeSidebar.addEventListener('click', function () {
+
+                    sidebar.classList.remove('open');
+
+                    if (sidebarOverlay) {
+
+                        sidebarOverlay.classList.add('hidden');
+
+                        sidebarOverlay.classList.remove('active');
+
+                    }
+
+                });
+
+            }
+
+
+
+            if (sidebarOverlay) {
+
+                sidebarOverlay.addEventListener('click', function () {
+
+                    sidebar.classList.remove('open');
+
+                    sidebarOverlay.classList.add('hidden');
+
+                    sidebarOverlay.classList.remove('active');
+
+                });
+
+            }
+
+
+
+            console.log('✅ Configuración completada');
+
+        });
+
+    </script>
+
+</body>
+
+
+
+</html>

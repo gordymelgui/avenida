@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Producto - AVENIDA.</title>
+
+
+
+    <!-- Favicon - Logo de AVENIDA en la pestaña del navegador -->
+
+    <link rel="icon" type="image/png" href="favicom.png">
+
+    <link rel="apple-touch-icon" href="favicom.png">
+
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css?v=4.3">
+
+    <link rel="stylesheet" href="product-gallery.css">
+
+
+
+    <!-- Firebase SDK -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+
+
+    <!-- Configuración de Firebase (CRÍTICO: Debe cargarse antes que el script inline) -->
+
+    <script src="firebase-config.js"></script>
+
+
+
+    <script>
+
+        // Script de respaldo para el efecto del header en la página de producto
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const header = document.getElementById('main-header');
+
+
+
+            if (header) {
+
+                function updateHeader() {
+
+                    const scrolled = window.scrollY > 50;
+
+
+
+                    if (scrolled) {
+
+                        header.classList.add('scrolled');
+
+                    } else {
+
+                        header.classList.remove('scrolled');
+
+                    }
+
+                }
+
+
+
+                window.addEventListener('scroll', updateHeader);
+
+                // Ejecutar al inicio
+
+                updateHeader();
+
+            }
+
+        });
+
+    </script>
+
+
+
+    <!-- Scripts de la aplicación -->
+
+    <script src="script.js?v=7" defer></script>
+
+
+
+    <style>
+        /* Mejoras de diseño para títulos y contenido */
+
+        .page-title {
+
+            background: linear-gradient(135deg, #8357C5 0%, #6e48a9 100%);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+
+
+        .section-title {
+
+            position: relative;
+
+            padding-bottom: 0.5rem;
+
+        }
+
+
+
+        .section-title::after {
+
+            content: '';
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            width: 60px;
+
+            height: 3px;
+
+            background: linear-gradient(90deg, #8357C5, #6e48a9);
+
+            border-radius: 2px;
+
+        }
+
+
+
+        .content-section {
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+            padding: 2rem;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        /* Mejorar espaciado general */
+
+        .improved-spacing {
+
+            margin-top: 2rem;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        /* Mejorar contraste de texto */
+
+        .text-content {
+
+            color: #374151;
+
+            line-height: 1.7;
+
+        }
+    </style>
+
+</head>
+
+
+
+<body class="bg-white">
+
+
+
+    <!-- ======================= HEADER ======================= -->
+
+    <!-- ======================= HEADER UNIFICADO ======================= -->
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-2 px-3 md:py-4 md:px-6 h-16 md:h-24">
+
+            <!-- Izquierda (Menú y Desktop Links) - flex-1 keeps both sides exactly equal width to center logo -->
+            <div class="flex-1 flex items-center justify-start space-x-3 md:space-x-6 z-20">
+                <!-- Menú hamburguesa -->
+                <button id="menu-toggle" class="icon-link shrink-0">
+                    <i class="fas fa-bars text-lg md:text-2xl"></i>
+                </button>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#product-grid" class="nav-link">Ropa</a>
+                </nav>
+            </div>
+
+            <!-- Centro (Logo) - Centrado perfecto usando flex-none sin superposición absolute -->
+            <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                <a href="index.html" class="logo-link">
+                    <span id="header-logo-text"
+                        class="text-[14px] sm:text-[16px] md:text-2xl leading-none tracking-normal md:tracking-widest font-black">AVENIDA</span>
+                </a>
+            </div>
+
+            <!-- Derecha (Botones) - Se limitan los espacios para no chocar -->
+            <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-6 z-20">
+                <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                    <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-2xl"></i>
+                    <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                </a>
+                <!-- Botón de registrarse compacto (limite de ancho en celulares súper chicos) -->
+                <button id="register-btn"
+                    class="bg-white text-[#8357C5] px-2 py-1 md:px-4 md:py-2 rounded font-semibold hover:bg-gray-100 transition-colors duration-300 text-[9px] sm:text-[11px] md:text-base whitespace-nowrap shrink-0 max-w-[130px] sm:max-w-none overflow-hidden text-ellipsis">
+                    Registrarse
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+
+    <!-- Barra lateral desplegable UNIFICADA -->
+
+    <div id="sidebar"
+        class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+
+        <div class="p-6">
+
+            <!-- Cabecera del sidebar -->
+
+            <div class="flex justify-between items-center mb-8">
+
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+
+                    <i class="fas fa-times text-2xl"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Sección de usuario -->
+
+            <div class="user-section mb-8">
+
+                <div class="flex items-center space-x-4 mb-4">
+
+                    <div class="w-16 h-24 rounded-full bg-white/20 flex items-center justify-center">
+
+                        <i class="fas fa-user text-white text-2xl"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-white text-lg font-semibold" id="user-display-name"
+                            class="text-xl font-semibold mb-4 text-gray-700">Usuario</h3>
+
+                        <p class="text-white/70" id="user-display-email">usuario@email.com</p>
+
+                    </div>
+
+                </div>
+
+                <div class="bg-white/10 rounded-lg p-4">
+
+                    <ul class="space-y-3">
+
+                        <li>
+
+                            <a href="profile.html" class="flex items-center text-white hover:text-gray-200">
+
+                                <i class="fas fa-user-circle mr-3"></i>
+
+                                <span>Mi Perfil</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="orders.html" class="flex items-center text-white hover:text-gray-200">
+
+                                <i class="fas fa-shopping-bag mr-3"></i>
+
+                                <span>Mis Pedidos</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="favorites.html" class="flex items-center text-white hover:text-gray-200">
+
+                                <i class="fas fa-heart mr-3"></i>
+
+                                <span>Favoritos</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Navegación principal -->
+
+            <nav class="mb-8">
+
+                <ul class="space-y-4">
+
+                    <li>
+
+                        <a href="index.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-home mr-3"></i>
+
+                            <span>Inicio</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="index.html#product-grid" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-tshirt mr-3"></i>
+
+                            <span>Ropa</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="index.html#lookbook-section"
+                            class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-images mr-3"></i>
+
+                            <span>Lookbook</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="about.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-info-circle mr-3"></i>
+
+                            <span>Sobre Nosotros</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+
+
+            <!-- Legal y Ayuda -->
+
+            <div class="border-t border-white/10 pt-6">
+
+                <h4 class="text-white/50 text-sm uppercase tracking-wider mb-4 font-medium">Legal y Ayuda</h4>
+
+                <ul class="space-y-3">
+
+                    <li>
+
+                        <a href="terms.html"
+                            class="flex items-center text-white/80 hover:text-white transition-colors group">
+
+                            <span class="w-6"><i
+                                    class="fas fa-file-contract text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+
+                            <span class="text-sm">Términos y Condiciones</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="privacy.html"
+                            class="flex items-center text-white/80 hover:text-white transition-colors group">
+
+                            <span class="w-6"><i
+                                    class="fas fa-user-shield text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+
+                            <span class="text-sm">Política de Privacidad</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="returns.html"
+                            class="flex items-center text-white/80 hover:text-white transition-colors group">
+
+                            <span class="w-6"><i
+                                    class="fas fa-undo text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+
+                            <span class="text-sm">Cambios y Devoluciones</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="help.html"
+                            class="flex items-center text-white/80 hover:text-white transition-colors group">
+
+                            <span class="w-6"><i
+                                    class="fas fa-question-circle text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+
+                            <span class="text-sm">Centro de Ayuda</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+
+
+    <!-- Modal de Registro UNIFICADO -->
+
+    <div id="register-modal" class="modal-overlay">
+
+        <div class="modal-content w-11/12 max-w-md">
+
+            <div class="bg-white rounded-lg shadow-xl p-8">
+
+                <div class="flex justify-between items-center mb-6">
+
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Crear Cuenta
+
+                    </h2>
+
+                    <button id="close-register-btn" class="text-gray-400 hover:text-gray-600">
+
+                        <i class="fas fa-times text-xl"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <form id="register-form" class="space-y-4">
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+
+                        <input type="text" id="register-name" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+
+                        <input type="email" id="register-email" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+
+                        <input type="password" id="register-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+
+                        <input type="password" id="register-confirm-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div class="flex items-center">
+
+                        <input type="checkbox" id="register-terms" required
+                            class="h-4 w-4 text-[#8357C5] focus:ring-[#8357C5] border-gray-300 rounded">
+
+                        <label class="ml-2 block text-sm text-gray-900">
+
+                            Acepto los <a href="terms.html" class="text-[#8357C5] hover:underline">Términos y
+
+                                Condiciones</a>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <button type="submit"
+                        class="w-full bg-[#8357C5] text-white py-3 px-4 rounded-md hover:bg-[#6e48a9] transition-colors duration-300 font-semibold">
+
+                        Crear Cuenta
+
+                    </button>
+
+                </form>
+
+
+
+                <div class="mt-6 text-center">
+
+                    <p class="text-sm text-gray-600">
+
+                        ¿Ya tienes cuenta?
+
+                        <a href="#" id="login-link" class="text-[#8357C5] hover:underline font-medium">Iniciar
+
+                            Sesión</a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ======================= PÁGINA DE PRODUCTO ======================= -->
+
+    <main class="pt-24 pb-20 pt-56 px-6">
+
+        <div class="container mx-auto px-6">
+
+            <!-- Breadcrumb -->
+
+            <nav class="mb-8">
+
+                <ol class="flex items-center space-x-2 text-sm text-gray-600">
+
+                    <li><a href="index.html" class="hover:text-[#8357C5]">Inicio</a></li>
+
+                    <li><i class="fas fa-chevron-right text-xs"></i></li>
+
+                    <li><a href="index.html#product-grid" class="hover:text-[#8357C5]">Productos</a></li>
+
+                    <li><i class="fas fa-chevron-right text-xs"></i></li>
+
+                    <li id="product-name-breadcrumb" class="text-gray-900 font-medium">Producto</li>
+
+                </ol>
+
+            </nav>
+
+
+
+            <!-- Contenido del Producto -->
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 product-page-grid">
+
+
+
+                <!-- Galería de Imágenes -->
+
+                <div class="product-gallery lg:col-span-2">
+
+                    <div class="flex gap-6 gallery-flex">
+
+                        <!-- Miniaturas Verticales (Lado Izquierdo) -->
+
+                        <div class="thumbnails-vertical">
+
+                            <div id="thumbnails-list" class="flex flex-col space-y-4 thumbnails-scroll">
+
+                                <!-- Las miniaturas se generarán dinámicamente -->
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Imagen Principal (Lado Derecho) -->
+
+                        <div class="main-image-container flex-1">
+
+                            <img id="main-product-image" src="" alt="Imagen principal del producto"
+                                class="w-auto max-w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-lg mx-auto">
+
+
+
+                            <!-- Flechas del carrusel móvil (solo visibles en móvil) -->
+
+                            <button class="mobile-carousel-arrow prev" onclick="changeImage(-1)">
+
+                                <i class="fas fa-chevron-left"></i>
+
+                            </button>
+
+                            <button class="mobile-carousel-arrow next" onclick="changeImage(1)">
+
+                                <i class="fas fa-chevron-right"></i>
+
+                            </button>
+
+
+
+                            <!-- Indicadores del carrusel móvil (solo visibles en móvil) -->
+
+                            <div class="mobile-carousel-indicators" id="mobile-carousel-indicators">
+
+                                <!-- Los indicadores se generarán dinámicamente -->
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Guía de Talles Compacta (Justo debajo de la imagen) -->
+
+                    <div id="size-guide-card" class="mt-6 bg-white rounded-lg shadow-lg p-4">
+
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+
+                            <i class="fas fa-ruler mr-2 text-[#8357C5]"></i>
+
+                            Guía de Talles
+
+                        </h3>
+
+
+
+                        <!-- Imagen de Guía de Talles Dinámica -->
+
+                        <div id="size-chart-container" class="cursor-pointer hover:opacity-90 transition-opacity"
+                            onclick="openProductSizeChart()">
+
+                            <img id="product-size-chart-img" src="" alt="Guía de Talles"
+                                class="w-full h-auto rounded border border-gray-200">
+
+                            <p class="text-center text-xs text-gray-500 mt-2 flex items-center justify-center">
+
+                                <i class="fas fa-search-plus mr-1"></i> Click para ampliar
+
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- Nota informativa compacta -->
+
+                        <div class="mt-3 p-2 bg-blue-50 border border-blue-200 rounded text-xs text-blue-700">
+
+                            <div class="flex items-start">
+
+                                <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2"></i>
+
+                                <div>
+
+                                    <p class="font-medium mb-1">¿Cómo medir tu talle?</p>
+
+                                    <ul class="space-y-0.5">
+
+                                        <li><strong>Cintura:</strong> Mide alrededor de tu cintura natural</li>
+
+                                        <li><strong>Largo:</strong> Mide desde la cintura hasta donde quieres que llegue
+
+                                            el pantalón</li>
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Información del Producto -->
+
+                <div class="product-info product-info-sticky">
+
+                    <!-- Título y Precio -->
+
+                    <div class="mb-8">
+
+                        <h1 id="product-title"
+                            class="text-4xl mt-12 mt-8 md:text-5xl font-bold text-gray-900 mb-8 text-center bg-gradient-to-r from-[#8357C5] to-[#6e48a9] bg-clip-text text-transparent">
+
+                            Nombre del Producto</h1>
+
+                        <div class="flex items-center space-x-4">
+
+                            <span id="product-price" class="text-3xl font-bold text-[#8357C5]">0</span>
+
+                            <span id="product-status"
+                                class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Disponible</span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Opciones de Diseño (Si el producto lo tiene) -->
+                    <div id="design-section" class="mb-6 hidden">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Diseño</h3>
+                        <div id="design-options" class="flex flex-wrap gap-3">
+                            <!-- Las opciones de diseño se generarán dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Talla -->
+                    <div class="mb-8">
+
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 text-xl font-semibold mb-4 text-gray-700">
+
+                            Talla</h3>
+
+
+
+                        <div id="size-options" class="grid grid-cols-3 gap-3 sm:grid-cols-3">
+
+                            <!-- Las opciones de talla se generarán dinámicamente -->
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Descripción -->
+
+                    <div class="mb-8">
+
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 text-xl font-semibold mb-4 text-gray-700">
+
+                            Descripción</h3>
+
+                        <p id="product-description" class="text-gray-600 leading-relaxed text-lg">
+
+                            Descripción del producto...
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- Características -->
+
+                    <div class="mb-8">
+
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 text-xl font-semibold mb-4 text-gray-700">
+
+                            Características</h3>
+
+                        <ul id="product-features" class="space-y-2 text-gray-600">
+
+                            <!-- Las características se generarán dinámicamente -->
+
+                        </ul>
+
+                    </div>
+
+
+
+                    <!-- Botones de Acción -->
+
+                    <div class="space-y-4">
+
+                        <button id="add-to-cart-btn"
+                            class="w-full bg-[#8357C5] text-white py-4 rounded-lg text-lg font-bold hover:bg-[#6e48a9] transition-colors duration-300">
+
+                            Añadir al Carrito
+
+                        </button>
+
+
+
+                        <!-- Botón para ver el carrito (se muestra después de añadir productos) -->
+
+                        <a id="view-cart-btn" href="cart.html"
+                            class="hidden inline-flex items-center justify-center w-full bg-gray-600 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors duration-300 text-lg font-bold">
+
+                            <i class="fas fa-shopping-cart mr-3 text-xl"></i>
+
+                            Ver Carrito
+
+                        </a>
+
+
+
+                        <a id="whatsapp-btn"
+                            href="https://wa.me/595982713971?text=Hola! Me gustaría consultar sobre este producto"
+                            target="_blank"
+                            class="inline-flex items-center justify-center w-full bg-gray-900 text-white py-4 rounded-lg hover:bg-black transition-colors duration-300 text-lg font-bold">
+
+                            <i class="fab fa-whatsapp mr-3 text-xl"></i>
+
+                            Consultar por WhatsApp
+
+                        </a>
+
+
+
+                        <!-- Disclaimer de tiempo de entrega -->
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+
+                            <div class="flex items-center justify-center text-blue-700 mb-2">
+
+                                <i class="fas fa-clock mr-2"></i>
+
+                                <span class="font-semibold">Tiempo de Entrega</span>
+
+                            </div>
+
+                            <p class="text-blue-600 text-sm">
+
+                                Los pedidos pueden tardar entre <strong>7 y 15 días</strong> en ser entregados
+
+                            </p>
+
+                            <div class="mt-3 pt-3 border-t border-blue-200">
+
+                                <div class="flex items-center justify-center text-blue-700 mb-1">
+
+                                    <i class="fas fa-truck mr-2"></i>
+
+                                    <span class="font-semibold">Delivery</span>
+
+                                </div>
+
+                                <p class="text-blue-600 text-sm">
+
+                                    <strong>Servicio:</strong> moto - <strong>Costo:</strong> Consultar por el precio
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Información Adicional -->
+
+                    <div class="mt-8 pt-8 border-t border-gray-200">
+
+                        <div class="grid grid-cols-2 gap-6 text-sm text-gray-600">
+
+                            <div>
+
+                                <span class="font-medium text-gray-900">Material:</span>
+
+                                <span id="product-material">Denim</span>
+
+                            </div>
+
+                            <div>
+
+                                <span class="font-medium text-gray-900">Cuidado:</span>
+
+                                <span id="product-care">Lavar con agua fría</span>
+
+                            </div>
+
+                            <div>
+
+                                <span class="font-medium text-gray-900">Origen:</span>
+
+                                <span id="product-origin">Paraguay</span>
+
+                            </div>
+
+                            <div id="warranty-container">
+
+                                <span class="font-medium text-gray-900">Garantía:</span>
+
+                                <span id="product-warranty">30 días</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Productos Relacionados -->
+
+            <section class="mt-20 py-12">
+
+                <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Productos
+
+                    Relacionados</h2>
+
+                <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                    <!-- Los productos relacionados se generarán dinámicamente -->
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ======================= FOOTER ======================= -->
+
+    <!-- Footer -->
+
+    <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+
+        <div class="container mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+
+                <!-- Brand Column -->
+
+                <div class="space-y-6">
+
+                    <img src="logo/logo blanco.png" alt="AVENIDA" class="h-12">
+
+                    <p class="text-gray-400 text-sm leading-relaxed">
+
+                        Redefiniendo el estilo urbano con calidad premium y diseño exclusivo. Tu destino para la moda
+
+                        contemporánea.
+
+                    </p>
+
+                    <div class="flex space-x-4">
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-facebook-f"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+
+                            <i class="fab fa-tiktok"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Shop Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        TIENDA
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Ver Todo</a></li>
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Novedades</a></li>
+
+                        <li><a href="index.html#product-grid"
+                                class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Más Vendidos</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- Help Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        AYUDA
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="help.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Centro de Ayuda</a>
+
+                        </li>
+
+                        <li><a href="returns.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Cambios y
+
+                                Devoluciones</a></li>
+
+                        <li><a href="shipping.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Envíos</a></li>
+
+                        <li><a href="contact.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Contacto</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- Legal Column -->
+
+                <div>
+
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+
+                        LEGAL
+
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-400">
+
+                        <li><a href="terms.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Términos y
+
+                                Condiciones</a></li>
+
+                        <li><a href="privacy.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i
+                                    class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Política de
+
+                                Privacidad</a></li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Bottom Footer -->
+
+            <div class="border-t border-white/10 pt-8 mt-8">
+
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+
+                    <p class="text-gray-500 text-sm">
+
+                        &copy; 2024 AVENIDA. Todos los derechos reservados.
+
+                    </p>
+
+                    <div class="flex items-center space-x-2">
+
+                        <span class="text-gray-500 text-sm mr-2">Pagos seguros con:</span>
+
+                        <div class="flex space-x-2 opacity-70 grayscale hover:grayscale-0 transition-all duration-300">
+
+                            <i class="fab fa-cc-visa text-2xl text-white"></i>
+
+                            <i class="fab fa-cc-mastercard text-2xl text-white"></i>
+
+                            <i class="fab fa-cc-amex text-2xl text-white"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- WhatsApp Button -->
+
+    <a href="https://wa.me/595982713971" class="whatsapp-button" target="_blank">
+
+        <i class="fab fa-whatsapp text-4xl"></i>
+
+    </a>
+
+    <div id="toast-notification" class="toast-notification"></div>
+
+
+
+    <!-- Modal para completar datos del cliente -->
+
+    <div id="customer-data-modal" class="modal-overlay hidden">
+
+        <div class="modal-content w-11/12 max-w-2xl">
+
+            <div class="bg-white rounded-lg shadow-xl p-8">
+
+                <div class="flex justify-between items-center mb-6">
+
+                    <h2 class="text-2xl font-bold text-gray-900">Completar Información</h2>
+
+                    <button id="close-customer-modal" class="text-gray-400 hover:text-gray-600">
+
+                        <i class="fas fa-times text-xl"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <p class="text-gray-600 mb-6">
+
+                    Para continuar con tu compra, necesitamos que completes algunos datos personales y de envío.
+
+                </p>
+
+
+
+                <div class="text-center">
+
+                    <a href="cart.html"
+                        class="inline-flex items-center justify-center bg-[#8357C5] text-white px-8 py-4 rounded-lg hover:bg-[#6e48a9] transition-colors duration-300 text-lg font-bold">
+
+                        <i class="fas fa-shopping-cart mr-3"></i>
+
+                        Ver Carrito
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal Guía de Tallas (Igual que en index.html) -->
+
+    <div id="product-size-chart-modal"
+        class="fixed inset-0 bg-black/70 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+
+        <div
+            class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl transform transition-all duration-300 scale-100">
+
+            <button id="close-product-size-chart"
+                class="absolute top-4 right-4 bg-white/80 rounded-full p-2 text-gray-800 hover:text-[#8357C5] hover:bg-white transition-all duration-300 shadow-md z-10">
+
+                <i class="fas fa-times text-xl"></i>
+
+            </button>
+
+            <div class="p-4 md:p-8 flex justify-center bg-gray-50">
+
+                <img id="modal-size-chart-img" src="" alt="Guía de Tallas"
+                    class="max-w-full h-auto rounded-lg shadow-sm">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        // Variables globales para la galería
+
+        let currentImageIndex = 0;
+
+        let productImages = [];
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            loadProductDetails();
+
+
+
+            // Inicializar modal de tallas
+
+            const modal = document.getElementById('product-size-chart-modal');
+
+            const closeBtn = document.getElementById('close-product-size-chart');
+
+
+
+            if (modal && closeBtn) {
+
+                closeBtn.addEventListener('click', () => {
+
+                    modal.classList.add('hidden');
+
+                    document.body.style.overflow = '';
+
+                });
+
+
+
+                modal.addEventListener('click', (e) => {
+
+                    if (e.target === modal) {
+
+                        modal.classList.add('hidden');
+
+                        document.body.style.overflow = '';
+
+                    }
+
+                });
+
+            }
+
+        });
+
+
+
+        function loadProductDetails() {
+
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const productId = parseInt(urlParams.get('id'));
+
+
+
+            if (!productId) {
+
+                // Si no hay ID, redirigir al inicio (opcional, o mostrar error)
+
+                console.error('No product ID provided');
+
+                return;
+
+            }
+
+
+
+            // Buscar producto en window.products (cargado desde script.js)
+
+            // Esperar un poco por si script.js tarda en cargar
+
+            if (!window.products) {
+
+                setTimeout(loadProductDetails, 100);
+
+                return;
+
+            }
+
+
+
+            const product = window.products.find(p => p.id === productId);
+
+
+
+            if (!product) {
+
+                console.error('Producto no encontrado');
+
+                return;
+
+            }
+
+
+
+            // Guardar imágenes para la galería
+
+            productImages = product.images || [];
+
+
+
+            updateProductInfo(product);
+
+            if (product.designs) {
+                window.selectedDesign = null;
+                generateDesignOptions(product);
+            } else {
+                window.selectedDesign = null;
+            }
+
+            generateSizeOptions(product);
+
+            setupActionButtons(product);
+
+            updateBreadcrumb(product);
+
+            updateSizeChart(product);
+
+
+
+            // Inicializar galería
+
+            if (productImages.length > 0) {
+
+                updateMainImage(productImages[0]);
+
+                generateThumbnails();
+
+            }
+
+
+
+            // ============================================================
+
+            // FIX: FORZAR CARGA DIRECTA DE FIREBASE PARA ESTE PRODUCTO
+
+            // ============================================================
+
+            if (typeof firebase !== 'undefined' && firebase.firestore) {
+
+                console.log(`ðŸ”¥ Intentando carga directa para producto ID: ${productId}`);
+
+                const db = firebase.firestore();
+
+
+
+                // Función auxiliar para actualizar UI
+
+                const updateUIWithFirebaseData = (data) => {
+
+                    console.log('✅ Actualizando UI con datos de Firebase:', data);
+
+                    if (data.stock) {
+
+                        product.stock = data.stock;
+                        // Forzar actualización visual inmediata
+                        updateProductInfo(product);
+                        if (product.designs) {
+                            generateDesignOptions(product);
+                        }
+                        generateSizeOptions(product);
+
+
+
+                        // Feedback visual de que viene de Firebase (opcional, para debug)
+
+                        const statusElement = document.getElementById('product-status');
+
+                        if (statusElement) {
+
+                            statusElement.setAttribute('title', 'Datos cargados desde Firebase en tiempo real');
+
+                            statusElement.style.border = '2px solid #4ade80'; // Borde verde sutil
+
+                        }
+
+                    }
+
+                };
+
+
+
+                // 1. Intentar por ID directo (String)
+
+                db.collection('products').doc(productId.toString()).get().then(doc => {
+
+                    if (doc.exists) {
+
+                        updateUIWithFirebaseData(doc.data());
+
+                    } else {
+
+                        console.log('âš ï¸ No encontrado por ID exacto, buscando en toda la colección...');
+
+                        // 2. Buscar en toda la colección (Fuzzy Match)
+
+                        db.collection('products').get().then(snapshot => {
+
+                            let found = false;
+
+                            snapshot.forEach(doc => {
+
+                                const data = doc.data();
+
+                                // Coincidencia por nombre o ID numérico/string
+
+                                if (data.name === product.name || doc.id == productId) {
+
+                                    console.log(`✅ Encontrado en colección: ${doc.id}`);
+
+                                    updateUIWithFirebaseData(data);
+
+                                    found = true;
+
+                                }
+
+                            });
+
+                            if (!found) console.log('âŒ Producto no encontrado en ninguna parte de Firebase');
+
+                        });
+
+                    }
+
+                }).catch(err => console.error('Error en carga directa:', err));
+
+            }
+
+
+
+            // Escuchar actualizaciones en tiempo real
+
+            window.addEventListener('productsUpdated', () => {
+
+                console.log('ðŸ”„ Actualizando detalles del producto en tiempo real...');
+
+                const updatedProduct = window.products.find(p => p.id === productId);
+
+                if (updatedProduct) {
+
+                    updateProductInfo(updatedProduct);
+                    if (updatedProduct.designs) {
+                        generateDesignOptions(updatedProduct);
+                    }
+                    generateSizeOptions(updatedProduct);
+
+                }
+
+            });
+
+        }
+
+
+
+        function updateProductInfo(product) {
+
+            document.getElementById('product-title').textContent = product.name;
+
+            document.getElementById('product-price').textContent = `\u20B2${product.price.toLocaleString('es-PY')}`;
+
+            document.getElementById('product-description').textContent = product.description;
+
+
+
+            // Estado
+
+            const statusElement = document.getElementById('product-status');
+
+            const hasStock = Object.values(product.stock).some(val => val > 0);
+
+            if (hasStock) {
+
+                statusElement.textContent = 'Disponible';
+
+                statusElement.className = 'px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium';
+
+            } else {
+
+                statusElement.textContent = 'Agotado';
+
+                statusElement.className = 'px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium';
+
+            }
+
+
+
+            // Características
+
+            const featuresList = document.getElementById('product-features');
+
+            if (featuresList && product.features) {
+
+                featuresList.innerHTML = product.features.map(feature =>
+
+                    `<li class="flex items-center"><i class="fas fa-check text-[#8357C5] mr-2"></i>${feature}</li>`
+
+                ).join('');
+
+            }
+
+
+
+            // Info adicional
+
+            if (product.material) document.getElementById('product-material').textContent = product.material;
+
+            if (product.care) document.getElementById('product-care').textContent = product.care;
+
+            if (product.origin) document.getElementById('product-origin').textContent = product.origin;
+
+
+
+            const warrantyContainer = document.getElementById('warranty-container');
+
+            if (product.warranty) {
+
+                document.getElementById('product-warranty').textContent = product.warranty;
+
+                if (warrantyContainer) warrantyContainer.style.display = 'block';
+
+            } else {
+
+                if (warrantyContainer) warrantyContainer.style.display = 'none';
+
+            }
+
+        }
+
+
+
+        function generateDesignOptions(product) {
+            const container = document.getElementById('design-options');
+            const section = document.getElementById('design-section');
+            if (!container || !section) return;
+
+            if (!product.designs || product.designs.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+
+            section.classList.remove('hidden');
+            container.innerHTML = product.designs.map(design => {
+                const isSelected = window.selectedDesign === design;
+                return `
+                    <button 
+                        class="design-option border rounded-md py-2 px-4 text-sm font-medium transition-all duration-200 ${isSelected ? 'ring-2 ring-[#8357C5] border-[#8357C5] text-[#8357C5]' : 'border-gray-300 hover:border-[#8357C5] hover:text-[#8357C5]'}"
+                        onclick="selectDesign(this, '${design}', ${product.id})"
+                    >
+                        ${design}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectDesign(btn, design, productId) {
+            // Remover selección previa
+            document.querySelectorAll('.design-option').forEach(b => {
+                b.classList.remove('ring-2', 'ring-[#8357C5]', 'border-[#8357C5]', 'text-[#8357C5]');
+                b.classList.add('border-gray-300');
+            });
+            // Activar selección
+            btn.classList.add('ring-2', 'ring-[#8357C5]', 'border-[#8357C5]', 'text-[#8357C5]');
+            btn.classList.remove('border-gray-300');
+
+            window.selectedDesign = design;
+            const product = window.products.find(p => p.id === productId);
+
+            // Actualizar opciones de tamaño por si varía el stock
+            generateSizeOptions(product);
+
+            // Actualizar la guía de tallas dependiendo del diseño
+            updateSizeChart(product);
+
+            // Si el producto tiene imágenes específicas por diseño, actualizarlas
+            if (product.designImages && product.designImages[design]) {
+                productImages = product.designImages[design];
+                updateMainImage(productImages[0]);
+                generateThumbnails();
+            }
+        }
+
+        function generateSizeOptions(product) {
+
+            const container = document.getElementById('size-options');
+
+            if (!container) return;
+
+
+
+            container.innerHTML = product.availableSizes.map(size => {
+                const needsDesignSelection = product.designs && product.designs.length > 0 && !window.selectedDesign;
+
+                if (needsDesignSelection) {
+                    return `
+                        <button 
+                            class="size-option border rounded-md py-2 px-4 text-sm font-medium transition-all duration-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
+                            disabled
+                            title="Selecciona un diseño primero"
+                        >
+                            ${size}
+                        </button>
+                    `;
+                }
+
+                // Comprobar stock usando el formato Diseño_Talla si corresponde
+                const internalSize = window.selectedDesign ? `${window.selectedDesign}_${size}` : size;
+                // Intentar buscar el stock especifico, y si no se encuentra usar el genérico
+                let stock = product.stock[internalSize];
+                if (stock === undefined && !window.selectedDesign) {
+                    stock = product.stock[size] || 0;
+                } else if (stock === undefined) {
+                    stock = product.stock[size] || 0;
+                }
+
+                const isAvailable = stock > 0;
+
+                return `
+
+                    <button 
+
+                        class="size-option border rounded-md py-2 px-4 text-sm font-medium transition-all duration-200 ${isAvailable ? 'border-gray-300 hover:border-[#8357C5] hover:text-[#8357C5]' : 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'}"
+
+                        ${!isAvailable ? 'disabled' : ''}
+
+                        onclick="selectSize(this, '${size}')"
+
+                    >
+
+                        ${size}
+
+                        ${!isAvailable ? '<span class="block text-xs text-red-500">Agotado</span>' : ''}
+
+                    </button>
+
+                `;
+
+            }).join('');
+
+        }
+
+
+
+        function selectSize(btn, size) {
+
+            // Remover selección previa
+
+            document.querySelectorAll('.size-option').forEach(b => {
+
+                b.classList.remove('ring-2', 'ring-[#8357C5]', 'border-[#8357C5]', 'text-[#8357C5]');
+
+            });
+
+
+
+            // Activar selección
+
+            btn.classList.add('ring-2', 'ring-[#8357C5]', 'border-[#8357C5]', 'text-[#8357C5]');
+
+            window.selectedSize = size;
+
+        }
+
+
+
+        function setupActionButtons(product) {
+
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+
+            if (addToCartBtn) {
+
+                addToCartBtn.onclick = () => {
+
+                    if (product.designs && product.designs.length > 0 && !window.selectedDesign) {
+
+                        alert('Por favor selecciona un diseño primero');
+
+                        return;
+
+                    }
+
+                    if (!window.selectedSize) {
+
+                        alert('Por favor selecciona una talla');
+
+                        return;
+
+                    }
+
+                    // Asumiendo que addToCart está en script.js
+
+                    if (window.addToCart) {
+                        window.addToCart(product.id, window.selectedSize, 1, window.selectedDesign || null);
+                    } else {
+
+                        console.error('Función addToCart no encontrada');
+
+                    }
+
+                };
+
+            }
+
+        }
+
+
+
+        function updateBreadcrumb(product) {
+
+            const breadcrumb = document.getElementById('product-name-breadcrumb');
+
+            if (breadcrumb) breadcrumb.textContent = product.name;
+
+        }
+
+
+
+        // Galería de Imágenes
+
+        function updateMainImage(src) {
+
+            const img = document.getElementById('main-product-image');
+
+            if (img) img.src = src;
+
+        }
+
+
+
+        function generateThumbnails() {
+
+            const container = document.getElementById('thumbnails-list');
+
+            if (!container) return;
+
+
+
+            container.innerHTML = productImages.map((img, index) => `
+
+                <img src="${img}" 
+
+                     class="w-20 h-20 object-cover rounded-md cursor-pointer border-2 ${index === currentImageIndex ? 'border-[#8357C5]' : 'border-transparent hover:border-gray-300'}"
+
+                     onclick="setMainImage(${index})"
+
+                >
+
+            `).join('');
+
+        }
+
+
+
+        function setMainImage(index) {
+
+            currentImageIndex = index;
+
+            updateMainImage(productImages[index]);
+
+            generateThumbnails(); // Actualizar bordes
+
+        }
+
+
+
+        function changeImage(direction) {
+
+            currentImageIndex = (currentImageIndex + direction + productImages.length) % productImages.length;
+
+            setMainImage(currentImageIndex);
+
+        }
+
+
+
+        // Guía de Talles
+
+        function updateSizeChart(product) {
+
+            const imgElement = document.getElementById('product-size-chart-img');
+
+            const container = document.getElementById('size-chart-container');
+
+            const card = document.getElementById('size-guide-card');
+
+
+
+            if (!imgElement || !container) return;
+
+
+
+            let sizeChartImg = '';
+
+
+
+            if (product.designSizeCharts && window.selectedDesign && product.designSizeCharts[window.selectedDesign]) {
+                sizeChartImg = product.designSizeCharts[window.selectedDesign];
+            } else if (product.sizeChart) {
+                sizeChartImg = product.sizeChart;
+            } else if (product.name.toUpperCase().includes('HOLGADOS') || product.name.toUpperCase().includes('BAGGY')) {
+                sizeChartImg = 'size chart/size chart holgado.png';
+            } else if (product.name.toUpperCase().includes('RECTOS') || product.name.toUpperCase().includes('STRAIGHT')) {
+                sizeChartImg = 'size chart/size chart recto.png';
+            } else if (product.name.toUpperCase().includes('BOXER')) {
+                sizeChartImg = 'size chart/size chart boxer.png';
+            }
+
+
+
+            if (sizeChartImg) {
+
+                imgElement.src = sizeChartImg;
+
+                container.style.display = 'block';
+
+                if (card) card.style.display = 'block';
+
+            } else {
+
+                container.style.display = 'none';
+
+                if (card) card.style.display = 'none';
+
+            }
+
+        }
+
+
+
+        function openProductSizeChart() {
+
+            const modal = document.getElementById('product-size-chart-modal');
+
+            const modalImg = document.getElementById('modal-size-chart-img');
+
+            const currentImg = document.getElementById('product-size-chart-img');
+
+
+
+            if (modal && modalImg && currentImg && currentImg.src) {
+
+                modalImg.src = currentImg.src;
+
+                modal.classList.remove('hidden');
+
+                document.body.style.overflow = 'hidden';
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones - AVENIDA.</title>
+    
+    <!-- Favicon - Logo de AVENIDA en la pestaña del navegador -->
+    <link rel="icon" type="image/png" href="logo/logo violeta.png">
+    <link rel="apple-touch-icon" href="logo/logo violeta.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=4.3">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+    <style>
+        /* Mejoras de diseño para títulos y contenido */
+        .page-title {
+            background: linear-gradient(135deg, #8357C5 0%, #6e48a9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #8357C5, #6e48a9);
+            border-radius: 2px;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Mejorar espaciado general */
+        .improved-spacing {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Mejorar contraste de texto */
+        .text-content {
+            color: #374151;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- ======================= HEADER ======================= -->
+        <!-- ======================= HEADER UNIFICADO ======================= -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-2 px-3 md:py-4 md:px-6 h-16 md:h-24">
+            
+            <!-- Izquierda (Menú y Desktop Links) - flex-1 keeps both sides exactly equal width to center logo -->
+            <div class="flex-1 flex items-center justify-start space-x-3 md:space-x-6 z-20">
+                <!-- Menú hamburguesa -->
+                <button id="menu-toggle" class="icon-link shrink-0">
+                    <i class="fas fa-bars text-lg md:text-2xl"></i>
+                </button>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#product-grid" class="nav-link">Ropa</a>
+                </nav>
+            </div>
+
+            <!-- Centro (Logo) - Centrado perfecto usando flex-none sin superposición absolute -->
+            <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                <a href="index.html" class="logo-link">
+                    <span id="header-logo-text" class="text-[14px] sm:text-[16px] md:text-2xl leading-none tracking-normal md:tracking-widest font-black">AVENIDA</span>
+                </a>
+            </div>
+
+            <!-- Derecha (Botones) - Se limitan los espacios para no chocar -->
+            <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-6 z-20">
+                <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                    <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-2xl"></i>
+                    <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                </a>
+                <!-- Botón de registrarse compacto (limite de ancho en celulares súper chicos) -->
+                <button id="register-btn" class="bg-white text-[#8357C5] px-2 py-1 md:px-4 md:py-2 rounded font-semibold hover:bg-gray-100 transition-colors duration-300 text-[9px] sm:text-[11px] md:text-base whitespace-nowrap shrink-0 max-w-[130px] sm:max-w-none overflow-hidden text-ellipsis">
+                    Registrarse
+                </button>
+            </div>
+
+        </div>
+    </header>
+    
+    <!-- Barra lateral desplegable UNIFICADA -->
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+        <div class="p-6">
+            <!-- Cabecera del sidebar -->
+            <div class="flex justify-between items-center mb-8">
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Sección de usuario -->
+            <div class="user-section mb-8">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-16 h-24 rounded-full bg-white/20 flex items-center justify-center">
+                        <i class="fas fa-user text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-lg font-semibold" id="user-display-name" class="text-xl font-semibold mb-4 text-gray-700">Usuario</h3>
+                        <p class="text-white/70" id="user-display-email">usuario@email.com</p>
+                    </div>
+                </div>
+                <div class="bg-white/10 rounded-lg p-4">
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="profile.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-user-circle mr-3"></i>
+                                <span>Mi Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="orders.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-shopping-bag mr-3"></i>
+                                <span>Mis Pedidos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="favorites.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-heart mr-3"></i>
+                                <span>Favoritos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Navegación principal -->
+            <nav class="mb-8">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="index.html" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-home mr-3"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#product-grid" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-tshirt mr-3"></i>
+                            <span>Ropa</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#lookbook-section" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-images mr-3"></i>
+                            <span>Lookbook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-info-circle mr-3"></i>
+                            <span>Sobre Nosotros</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Legal y Ayuda -->
+            <div class="border-t border-white/10 pt-6">
+                <h4 class="text-white/50 text-sm uppercase tracking-wider mb-4 font-medium">Legal y Ayuda</h4>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="terms.html" class="flex items-center text-white/80 hover:text-white transition-colors group">
+                            <span class="w-6"><i class="fas fa-file-contract text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+                            <span class="text-sm">Términos y Condiciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="privacy.html" class="flex items-center text-white/80 hover:text-white transition-colors group">
+                            <span class="w-6"><i class="fas fa-user-shield text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+                            <span class="text-sm">Política de Privacidad</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="returns.html" class="flex items-center text-white/80 hover:text-white transition-colors group">
+                            <span class="w-6"><i class="fas fa-undo text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+                            <span class="text-sm">Cambios y Devoluciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="help.html" class="flex items-center text-white/80 hover:text-white transition-colors group">
+                            <span class="w-6"><i class="fas fa-question-circle text-xs group-hover:text-[#a78bfa] transition-colors"></i></span>
+                            <span class="text-sm">Centro de Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+    
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+    <!-- Modal de Registro UNIFICADO -->
+    <div id="register-modal" class="modal-overlay">
+        <div class="modal-content w-11/12 max-w-md">
+            <div class="bg-white rounded-lg shadow-xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Crear Cuenta</h2>
+                    <button id="close-register-btn" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="register-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+                        <input type="text" id="register-name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="register-email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                        <input type="password" id="register-password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+                        <input type="password" id="register-confirm-password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="register-terms" required class="h-4 w-4 text-[#8357C5] focus:ring-[#8357C5] border-gray-300 rounded">
+                        <label class="ml-2 block text-sm text-gray-900">
+                            Acepto los <a href="#" class="text-[#8357C5] hover:underline">Términos y Condiciones</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-[#8357C5] text-white py-3 px-4 rounded-md hover:bg-[#6e48a9] transition-colors duration-300 font-semibold">
+                        Crear Cuenta
+                    </button>
+                </form>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        ¿Ya tienes cuenta? 
+                        <a href="#" id="login-link" class="text-[#8357C5] hover:underline font-medium">Iniciar Sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+
+    <!-- Envoltura principal para todo el contenido que se desplaza -->
+    <div id="page-content">
+        <!-- ======================= SECCIí“N DE NOTIFICACIONES ======================= -->
+        <main class="container mx-auto pt-56 px-6 pt-56 px-6">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl mt-12 mt-8 md:text-5xl font-bold text-gray-900 mb-8 text-center bg-gradient-to-r from-[#8357C5] to-[#6e48a9] bg-clip-text text-transparent">Notificaciones</h1>
+                
+                <!-- Filtros de notificaciones -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                    <div class="flex flex-wrap gap-4 items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <button id="filter-all" class="px-4 py-2 rounded-lg bg-[#8357C5] text-white font-medium">Todas</button>
+                            <button id="filter-unread" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300">No leídas</button>
+                            <button id="filter-orders" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300">Pedidos</button>
+                            <button id="filter-offers" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300">Ofertas</button>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button id="mark-all-read" class="text-[#8357C5] hover:text-[#6B46C1] font-medium">
+                                <i class="fas fa-check-double mr-2"></i>Marcar todas como leídas
+                            </button>
+                            <button id="clear-all" class="text-red-600 hover:text-red-700 font-medium">
+                                <i class="fas fa-trash mr-2"></i>Limpiar todas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lista de notificaciones -->
+                <div id="notifications-list" class="space-y-4">
+                    <!-- Las notificaciones se cargarán dinámicamente aquí -->
+                </div>
+                
+                <!-- Estado vacío -->
+                <div id="empty-state" class="hidden text-center py-16">
+                    <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-bell text-4xl text-gray-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2 text-xl font-semibold mb-4 text-gray-700">No hay notificaciones</h3>
+                    <p class="text-gray-600">Te notificaremos cuando tengas novedades importantes.</p>
+                </div>
+                
+                <!-- Cargar más notificaciones -->
+                <div class="text-center mt-8">
+                    <button id="load-more" class="bg-[#8357C5] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6B46C1] transition-colors duration-300 hidden">
+                        Cargar más notificaciones
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand Column -->
+                <div class="space-y-6">
+                    <img src="logo/logo blanco.png" alt="AVENIDA" class="h-12">
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Redefiniendo el estilo urbano con calidad premium y diseño exclusivo. Tu destino para la moda contemporánea.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#8357C5] transition-all duration-300">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Shop Column -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+                        TIENDA
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+                    </h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="index.html#product-grid" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Ver Todo</a></li>
+                        <li><a href="index.html#product-grid" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Novedades</a></li>
+                        <li><a href="index.html#product-grid" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Más Vendidos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Help Column -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+                        AYUDA
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+                    </h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="help.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Centro de Ayuda</a></li>
+                        <li><a href="returns.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Cambios y Devoluciones</a></li>
+                        <li><a href="shipping.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Envíos</a></li>
+                        <li><a href="contact.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal Column -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 relative inline-block">
+                        LEGAL
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#8357C5]"></span>
+                    </h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="terms.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Términos y Condiciones</a></li>
+                        <li><a href="privacy.html" class="hover:text-[#8357C5] transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-[#8357C5]"></i>Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-white/10 pt-8 mt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <p class="text-gray-500 text-sm">
+                        &copy; 2024 AVENIDA. Todos los derechos reservados.
+                    </p>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-500 text-sm mr-2">Pagos seguros con:</span>
+                        <div class="flex space-x-2 opacity-70 grayscale hover:grayscale-0 transition-all duration-300">
+                            <i class="fab fa-cc-visa text-2xl text-white"></i>
+                            <i class="fab fa-cc-mastercard text-2xl text-white"></i>
+                            <i class="fab fa-cc-amex text-2xl text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast de notificación -->
+    <div id="toast" class="fixed top-20 right-4 z-50 hidden">
+        <div class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Modal de registro -->
+    <div id="register-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Registrarse</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Nombre completo</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Contraseña</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirmar contraseña</label>
+                    <input type="password" id="register-confirm-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Registrarse</button>
+            </form>
+            <div class="modal-footer">
+                <p>¿Ya tienes cuenta? <a href="#" id="show-login">Iniciar sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de inicio de sesión -->
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Iniciar Sesión</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            </form>
+            <div class="modal-footer">
+                <p>¿No tienes cuenta? <a href="#" id="show-register">Registrarse</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="firebase-config.js"></script>
+        <!-- Scripts unificados -->
+    
+    <!-- Script para funcionalidad del sidebar y header -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar funcionalidad del sidebar
+            initializeSidebar();
+            
+            // Inicializar funcionalidad del header
+            initializeHeader();
+        });
+        
+        // ======================= FUNCIONALIDAD DEL SIDEBAR =======================
+        function initializeSidebar() {
+            console.log('Inicializando sidebar...');
+            
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            // Abrir sidebar
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    console.log('Botón menú clickeado');
+                    sidebar.classList.add('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('hidden');
+                        sidebarOverlay.classList.add('active');
+                    }
+                    console.log('Sidebar abierto');
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(true);
+                    }
+                });
+            }
+
+            // Cerrar sidebar
+            if (closeSidebar && sidebar) {
+                closeSidebar.addEventListener('click', function() {
+                    console.log('Botón cerrar clickeado');
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                    console.log('Sidebar cerrado');
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            }
+
+            // Cerrar sidebar al hacer clic en el overlay
+            if (sidebarOverlay && sidebar) {
+                sidebarOverlay.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.add('hidden');
+                    sidebarOverlay.classList.remove('active');
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            }
+
+            // Cerrar sidebar al hacer clic en enlaces
+            const sidebarLinks = sidebar.querySelectorAll('a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            });
+
+            console.log('Sidebar configurado correctamente');
+        }
+        
+        // ======================= FUNCIONALIDAD DEL HEADER =======================
+        function initializeHeader() {
+            console.log('Inicializando header...');
+            
+            const header = document.getElementById('main-header');
+            
+            if (header) {
+                const onScroll = () => {
+                    const scrolled = window.scrollY > 50;
+                    header.classList.toggle('scrolled', scrolled);
+                };
+                
+                // Event listeners
+                window.addEventListener('scroll', onScroll, { passive: true });
+                window.addEventListener('resize', onScroll, { passive: true });
+                
+                onScroll(); // Ejecutar inmediatamente para establecer el estado inicial
+                
+                console.log('Header configurado correctamente');
+            } else {
+                console.error('âŒ Header no encontrado');
+            }
+        }
+    </script><script src="script.js?v=7"></script>
+    
+    <!-- Script para establecer el logo inicial inmediatamente -->
+    <script>
+        // Script para establecer el logo inicial inmediatamente
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logo logic removed
+        });
+    </script>
+</body>
+</html>
+
+

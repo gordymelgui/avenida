@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Por defecto, DENEGAR todo acceso
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Usuarios solo pueden acceder a sus propios datos
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Productos: CUALQUIERA puede leer, SOLO admin puede modificar
+    match /products/{productId} {
+      allow read: if true; // Cualquiera puede ver productos
+      allow write: if request.auth != null && isAdmin(request.auth.token.email); // Solo admin puede modificar
+    }
+    
+    // Pedidos: permitir crear sin autenticación, leer solo para admin
+    match /orders/{orderId} {
+      allow create: if true; // Cualquiera puede crear pedidos
+      allow read, write: if request.auth != null && isAdmin(request.auth.token.email); // Solo admin puede leer/modificar
+    }
+    
+    // Newsletter y preferencias: solo usuarios logueados
+    match /newsletter/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
+
+// Función helper para verificar si es admin
+function isAdmin(email) {
+  return email == 'aaavenidaaa@gmail.com';
+}

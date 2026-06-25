@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modal Simple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 p-8">
+    <h1 class="text-3xl font-bold mb-8 text-center">🧪 Test del Modal de Confirmación</h1>
+
+    <!-- Botón de prueba -->
+    <div class="bg-white p-6 rounded-lg shadow mb-6 text-center">
+        <h2 class="text-xl font-semibold mb-4">🔘 Botón de Prueba</h2>
+        <button id="test-modal-btn"
+            class="bg-[#8357C5] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6e48a9] transition-colors duration-300">
+            Abrir Modal de Confirmación
+        </button>
+    </div>
+
+    <!-- Modal de Confirmación de Pago -->
+    <div id="payment-confirmation-modal" class="modal-overlay hidden">
+        <div class="modal-content w-11/12 max-w-2xl">
+            <div class="bg-white rounded-lg shadow-xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Proceso de Pago</h2>
+                    <button id="close-payment-modal" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Pasos del proceso de pago -->
+                <div class="space-y-6">
+                    <!-- Paso 1: Revisar Pedido -->
+                    <div class="border-l-4 border-gray-300 pl-4">
+                        <div class="flex items-center mb-2">
+                            <span
+                                class="bg-gray-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3">1</span>
+                            <h3 class="text-lg font-semibold text-gray-800">Revisar Pedido</h3>
+                        </div>
+                        <p class="text-gray-600 ml-9">Revisa los productos en tu carrito y confirma tu pedido</p>
+                    </div>
+
+                    <!-- Paso 2: Completar Datos -->
+                    <div class="border-l-4 border-gray-300 pl-4">
+                        <div class="flex items-center mb-2">
+                            <span
+                                class="bg-gray-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3">2</span>
+                            <h3 class="text-lg font-semibold text-gray-800">Completar Datos</h3>
+                        </div>
+                        <p class="text-gray-600 ml-9">Proporciona tu información personal y de envío</p>
+                    </div>
+
+                    <!-- Paso 3: Confirmación -->
+                    <div class="border-l-4 border-[#8357C5] pl-4">
+                        <div class="flex items-center mb-2">
+                            <span
+                                class="bg-[#8357C5] text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3">3</span>
+                            <h3 class="text-lg font-semibold text-gray-800">Confirmación</h3>
+                        </div>
+                        <div class="ml-9 space-y-4">
+                            <p class="text-gray-600">
+                                ¡Gracias por tu pedido! Tu compra ha sido realizada con éxito.
+                            </p>
+                            <p class="text-gray-600">
+                                Recibirás un correo electrónico de confirmación con los detalles de tu pedido.
+                            </p>
+                            <p class="text-gray-600">
+                                <strong>Recuerda enviar el comprobante de pago a nuestro WhatsApp para finalizar el
+                                    proceso.</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón de acción -->
+                <div class="mt-8 text-center">
+                    <a href="https://wa.me/595982713971?text=Hola! Aquí está mi comprobante de pago para el pedido."
+                        target="_blank"
+                        class="inline-flex items-center justify-center bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-600 transition-colors duration-300 text-lg font-bold">
+                        <i class="fab fa-whatsapp mr-3 text-2xl"></i>
+                        Enviar Comprobante por WhatsApp
+                    </a>
+                </div>
+
+                <!-- Información adicional -->
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-500">
+                        Número de WhatsApp: <strong>+595 982 713971</strong>
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Horario de atención: Lunes a Viernes de 9:00 AM a 6:00 PM
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Función para abrir el modal de confirmación de pago
+        function openPaymentConfirmationModal() {
+            console.log('🔍 Abriendo modal de confirmación de pago...');
+            const modal = document.getElementById('payment-confirmation-modal');
+            console.log('📋 Modal encontrado:', !!modal);
+
+            if (modal) {
+                console.log('🎯 Removiendo clase hidden...');
+                modal.classList.remove('hidden');
+                console.log('🎯 Añadiendo clase visible...');
+                modal.classList.add('visible');
+                console.log('✅ Modal de confirmación abierto');
+            } else {
+                console.error('❌ Modal de confirmación no encontrado');
+            }
+        }
+
+        // Función para cerrar el modal de confirmación de pago
+        function closePaymentConfirmationModal() {
+            const modal = document.getElementById('payment-confirmation-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('visible');
+            }
+        }
+
+        // Configurar cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('🚀 Página de prueba cargada');
+
+            // Configurar botón de prueba
+            const testBtn = document.getElementById('test-modal-btn');
+            if (testBtn) {
+                testBtn.addEventListener('click', function () {
+                    console.log('🖱️ Botón de prueba clickeado');
+                    openPaymentConfirmationModal();
+                });
+                console.log('🔘 Botón de prueba configurado');
+            }
+
+            // Configurar botón de cerrar
+            const closeBtn = document.getElementById('close-payment-modal');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closePaymentConfirmationModal);
+                console.log('❌ Botón de cerrar configurado');
+            }
+
+            // Cerrar modal al hacer clic fuera
+            const modal = document.getElementById('payment-confirmation-modal');
+            if (modal) {
+                modal.addEventListener('click', function (e) {
+                    if (e.target === modal) {
+                        closePaymentConfirmationModal();
+                    }
+                });
+                console.log('🖱️ Cerrar al hacer clic fuera configurado');
+            }
+
+            console.log('✅ Configuración completada');
+        });
+    </script>
+</body>
+
+</html>

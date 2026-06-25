@@ -1,0 +1,939 @@
+/* FUENTES Y ESTILOS GLOBALES */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;700;800;900&family=Oswald:wght@500;700&family=Syncopate:wght@700&display=swap');
+
+@font-face {
+    font-family: 'Rip Regular';
+    src: url('./rip-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+:root {
+    --primary: #8357C5;
+    --primary-dark: #6e48a9;
+    --primary-light: #9d7bd8;
+    --dark: #1a1a1a;
+    --light: #f8f9fa;
+    --gray: #6b7280;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.font-rip {
+    font-family: 'Rip Regular', sans-serif;
+}
+
+/* FUENTES BRUTALISTAS */
+.font-brutal-header {
+    font-family: 'Rip Regular', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em !important;
+}
+
+.font-brutal-title {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em !important;
+}
+
+.font-brutal-price {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+}
+
+.font-brutal-category {
+    font-family: 'Syncopate', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.2em !important;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #8357C5;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: url('AP/cursor_mano_AP_32.png'), auto;
+}
+
+a, button, [onclick], .item-card, .icon-link, .category-link, .whatsapp-button {
+    cursor: url('AP/cursor_mano_AP_32.png'), pointer !important;
+}
+
+html,
+body {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+#page-content {
+    min-height: 100vh;
+    overflow: visible;
+}
+
+.container {
+    max-width: 1400px;
+    padding: 0 2rem;
+}
+
+/* UTILITIES */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+.shadow-soft {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* HEADER */
+#main-header {
+    background-color: transparent;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+}
+
+#main-header.scrolled {
+    background-color: rgba(131, 87, 197, 0.98);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+#main-header .nav-link,
+#main-header .icon-link {
+    color: var(--dark);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+#main-header.scrolled .nav-link,
+#main-header.scrolled .icon-link {
+    color: white;
+}
+
+#main-header .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
+}
+
+#main-header.scrolled .nav-link::after {
+    background-color: white;
+}
+
+#main-header .nav-link:hover::after {
+    width: 100%;
+}
+
+#main-header .nav-link:hover,
+#main-header .icon-link:hover {
+    color: var(--primary);
+}
+
+#main-header.scrolled .nav-link:hover,
+#main-header.scrolled .icon-link:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#header-logo-text {
+    font-family: 'Rip Regular', sans-serif;
+    font-size: 1.1rem;
+    color: var(--primary);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1;
+}
+
+@media (min-width: 768px) {
+    #header-logo-text {
+        font-size: 2.2rem;
+        letter-spacing: 0.15em;
+    }
+}
+
+#main-header.scrolled #header-logo-text {
+    color: white;
+    transform: scale(0.8);
+}
+
+#category-nav {
+    padding: 0.2rem 0 1rem 0;
+    width: 100%;
+    border-top: none !important;
+}
+
+#main-header.scrolled #category-nav {
+    border-top: none !important;
+}
+
+.category-link {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: white !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.6;
+    display: inline-block;
+}
+
+#main-header.scrolled .category-link {
+    color: white !important;
+}
+
+.category-link:hover,
+.category-link.active-category {
+    opacity: 1 !important;
+    color: white !important;
+    text-decoration: underline !important;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+}
+
+#main-header.scrolled .category-link:hover,
+#main-header.scrolled .category-link.active-category {
+    color: white !important;
+    opacity: 1 !important;
+    text-shadow: none;
+}
+
+#main-header.scrolled #category-nav {
+    padding-bottom: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    #main-header.scrolled #header-logo-text {
+        font-size: 1.1rem;
+        transform: scale(1);
+    }
+}
+
+/* SIDEBAR */
+#sidebar {
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    /* Violeta sólido */
+    color: white;
+}
+
+#sidebar.open {
+    transform: translateX(0) !important;
+}
+
+#sidebar-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    transition: opacity 0.4s ease;
+    z-index: 999;
+}
+
+/* User Section - ahora integrado en el fondo violeta */
+#sidebar .user-section {
+    background: rgba(0, 0, 0, 0.15);
+    /* Fondo ligeramente más oscuro */
+    margin: 0 0 2rem 0;
+    padding: 1.5rem;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+#sidebar .user-section h3 {
+    color: white;
+    font-weight: 700;
+}
+
+#sidebar .user-section p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#sidebar .user-section .bg-white\/20 {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#sidebar a {
+    color: white !important;
+    /* Forzar blanco */
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.9;
+}
+
+#sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white !important;
+    transform: translateX(5px);
+    opacity: 1;
+}
+
+#sidebar a i {
+    width: 24px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.bg-white\/10 {
+    background-color: transparent !important;
+    /* Remover fondo redundante en lista */
+}
+
+/* BUTTONS */
+#register-btn {
+    background-color: var(--primary);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(131, 87, 197, 0.3);
+}
+
+#register-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(131, 87, 197, 0.4);
+    background-color: var(--primary-dark);
+}
+
+/* HERO CAROUSEL */
+#banner-carousel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.carousel-container {
+    display: flex;
+    width: 500%;
+    height: 100%;
+    transition: transform 0.7s ease-in-out;
+}
+
+.carousel-slide {
+    width: 20%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 10;
+}
+
+.carousel-indicator {
+    width: 60px;
+    height: 4px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.carousel-indicator.active {
+    background-color: white;
+    width: 80px;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 60px;
+    height: 60px;
+    border-radius: 9999px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+#banner-carousel:hover .carousel-arrow {
+    opacity: 1;
+}
+
+.carousel-arrow:hover {
+    background-color: white;
+    color: var(--primary);
+    transform: translateY(-50%) scale(1.1);
+}
+
+#prev-btn {
+    left: 2rem;
+}
+
+#next-btn {
+    right: 2rem;
+}
+
+/* VIDEO HERO */
+.hero-video-container {
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-video-container video {
+    transform: scale(1.05);
+    /* Slight zoom for cinematic feel */
+}
+
+#video-sound-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    z-index: 20;
+}
+
+#video-sound-btn:hover {
+    background: white;
+    color: var(--dark);
+    transform: scale(1.1);
+}
+
+/* PRODUCTS */
+#product-grid-title,
+#old-grid-title,
+.container h2,
+h2.text-gray-900 {
+    font-family: 'Rip Regular', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em !important;
+    color: white !important;
+}
+
+#product-grid-title {
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.product-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card .relative.overflow-hidden {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .relative.overflow-hidden {
+    transform: translateY(-8px);
+}
+
+/* Nombres de prendas y Precios Brutalistas */
+.product-card h3 {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em !important;
+    color: white !important;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    transform: none !important;
+}
+
+.product-card:hover h3 {
+    opacity: 1;
+}
+
+.hover-price {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    transition: all 0.3s ease;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+.product-card:hover .hover-price {
+    color: white !important;
+}
+
+/* Efecto para productos agotados (transparencia) */
+.out-of-stock-media {
+    filter: grayscale(40%) !important;
+    transition: all 0.5s ease-in-out;
+}
+
+/* Estados por defecto para prendas sin stock */
+.product-card .main-image.out-of-stock-media {
+    opacity: 0.45 !important;
+}
+
+.product-card .hover-image.out-of-stock-media {
+    opacity: 0 !important;
+}
+
+/* Estados en hover para prendas sin stock */
+.product-card:hover .main-image.out-of-stock-media {
+    opacity: 0 !important;
+}
+
+.product-card:hover .hover-image.out-of-stock-media {
+    opacity: 0.6 !important;
+    filter: grayscale(10%) !important;
+}
+
+/* En móviles y escritorio se mantiene igual */
+@media (max-width: 768px) {
+    .product-card h3,
+    .hover-price {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+.product-card .main-image {
+    object-fit: contain !important;
+    padding: 1.25rem; /* Separación para que flote la prenda en PNG */
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .main-image {
+    transform: scale(1.05);
+    opacity: 0;
+}
+
+.product-card .hover-image {
+    object-fit: cover !important;
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0;
+}
+
+.product-card:hover .hover-image {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* BADGES BRUTALISTAS DE STOCK */
+.stock-badge {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    border-radius: 0 !important; /* Esquinas rectas brutalistas */
+    line-height: 1;
+}
+
+.stock-badge.in-stock {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+}
+
+.stock-badge.out-of-stock {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: 1.5px solid #ffffff !important;
+}
+
+.add-to-cart-btn {
+    background-color: var(--dark);
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid transparent;
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--primary);
+    box-shadow: 0 5px 15px rgba(131, 87, 197, 0.3);
+}
+
+/* INSTAGRAM LOOKBOOK REPLACEMENT */
+.instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    /* Instagram-like gap */
+}
+
+@media (max-width: 640px) {
+    .instagram-grid {
+        gap: 2px;
+    }
+}
+
+.insta-post {
+    position: relative;
+    background-color: #efefef;
+}
+
+.insta-post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.2s ease;
+}
+
+/* On hover, maybe darken image slightly */
+.insta-post:hover img {
+    filter: brightness(0.9);
+}
+
+/* Removing old lookbook styles if they conflict, or reusing them */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+/* FOOTER */
+footer {
+    background-color: #111;
+    border-top: 1px solid #222;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+}
+
+/* CUSTOM MODAL & UTILS */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    padding: 2rem 0;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    max-height: 95vh;
+    overflow-y: auto;
+    pointer-events: auto;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* MENÚ HAMBURGUESA */
+#menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+    transition: all 0.3s ease;
+}
+
+#menu-toggle:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Cart & Checkout */
+.cart-counter {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 9999px;
+    height: 1.25rem;
+    width: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* Toast */
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 16px;
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--dark);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 500;
+    font-size: 14px;
+    transform: translateX(400px);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 10000;
+    max-width: 350px;
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+}
+
+.toast-notification.success {
+    border-left: 4px solid #10b981;
+}
+
+.toast-notification.error {
+    border-left: 4px solid #ef4444;
+}
+
+.toast-notification.info {
+    border-left: 4px solid #3b82f6;
+}
+
+.toast-notification.warning {
+    border-left: 4px solid #f59e0b;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 60px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* TIKTOK SECTION */
+#tiktok-section {
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.05);
+    border: none;
+    margin: 4rem auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.tiktok-video-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.tiktok-video {
+    border-radius: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    #product-grid-title {
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    #main-header .container {
+        padding: 0.5rem 1.5rem;
+    }
+
+    .carousel-indicators {
+        bottom: 1.5rem;
+    }
+
+    .carousel-indicator {
+        width: 30px;
+    }
+
+    .carousel-indicator.active {
+        width: 45px;
+    }
+
+    .product-card .relative.bg-white {
+        background: transparent !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    #banner-carousel {
+        height: 70vh;
+    }
+
+    .tiktok-video-container {
+        width: 100%;
+    }
+}
+
+/* WHATSAPP FLOAT */
+.whatsapp-button {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #25D366;
+    color: white !important;
+    z-index: 1100;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.whatsapp-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+}
+
+/* EASTER EGG ANIMATIONS */
+@keyframes ee-wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+}
+
+.ee-wobble {
+    animation: ee-wobble 0.15s infinite;
+}
+
+@keyframes ee-pop-off {
+    0% { transform: translateY(0) rotate(0deg); }
+    15% { transform: translateY(-15px) rotate(-20deg); }
+    100% {
+        transform: translateY(300px) rotate(540deg);
+        opacity: 0;
+    }
+}
+
+.ee-pop-off {
+    animation: ee-pop-off 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}

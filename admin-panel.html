@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Gestión de Stock - AVENIDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=2.5">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Sidebar administrativo -->
+    <div id="admin-sidebar"
+        class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out -translate-x-full">
+        <div class="p-6">
+            <!-- Cabecera del sidebar -->
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center space-x-3">
+                    <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-12">
+                    <h2 class="text-white text-2xl font-bold">ADMIN</h2>
+                </div>
+                <button id="close-admin-sidebar" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navegación -->
+            <nav class="mb-8">
+                <ul class="space-y-3">
+                    <li>
+                        <a href="#"
+                            class="flex items-center text-white hover:text-gray-200 py-3 px-4 rounded-lg bg-white/10 transition-colors">
+                            <i class="fas fa-boxes mr-3"></i>
+                            <span>Gestión de Stock</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html"
+                            class="flex items-center text-white hover:text-gray-200 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+                            <i class="fas fa-home mr-3"></i>
+                            <span>Volver al Sitio</span>
+                        </a>
+                    </li>
+
+                    <!-- Botón de logout -->
+                    <li>
+                        <button id="admin-logout-btn"
+                            class="flex items-center text-white hover:text-red-300 w-full py-3 px-4 rounded-lg hover:bg-white/10 transition-colors text-left">
+                            <i class="fas fa-sign-out-alt mr-3"></i>
+                            <span>Cerrar Sesión</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Información del administrador -->
+            <div class="bg-white/10 rounded-lg p-4 mt-auto">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                        <i class="fas fa-user-shield text-white"></i>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium" id="admin-name">Administrador</p>
+                        <p class="text-white/70 text-sm">Panel de Control</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para abrir/cerrar sidebar -->
+    <button id="admin-menu-toggle" class="fixed top-4 left-4 z-50 bg-[#8357C5] text-white p-3 rounded-lg shadow-lg">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Overlay para cerrar sidebar -->
+    <div id="admin-sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <!-- Contenido principal -->
+    <div class="ml-80 p-8">
+        <!-- Encabezado de página -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Gestión de Stock</h1>
+            <p class="text-gray-600 mt-2">Administra el inventario de productos en tiempo real</p>
+        </div>
+
+        <!-- Botones de debug -->
+        <div class="mb-6 flex space-x-4">
+            <button onclick="window.firebaseAuth.debugAuth()"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <i class="fas fa-bug mr-2"></i>Debug Auth
+            </button>
+            <button onclick="checkAuthStatus()"
+                class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                <i class="fas fa-check mr-2"></i>Verificar Estado
+            </button>
+            <button onclick="forceAuthSync()"
+                class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                <i class="fas fa-sync mr-2"></i>Forzar Sincronización
+            </button>
+            <button onclick="saveAllChanges()"
+                class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors">
+                <i class="fas fa-save mr-2"></i>Guardar Cambios
+            </button>
+        </div>
+
+        <!-- Tabla de gestión de stock -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-900">Productos</h2>
+                <p class="text-sm text-gray-600">Edita el stock y estado de cada producto</p>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                PRODUCTO</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                PRECIO</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                TALLA 1 (P/36)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                TALLA 2 (M/40)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                TALLA 3 (G/44)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                TALLA 4 (GG/48)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ESTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stock-table-body" class="bg-white divide-y divide-gray-200">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+    <script src="admin-panel.js"></script>
+
+    <script>
+        // Configurar el botón de logout del admin
+        document.addEventListener('DOMContentLoaded', function () {
+            const adminLogoutBtn = document.getElementById('admin-logout-btn');
+            if (adminLogoutBtn) {
+                adminLogoutBtn.addEventListener('click', function () {
+                    console.log('🚪 Botón de logout de admin clickeado');
+                    logoutUser();
+                });
+                console.log('✅ Botón de logout de admin configurado');
+            }
+        });
+    </script>
+
+    <!-- Script para listeners de stock en tiempo real -->
+    <script src="realtime-stock-listeners.js"></script>
+</body>
+
+</html>

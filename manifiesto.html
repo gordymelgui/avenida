@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifiesto - AVENIDA.</title>
+    
+    <!-- Favicon - Logo de AVENIDA en la pestaña del navegador -->
+    <link rel="icon" type="image/png" href="logo/logo violeta.png">
+    <link rel="apple-touch-icon" href="logo/logo violeta.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=4.3">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+    <style>
+        /* Mejoras de diseño para títulos y contenido */
+        .page-title {
+            background: linear-gradient(135deg, #8357C5 0%, #6e48a9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #8357C5, #6e48a9);
+            border-radius: 2px;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Mejorar espaciado general */
+        .improved-spacing {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Mejorar contraste de texto */
+        .text-content {
+            color: #374151;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- ======================= HEADER ======================= -->
+        <!-- ======================= HEADER UNIFICADO ======================= -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-2 px-3 md:py-4 md:px-6 h-16 md:h-24">
+            
+            <!-- Izquierda (Menú y Desktop Links) - flex-1 keeps both sides exactly equal width to center logo -->
+            <div class="flex-1 flex items-center justify-start space-x-3 md:space-x-6 z-20">
+                <!-- Menú hamburguesa -->
+                <button id="menu-toggle" class="icon-link shrink-0">
+                    <i class="fas fa-bars text-lg md:text-2xl"></i>
+                </button>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#product-grid" class="nav-link">Ropa</a>
+                </nav>
+            </div>
+
+            <!-- Centro (Logo) - Centrado perfecto usando flex-none sin superposición absolute -->
+            <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                <a href="index.html" class="logo-link">
+                    <span id="header-logo-text" class="text-[14px] sm:text-[16px] md:text-2xl leading-none tracking-normal md:tracking-widest font-black">AVENIDA</span>
+                </a>
+            </div>
+
+            <!-- Derecha (Botones) - Se limitan los espacios para no chocar -->
+            <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-6 z-20">
+                <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                    <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-2xl"></i>
+                    <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                </a>
+                <!-- Botón de registrarse compacto (limite de ancho en celulares súper chicos) -->
+                <button id="register-btn" class="bg-white text-[#8357C5] px-2 py-1 md:px-4 md:py-2 rounded font-semibold hover:bg-gray-100 transition-colors duration-300 text-[9px] sm:text-[11px] md:text-base whitespace-nowrap shrink-0 max-w-[130px] sm:max-w-none overflow-hidden text-ellipsis">
+                    Registrarse
+                </button>
+            </div>
+
+        </div>
+    </header>
+    
+    <!-- Barra lateral desplegable UNIFICADA -->
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+        <div class="p-6">
+            <!-- Cabecera del sidebar -->
+            <div class="flex justify-between items-center mb-8">
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Sección de usuario -->
+            <div class="user-section mb-8">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-16 h-24 rounded-full bg-white/20 flex items-center justify-center">
+                        <i class="fas fa-user text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-lg font-semibold" id="user-display-name" class="text-xl font-semibold mb-4 text-gray-700">Usuario</h3>
+                        <p class="text-white/70" id="user-display-email">usuario@email.com</p>
+                    </div>
+                </div>
+                <div class="bg-white/10 rounded-lg p-4">
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="profile.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-user-circle mr-3"></i>
+                                <span>Mi Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="orders.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-shopping-bag mr-3"></i>
+                                <span>Mis Pedidos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="favorites.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-heart mr-3"></i>
+                                <span>Favoritos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Navegación principal -->
+            <nav class="mb-8">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="index.html" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-home mr-3"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#product-grid" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-tshirt mr-3"></i>
+                            <span>Ropa</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#lookbook-section" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-images mr-3"></i>
+                            <span>Lookbook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-info-circle mr-3"></i>
+                            <span>Sobre Nosotros</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-white/20">
+                        <a href="manifiesto.html" class="text-white hover:text-gray-200 underline">Ver nuestro manifiesto</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+    <!-- Modal de Registro UNIFICADO -->
+    <div id="register-modal" class="modal-overlay">
+        <div class="modal-content w-11/12 max-w-md">
+            <div class="bg-white rounded-lg shadow-xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Crear Cuenta</h2>
+                    <button id="close-register-btn" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="register-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+                        <input type="text" id="register-name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="register-email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                        <input type="password" id="register-password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+                        <input type="password" id="register-confirm-password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="register-terms" required class="h-4 w-4 text-[#8357C5] focus:ring-[#8357C5] border-gray-300 rounded">
+                        <label class="ml-2 block text-sm text-gray-900">
+                            Acepto los <a href="#" class="text-[#8357C5] hover:underline">Términos y Condiciones</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-[#8357C5] text-white py-3 px-4 rounded-md hover:bg-[#6e48a9] transition-colors duration-300 font-semibold">
+                        Crear Cuenta
+                    </button>
+                </form>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        ¿Ya tienes cuenta? 
+                        <a href="#" id="login-link" class="text-[#8357C5] hover:underline font-medium">Iniciar Sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+
+    <!-- Envoltura principal para todo el contenido que se desplaza -->
+    <div id="page-content">
+        <!-- ======================= SECCIí“N DEL MANIFIESTO ======================= -->
+        <main class="container mx-auto pt-56 px-6 pt-56 px-6">
+            <div class="max-w-5xl mx-auto">
+                <!-- Hero del manifiesto -->
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl mt-12 mt-8 md:text-5xl font-bold text-gray-900 mb-8 text-center bg-gradient-to-r from-[#8357C5] to-[#6e48a9] bg-clip-text text-transparent">Nuestro Manifiesto</h1>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                        Somos más que una marca de ropa. Somos una declaración de intenciones, 
+                        un compromiso con la excelencia y una promesa de autenticidad.
+                    </p>
+                </div>
+                
+                <!-- Visión y Misión -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-eye text-white text-3xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Nuestra Visión</h2>
+                        </div>
+                        <p class="text-gray-700 text-lg leading-relaxed text-center">
+                            Ser la marca de referencia en moda urbana, reconocida por su innovación, 
+                            calidad excepcional y compromiso con la sostenibilidad, inspirando a las 
+                            nuevas generaciones a expresar su individualidad a través del estilo.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-bullseye text-white text-3xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Nuestra Misión</h2>
+                        </div>
+                        <p class="text-gray-700 text-lg leading-relaxed text-center">
+                            Crear prendas únicas que fusionen el diseño contemporáneo con la funcionalidad, 
+                            ofreciendo a nuestros clientes no solo ropa, sino una experiencia completa que 
+                            refleje su personalidad y valores.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Valores fundamentales -->
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-16">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Valores Fundamentales</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-star text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">Excelencia</h3>
+                            <p class="text-gray-600">
+                                Nos esforzamos por la perfección en cada detalle, desde el diseño hasta 
+                                la confección, garantizando la más alta calidad en cada prenda.
+                            </p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-leaf text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">Sostenibilidad</h3>
+                            <p class="text-gray-600">
+                                Comprometidos con el medio ambiente, utilizamos materiales responsables 
+                                y procesos de producción que minimizan nuestro impacto ecológico.
+                            </p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-heart text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">Autenticidad</h3>
+                            <p class="text-gray-600">
+                                Cada diseño refleja nuestra identidad única, sin copias ni imitaciones. 
+                                Creemos en la originalidad y la expresión personal.
+                            </p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-users text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">Comunidad</h3>
+                            <p class="text-gray-600">
+                                Construimos relaciones duraderas con nuestros clientes, colaboradores 
+                                y la comunidad, basadas en el respeto y la confianza mutua.
+                            </p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-lightbulb text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">Innovación</h3>
+                            <p class="text-gray-600">
+                                Constantemente exploramos nuevas técnicas, materiales y tendencias 
+                                para mantenernos a la vanguardia del diseño de moda.
+                            </p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-24 bg-[#8357C5] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-handshake text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">Integridad</h3>
+                            <p class="text-gray-600">
+                                Actuamos con honestidad y transparencia en todas nuestras operaciones, 
+                                manteniendo los más altos estándares éticos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nuestra Historia -->
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-16">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Nuestra Historia</h2>
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-12 h-12 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-white font-bold text-lg">1</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-xl font-semibold mb-4 text-gray-700">Los Inicios (2025)</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    AVENIDA nació de la pasión de un grupo de diseñadores jóvenes que soñaban con crear 
+                                    ropa que fuera más que moda: una declaración de estilo y personalidad. Comenzamos 
+                                    en un pequeño taller con la misión de revolucionar la moda urbana.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-6">
+                            <div class="w-12 h-12 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-white font-bold text-lg">2</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-xl font-semibold mb-4 text-gray-700">Crecimiento y Expansión (2021-2022)</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    Nuestro compromiso con la calidad y el diseño único nos llevó a expandirnos. 
+                                    Introdujimos nuevas líneas de productos y comenzamos a llegar a más clientes 
+                                    que compartían nuestra visión de la moda auténtica.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-6">
+                            <div class="w-12 h-12 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-white font-bold text-lg">3</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-xl font-semibold mb-4 text-gray-700">Innovación y Sostenibilidad (2023)</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    Nos comprometimos con la sostenibilidad, introduciendo materiales eco-friendly 
+                                    y procesos de producción responsables. Nuestro compromiso con el medio ambiente 
+                                    se convirtió en un pilar fundamental de nuestra marca.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-6">
+                            <div class="w-12 h-12 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-white font-bold text-lg">4</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-xl font-semibold mb-4 text-gray-700">El Presente y Futuro (2024+)</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    Hoy, AVENIDA es reconocida como una marca innovadora y responsable. Continuamos 
+                                    evolucionando, explorando nuevas tecnologías y tendencias, siempre manteniendo 
+                                    nuestros valores fundamentales y la pasión que nos impulsó desde el principio.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Compromisos -->
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-16">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Nuestros Compromisos</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="p-6 bg-gray-50 rounded-lg">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-globe-americas mr-3 text-[#8357C5]"></i>
+                                Con el Medio Ambiente
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Uso de materiales sostenibles y reciclados</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Procesos de producción con bajo impacto ambiental</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Reducción de residuos y empaques eco-friendly</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Compromiso con la neutralidad de carbono</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-6 bg-gray-50 rounded-lg">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-users mr-3 text-[#8357C5]"></i>
+                                Con Nuestros Clientes
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Calidad excepcional en cada prenda</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Servicio al cliente personalizado</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Transparencia en nuestros procesos</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Innovación constante en diseño y funcionalidad</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-6 bg-gray-50 rounded-lg">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-handshake mr-3 text-[#8357C5]"></i>
+                                Con Nuestros Colaboradores
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Condiciones laborales justas y seguras</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Salarios competitivos y beneficios</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Oportunidades de crecimiento profesional</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Respeto por los derechos laborales</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-6 bg-gray-50 rounded-lg">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-building mr-3 text-[#8357C5]"></i>
+                                Con la Sociedad
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Apoyo a iniciativas sociales y comunitarias</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Promoción de la diversidad e inclusión</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Colaboración con organizaciones sin fines de lucro</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Contribución al desarrollo económico local</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Llamada a la acción -->
+                <div class="bg-gradient-to-r from-[#8357C5] to-[#6B46C1] rounded-lg shadow-lg p-12 text-center text-white">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">íšnete a Nuestra Visión</h2>
+                    <p class="text-xl mb-8 opacity-90">
+                        Sé parte de una comunidad que valora la autenticidad, la calidad y la sostenibilidad. 
+                        Descubre cómo AVENIDA puede reflejar tu estilo y valores.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="index.html#product-grid" class="bg-white text-[#8357C5] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+                            Explorar Colección
+                        </a>
+                        <a href="about.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#8357C5] transition-colors duration-300">
+                            Conocer Más
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                    <!-- Brand -->
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold tracking-tighter">AVENIDA.</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Redefiniendo el estilo urbano con calidad premium y diseño exclusivo.
+                        </p>
+                        <div class="flex space-x-4 pt-2">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-tiktok text-xl"></i></a>
+                        </div>
+                    </div>
+    
+                    <!-- Shop -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-6">Tienda</h4>
+                        <ul class="space-y-3 text-sm text-gray-400">
+                            <li><a href="index.html#product-grid" class="hover:text-white transition-colors">Novedades</a></li>
+                        </ul>
+                    </div>
+    
+                    <!-- Help -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-6">Ayuda</h4>
+                        <ul class="space-y-3 text-sm text-gray-400">
+                            <li><a href="help.html" class="hover:text-white transition-colors">Centro de Ayuda</a></li>
+                            <li><a href="shipping.html" class="hover:text-white transition-colors">Envíos</a></li>
+                            <li><a href="returns.html" class="hover:text-white transition-colors">Devoluciones</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition-colors">Contacto</a></li>
+                        </ul>
+                    </div>
+    
+                    <!-- Legal -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-6">Legal</h4>
+                        <ul class="space-y-3 text-sm text-gray-400">
+                            <li><a href="terms.html" class="hover:text-white transition-colors">Términos y Condiciones</a></li>
+                            <li><a href="privacy.html" class="hover:text-white transition-colors">Política de Privacidad</a></li>
+                            <li><a href="cookies.html" class="hover:text-white transition-colors">Política de Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm">&copy; 2024 AVENIDA. Todos los derechos reservados.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <i class="fab fa-cc-visa text-gray-500 text-2xl"></i>
+                        <i class="fab fa-cc-mastercard text-gray-500 text-2xl"></i>
+                        <i class="fab fa-cc-amex text-gray-500 text-2xl"></i>
+                        <i class="fab fa-cc-paypal text-gray-500 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+</body>
+</html>
+
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Servicio al cliente personalizado</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Transparencia en nuestros procesos</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Innovación constante en diseño y funcionalidad</span>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        
+
+                        <div class="p-6 bg-gray-50 rounded-lg">
+
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+
+                                <i class="fas fa-handshake mr-3 text-[#8357C5]"></i>
+
+                                Con Nuestros Colaboradores
+
+                            </h3>
+
+                            <ul class="space-y-3 text-gray-700">
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Condiciones laborales justas y seguras</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Salarios competitivos y beneficios</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Oportunidades de crecimiento profesional</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Respeto por los derechos laborales</span>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        
+
+                        <div class="p-6 bg-gray-50 rounded-lg">
+
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+
+                                <i class="fas fa-building mr-3 text-[#8357C5]"></i>
+
+                                Con la Sociedad
+
+                            </h3>
+
+                            <ul class="space-y-3 text-gray-700">
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Apoyo a iniciativas sociales y comunitarias</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Promoción de la diversidad e inclusión</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Colaboración con organizaciones sin fines de lucro</span>
+
+                                </li>
+
+                                <li class="flex items-start space-x-2">
+
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+
+                                    <span>Contribución al desarrollo económico local</span>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                
+
+                <!-- Llamada a la acción -->
+
+                <div class="bg-gradient-to-r from-[#8357C5] to-[#6B46C1] rounded-lg shadow-lg p-12 text-center text-white">
+
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">íšnete a Nuestra Visión</h2>
+                    <p class="text-xl mb-8 opacity-90">
+
+                        Sé parte de una comunidad que valora la autenticidad, la calidad y la sostenibilidad. 
+
+                        Descubre cómo AVENIDA puede reflejar tu estilo y valores.
+
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+                        <a href="index.html#product-grid" class="bg-white text-[#8357C5] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+
+                            Explorar Colección
+
+                        </a>
+
+                        <a href="about.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#8357C5] transition-colors duration-300">
+
+                            Conocer Más
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- Modal de registro -->
+
+    <div id="register-modal" class="modal-overlay">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Registrarse</h2>
+                <button class="close-modal">&times;</button>
+
+            </div>
+
+            <form id="register-form">
+
+                <div class="form-group">
+
+                    <label for="register-name">Nombre completo</label>
+
+                    <input type="text" id="register-name" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="register-email">Email</label>
+
+                    <input type="email" id="register-email" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="register-password">Contraseña</label>
+
+                    <input type="password" id="register-password" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="register-confirm-password">Confirmar contraseña</label>
+
+                    <input type="password" id="register-confirm-password" required>
+
+                </div>
+
+                <button type="submit" class="btn-primary">Registrarse</button>
+
+            </form>
+
+            <div class="modal-footer">
+
+                <p>¿Ya tienes cuenta? <a href="#" id="show-login">Iniciar sesión</a></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal de inicio de sesión -->
+
+    <div id="login-modal" class="modal-overlay">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Iniciar Sesión</h2>
+                <button class="close-modal">&times;</button>
+
+            </div>
+
+            <form id="login-form">
+
+                <div class="form-group">
+
+                    <label for="login-email">Email</label>
+
+                    <input type="email" id="login-email" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="login-password">Contraseña</label>
+
+                    <input type="password" id="login-password" required>
+
+                </div>
+
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+
+            </form>
+
+            <div class="modal-footer">
+
+                <p>¿No tienes cuenta? <a href="#" id="show-register">Registrarse</a></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script src="firebase-config.js"></script>
+
+        <!-- Scripts unificados -->
+    
+    <!-- Script para funcionalidad del sidebar y header -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar funcionalidad del sidebar
+            initializeSidebar();
+            
+            // Inicializar funcionalidad del header
+            initializeHeader();
+        });
+        
+        // ======================= FUNCIONALIDAD DEL SIDEBAR =======================
+        function initializeSidebar() {
+            console.log('Inicializando sidebar...');
+            
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            // Abrir sidebar
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    console.log('Botón menú clickeado');
+                    sidebar.classList.add('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('hidden');
+                        sidebarOverlay.classList.add('active');
+                    }
+                    console.log('Sidebar abierto');
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(true);
+                    }
+                });
+            }
+
+            // Cerrar sidebar
+            if (closeSidebar && sidebar) {
+                closeSidebar.addEventListener('click', function() {
+                    console.log('Botón cerrar clickeado');
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                    console.log('Sidebar cerrado');
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            }
+
+            // Cerrar sidebar al hacer clic en el overlay
+            if (sidebarOverlay && sidebar) {
+                sidebarOverlay.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.add('hidden');
+                    sidebarOverlay.classList.remove('active');
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            }
+
+            // Cerrar sidebar al hacer clic en enlaces
+            const sidebarLinks = sidebar.querySelectorAll('a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                    
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            });
+
+            console.log('Sidebar configurado correctamente');
+        }
+        
+        // ======================= FUNCIONALIDAD DEL HEADER =======================
+        function initializeHeader() {
+            console.log('Inicializando header...');
+            
+            const header = document.getElementById('main-header');
+            
+            if (header) {
+                const onScroll = () => {
+                    const scrolled = window.scrollY > 50;
+                    header.classList.toggle('scrolled', scrolled);
+                };
+                
+                // Event listeners
+                window.addEventListener('scroll', onScroll, { passive: true });
+                window.addEventListener('resize', onScroll, { passive: true });
+                
+                onScroll(); // Ejecutar inmediatamente para establecer el estado inicial
+                
+                console.log('Header configurado correctamente');
+            } else {
+                console.error('âŒ Header no encontrado');
+            }
+        }
+    </script><script src="script.js?v=7"></script>
+    
+    <!-- Script para establecer el logo inicial inmediatamente -->
+    <script>
+        // Script para establecer el logo inicial inmediatamente
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logo logic removed
+        });
+    </script>
+</body>
+</html>
+
+
+
+

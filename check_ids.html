@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Check IDs</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <h1>Product IDs in Firebase</h1>
+    <ul id="list">Loading...</ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const db = firebase.firestore();
+            const snapshot = await db.collection('products').get();
+            const list = document.getElementById('list');
+            list.innerHTML = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const li = document.createElement('li');
+                li.textContent = `ID: "${doc.id}" - Name: ${data.name}`;
+                list.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>

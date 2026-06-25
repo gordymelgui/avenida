@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Firebase Stock</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .log { background: #f0f0f0; padding: 10px; border: 1px solid #ccc; margin-bottom: 10px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Debug Stock Firebase</h1>
+    <div id="status">Conectando...</div>
+    <div id="output" class="log"></div>
+    <button onclick="checkStock()">Re-check Stock</button>
+
+    <script>
+        const db = firebase.firestore();
+
+        function log(msg) {
+            const output = document.getElementById('output');
+            output.textContent += msg + '\n';
+            console.log(msg);
+        }
+
+        async function checkStock() {
+            document.getElementById('output').textContent = '';
+            log('Iniciando verificación...');
+            
+            try {
+                const snapshot = await db.collection('products').get();
+                log(`Total documentos encontrados: ${snapshot.size}`);
+                
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    log(`--------------------------------`);
+                    log(`ID: ${doc.id}`);
+                    log(`Nombre: ${data.name}`);
+                    log(`Stock Raw: ${JSON.stringify(data.stock)}`);
+                    
+                    if (data.stock) {
+                        log(`Stock P: ${data.stock.P} (Type: ${typeof data.stock.P})`);
+                        log(`Stock M: ${data.stock.M} (Type: ${typeof data.stock.M})`);
+                        log(`Stock G: ${data.stock.G} (Type: ${typeof data.stock.G})`);
+                    } else {
+                        log('⚠️ No hay campo stock en este documento');
+                    }
+                });
+                
+                document.getElementById('status').textContent = 'Verificación completada';
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                document.getElementById('status').textContent = 'Error';
+            }
+        }
+
+        // Auto-run
+        setTimeout(checkStock, 1000);
+    </script>
+</body>
+</html>

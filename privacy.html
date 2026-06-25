@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Política de Privacidad - AVENIDA.</title>
+
+    <!-- Favicon - Logo de AVENIDA en la pestaña del navegador -->
+    <link rel="icon" type="image/png" href="logo/logo violeta.png">
+    <link rel="apple-touch-icon" href="logo/logo violeta.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css?v=4.3">
+
+
+
+    <!-- Firebase SDK -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+
+    <style>
+        /* Mejoras de diseño para títulos y contenido */
+        .page-title {
+            background: linear-gradient(135deg, #8357C5 0%, #6e48a9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #8357C5, #6e48a9);
+            border-radius: 2px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Mejorar espaciado general */
+        .improved-spacing {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Mejorar contraste de texto */
+        .text-content {
+            color: #374151;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+
+
+
+    <!-- ======================= HEADER ======================= -->
+
+    <!-- ======================= HEADER UNIFICADO ======================= -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-2 px-3 md:py-4 md:px-6 h-16 md:h-24">
+
+            <!-- Izquierda (Menú y Desktop Links) - flex-1 keeps both sides exactly equal width to center logo -->
+            <div class="flex-1 flex items-center justify-start space-x-3 md:space-x-6 z-20">
+                <!-- Menú hamburguesa -->
+                <button id="menu-toggle" class="icon-link shrink-0">
+                    <i class="fas fa-bars text-lg md:text-2xl"></i>
+                </button>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#product-grid" class="nav-link">Ropa</a>
+                </nav>
+            </div>
+
+            <!-- Centro (Logo) - Centrado perfecto usando flex-none sin superposición absolute -->
+            <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                <a href="index.html" class="logo-link">
+                    <span id="header-logo-text"
+                        class="text-[14px] sm:text-[16px] md:text-2xl leading-none tracking-normal md:tracking-widest font-black">AVENIDA</span>
+                </a>
+            </div>
+
+            <!-- Derecha (Botones) - Se limitan los espacios para no chocar -->
+            <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-6 z-20">
+                <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                    <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-2xl"></i>
+                    <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                </a>
+                <!-- Botón de registrarse compacto (limite de ancho en celulares súper chicos) -->
+                <button id="register-btn"
+                    class="bg-white text-[#8357C5] px-2 py-1 md:px-4 md:py-2 rounded font-semibold hover:bg-gray-100 transition-colors duration-300 text-[9px] sm:text-[11px] md:text-base whitespace-nowrap shrink-0 max-w-[130px] sm:max-w-none overflow-hidden text-ellipsis">
+                    Registrarse
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- Barra lateral desplegable UNIFICADA -->
+    <div id="sidebar"
+        class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+        <div class="p-6">
+            <!-- Cabecera del sidebar -->
+            <div class="flex justify-between items-center mb-8">
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Sección de usuario -->
+            <div class="user-section mb-8">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-16 h-24 rounded-full bg-white/20 flex items-center justify-center">
+                        <i class="fas fa-user text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-lg font-semibold" id="user-display-name"
+                            class="text-xl font-semibold mb-4 text-gray-700">Usuario</h3>
+                        <p class="text-white/70" id="user-display-email">usuario@email.com</p>
+                    </div>
+                </div>
+                <div class="bg-white/10 rounded-lg p-4">
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="profile.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-user-circle mr-3"></i>
+                                <span>Mi Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="orders.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-shopping-bag mr-3"></i>
+                                <span>Mis Pedidos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="favorites.html" class="flex items-center text-white hover:text-gray-200">
+                                <i class="fas fa-heart mr-3"></i>
+                                <span>Favoritos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Navegación principal -->
+            <nav class="mb-8">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="index.html" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-home mr-3"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#product-grid" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-tshirt mr-3"></i>
+                            <span>Ropa</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#lookbook-section"
+                            class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-images mr-3"></i>
+                            <span>Lookbook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-info-circle mr-3"></i>
+                            <span>Sobre Nosotros</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+
+        </div>
+    </div>
+
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+    <!-- Modal de Registro UNIFICADO -->
+    <div id="register-modal" class="modal-overlay">
+        <div class="modal-content w-11/12 max-w-md">
+            <div class="bg-white rounded-lg shadow-xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Crear Cuenta
+                    </h2>
+                    <button id="close-register-btn" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <form id="register-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+                        <input type="text" id="register-name" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="register-email" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                        <input type="password" id="register-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+                        <input type="password" id="register-confirm-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+                    </div>
+
+                    <div class="flex items-center">
+                        <input type="checkbox" id="register-terms" required
+                            class="h-4 w-4 text-[#8357C5] focus:ring-[#8357C5] border-gray-300 rounded">
+                        <label class="ml-2 block text-sm text-gray-900">
+                            Acepto los <a href="#" class="text-[#8357C5] hover:underline">Términos y Condiciones</a>
+                        </label>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-[#8357C5] text-white py-3 px-4 rounded-md hover:bg-[#6e48a9] transition-colors duration-300 font-semibold">
+                        Crear Cuenta
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        ¿Ya tienes cuenta?
+                        <a href="#" id="login-link" class="text-[#8357C5] hover:underline font-medium">Iniciar
+                            Sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Barra lateral desplegable -->
+
+    <div id="sidebar"
+        class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+
+        <div class="p-6">
+
+            <!-- Cabecera del sidebar -->
+
+            <div class="flex justify-between items-center mb-8">
+
+                <h2 class="text-white text-2xl font-bold">AVENIDA.</h2>
+
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+
+                    <i class="fas fa-times text-2xl"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Sección de usuario -->
+
+            <div class="user-section mb-8">
+
+                <div class="flex items-center space-x-4 mb-4">
+
+                    <div class="w-16 h-24 rounded-full bg-white/20 flex items-center justify-center">
+
+                        <i class="fas fa-user text-white text-2xl"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-white text-lg font-semibold" id="user-display-name"
+                            class="text-xl font-semibold mb-4 text-gray-700">Usuario</h3>
+                        <p class="text-white/70" id="user-display-email">usuario@email.com</p>
+
+                    </div>
+
+                </div>
+
+                <div class="bg-white/10 rounded-lg p-4">
+
+                    <ul class="space-y-3">
+
+                        <li>
+
+                            <a href="profile.html" class="flex items-center text-white hover:text-gray-200">
+
+                                <i class="fas fa-user-circle mr-3"></i>
+
+                                <span>Mi Perfil</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="orders.html" class="flex items-center text-white hover:text-gray-200">
+
+                                <i class="fas fa-shopping-bag mr-3"></i>
+
+                                <span>Mis Pedidos</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="favorites.html" class="flex items-center text-white hover:text-gray-200">
+
+                                <i class="fas fa-heart mr-3"></i>
+
+                                <span>Favoritos</span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Navegación principal -->
+
+            <nav class="mb-8">
+
+                <ul class="space-y-4">
+
+                    <li>
+
+                        <a href="index.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-home mr-3"></i>
+
+                            <span>Inicio</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="index.html#product-grid" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-tshirt mr-3"></i>
+
+                            <span>Ropa</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="index.html#lookbook-section"
+                            class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-images mr-3"></i>
+
+                            <span>Lookbook</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="about.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-info-circle mr-3"></i>
+
+                            <span>Sobre Nosotros</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+
+
+            <!-- Sección de Legal y Ayuda -->
+            <div class="config-section mb-8">
+                <h3 class="text-white text-lg font-semibold mb-4">Legal y Ayuda</h3>
+                <ul class="space-y-3 bg-white/10 rounded-lg p-4">
+                    <li>
+                        <a href="terms.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-file-contract mr-3"></i>
+                            <span>Términos y Condiciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="privacy.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-user-shield mr-3"></i>
+                            <span>Política de Privacidad</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="returns.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-undo mr-3"></i>
+                            <span>Política de Devolución</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="help.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-question-circle mr-3"></i>
+                            <span>Centro de Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sección de administración (solo para admins) -->
+            <div class="admin-section mb-8" id="admin-section" style="display: none;">
+                <h3 class="text-white text-lg font-semibold mb-4">Administración</h3>
+                <ul class="space-y-3 bg-white/10 rounded-lg p-4">
+                    <li>
+
+                        <a href="admin-panel.html" class="flex items-center text-white hover:text-gray-200">
+
+                            <i class="fas fa-cog mr-3"></i>
+
+                            <span>Panel de Administración</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="stock-admin.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-boxes mr-3"></i>
+                            <span>Gestión de Stock</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+
+
+            <!-- Sección de manifiesto -->
+
+            <div class="about-section">
+
+                <h3 class="text-white text-lg font-semibold mb-4">Sobre Nosotros</h3>
+
+                <div class="bg-white/10 rounded-lg p-4">
+
+                    <p class="text-white/80 mb-4">Somos AVENIDA, una marca de ropa comprometida con la calidad y el
+                        estilo.</p>
+
+
+                    <!-- Equipo AVENIDA -->
+                    <div class="team-info mt-4">
+                        <h4 class="text-white font-semibold mb-3">Nuestro Equipo</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                    <i class="fas fa-palette text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Isma</p>
+                                    <p class="text-white/70 text-sm">Estética de la marca</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                    <i class="fas fa-bullhorn text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Tizi</p>
+                                    <p class="text-white/70 text-sm">Marketing</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                    <i class="fas fa-tshirt text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Carpi</p>
+                                    <p class="text-white/70 text-sm">Diseñador de pantalones</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-white/20">
+                        <a href="manifiesto.html" class="text-white hover:text-gray-200 underline">Ver nuestro
+                            manifiesto</a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+
+
+
+    <!-- Envoltura principal para todo el contenido que se desplaza -->
+
+    <div id="page-content">
+
+        <!-- ======================= SECCIí“N DE PRIVACIDAD ======================= -->
+
+        <main class="container mx-auto pt-56 px-6 pt-56 px-6">
+            <div class="max-w-4xl mx-auto">
+
+                <h1
+                    class="text-4xl mt-12 mt-8 md:text-5xl font-bold text-gray-900 mb-8 text-center bg-gradient-to-r from-[#8357C5] to-[#6e48a9] bg-clip-text text-transparent">
+                    Política de Privacidad</h1>
+
+
+                <!-- Información general -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-shield-alt mr-3 text-[#8357C5]"></i>
+
+                        Información General
+
+                    </h2>
+
+                    <div class="prose prose-lg max-w-none">
+
+                        <p class="text-gray-700 mb-4">
+
+                            En AVENIDA, nos comprometemos a proteger y respetar tu privacidad. Esta política de
+                            privacidad
+
+                            explica cómo recopilamos, utilizamos y protegemos tu información personal cuando utilizas
+                            nuestro
+
+                            sitio web y servicios.
+
+                        </p>
+
+                        <p class="text-gray-700 mb-4">
+
+                            <strong>íšltima actualización:</strong> 4 de Diciembre, 2025
+
+                        </p>
+
+                        <p class="text-gray-700">
+
+                            <strong>Responsable del tratamiento:</strong> AVENIDA Store, con domicilio en Asunción,
+                            Paraguay.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Información que recopilamos -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-database mr-3 text-[#8357C5]"></i>
+
+                        Información que Recopilamos
+
+                    </h2>
+
+                    <div class="space-y-6">
+
+                        <div>
+
+                            <h3
+                                class="text-lg font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">
+                                Información Personal</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+
+                                <li>Nombre completo y apellidos</li>
+
+                                <li>Dirección de correo electrónico</li>
+
+                                <li>Número de teléfono</li>
+
+                                <li>Dirección de envío y facturación</li>
+
+                                <li>Información de pago (procesada de forma segura)</li>
+
+                            </ul>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <h3
+                                class="text-lg font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">
+                                Información de Uso</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+
+                                <li>Datos de navegación y uso del sitio web</li>
+
+                                <li>Información del dispositivo y navegador</li>
+
+                                <li>Dirección IP y ubicación aproximada</li>
+
+                                <li>Cookies y tecnologías similares</li>
+
+                            </ul>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <h3
+                                class="text-lg font-semibold text-gray-900 mb-3 text-xl font-semibold mb-4 text-gray-700">
+                                Información de Transacciones</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+
+                                <li>Historial de compras y pedidos</li>
+
+                                <li>Productos favoritos y listas de deseos</li>
+
+                                <li>Comentarios y reseñas</li>
+
+                                <li>Interacciones con el servicio al cliente</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Cómo utilizamos tu información -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-cogs mr-3 text-[#8357C5]"></i>
+
+                        Cómo Utilizamos tu Información
+
+                    </h2>
+
+                    <div class="space-y-6">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <div class="bg-gray-50 p-6 rounded-lg">
+
+                                <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+
+                                    <i class="fas fa-shopping-cart mr-2 text-[#8357C5]"></i>
+
+                                    Procesamiento de Pedidos
+
+                                </h3>
+
+                                <p class="text-gray-700 text-sm">
+
+                                    Para procesar y enviar tus pedidos, gestionar pagos y proporcionar servicio al
+                                    cliente.
+
+                                </p>
+
+                            </div>
+
+
+
+                            <div class="bg-gray-50 p-6 rounded-lg">
+
+                                <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+
+                                    <i class="fas fa-bullhorn mr-2 text-[#8357C5]"></i>
+
+                                    Comunicaciones
+
+                                </h3>
+
+                                <p class="text-gray-700 text-sm">
+
+                                    Para enviarte información sobre productos, ofertas especiales y actualizaciones del
+                                    servicio.
+
+                                </p>
+
+                            </div>
+
+
+
+                            <div class="bg-gray-50 p-6 rounded-lg">
+
+                                <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+
+                                    <i class="fas fa-chart-line mr-2 text-[#8357C5]"></i>
+
+                                    Mejora del Servicio
+
+                                </h3>
+
+                                <p class="text-gray-700 text-sm">
+
+                                    Para analizar el uso del sitio web y mejorar nuestros productos y servicios.
+
+                                </p>
+
+                            </div>
+
+
+
+                            <div class="bg-gray-50 p-6 rounded-lg">
+
+                                <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+
+                                    <i class="fas fa-shield-alt mr-2 text-[#8357C5]"></i>
+
+                                    Seguridad
+
+                                </h3>
+
+                                <p class="text-gray-700 text-sm">
+
+                                    Para proteger contra fraudes, abusos y mantener la seguridad de nuestros servicios.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Compartir información -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-share-alt mr-3 text-[#8357C5]"></i>
+
+                        Compartir tu Información
+
+                    </h2>
+
+                    <div class="prose prose-lg max-w-none">
+
+                        <p class="text-gray-700 mb-4">
+
+                            <strong>No vendemos, alquilamos ni compartimos tu información personal</strong> con
+                            terceros,
+
+                            excepto en las siguientes circunstancias:
+
+                        </p>
+
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+
+                            <li><strong>Proveedores de servicios:</strong> Para procesar pagos, enviar productos y
+                                proporcionar soporte técnico</li>
+
+                            <li><strong>Cumplimiento legal:</strong> Cuando sea requerido por ley o para proteger
+                                nuestros derechos</li>
+
+                            <li><strong>Consentimiento:</strong> Cuando hayas dado tu consentimiento explícito</li>
+
+                            <li><strong>Seguridad:</strong> Para proteger contra fraudes y abusos</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Tus derechos -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-user-check mr-3 text-[#8357C5]"></i>
+
+                        Tus Derechos
+
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <div class="space-y-4">
+
+                            <div class="flex items-start space-x-3">
+
+                                <div
+                                    class="w-8 h-8 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                    <i class="fas fa-eye text-white text-sm"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4 class="font-semibold text-gray-900">Acceso</h4>
+
+                                    <p class="text-sm text-gray-600">Solicitar acceso a tu información personal</p>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="flex items-start space-x-3">
+
+                                <div
+                                    class="w-8 h-8 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                    <i class="fas fa-edit text-white text-sm"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4 class="font-semibold text-gray-900">Rectificación</h4>
+
+                                    <p class="text-sm text-gray-600">Corregir información inexacta o incompleta</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="space-y-4">
+
+                            <div class="flex items-start space-x-3">
+
+                                <div
+                                    class="w-8 h-8 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                    <i class="fas fa-trash text-white text-sm"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4 class="font-semibold text-gray-900">Supresión</h4>
+
+                                    <p class="text-sm text-gray-600">Solicitar la eliminación de tu información</p>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="flex items-start space-x-3">
+
+                                <div
+                                    class="w-8 h-8 bg-[#8357C5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                    <i class="fas fa-ban text-white text-sm"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4 class="font-semibold text-gray-900">Oposición</h4>
+
+                                    <p class="text-sm text-gray-600">Oponerte al procesamiento de tus datos</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+
+                        <p class="text-blue-800 text-sm">
+
+                            <i class="fas fa-info-circle mr-2"></i>
+
+                            Para ejercer cualquiera de estos derechos, contáctanos a través de
+
+                            <a href="mailto:aaavenidaaa@gmail.com"
+                                class="underline font-medium">aaavenidaaa@gmail.com</a>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Seguridad de datos -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-lock mr-3 text-[#8357C5]"></i>
+
+                        Seguridad de Datos
+
+                    </h2>
+
+                    <div class="space-y-4">
+
+                        <div class="flex items-start space-x-3">
+
+                            <div
+                                class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                <i class="fas fa-check text-white text-xs"></i>
+
+                            </div>
+
+                            <p class="text-gray-700">Utilizamos encriptación SSL/TLS para proteger la transmisión de
+                                datos</p>
+
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+
+                            <div
+                                class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                <i class="fas fa-check text-white text-xs"></i>
+
+                            </div>
+
+                            <p class="text-gray-700">Implementamos medidas de seguridad técnicas y organizativas</p>
+
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+
+                            <div
+                                class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                <i class="fas fa-check text-white text-xs"></i>
+
+                            </div>
+
+                            <p class="text-gray-700">Acceso limitado a la información personal solo para personal
+                                autorizado</p>
+
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+
+                            <div
+                                class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+
+                                <i class="fas fa-check text-white text-xs"></i>
+
+                            </div>
+
+                            <p class="text-gray-700">Monitoreo regular de sistemas para detectar y prevenir amenazas</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Cookies -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-cookie-bite mr-3 text-[#8357C5]"></i>
+
+                        Cookies y Tecnologías Similares
+
+                    </h2>
+
+                    <div class="prose prose-lg max-w-none">
+
+                        <p class="text-gray-700 mb-4">
+
+                            Utilizamos cookies y tecnologías similares para mejorar tu experiencia en nuestro sitio web:
+
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+
+                            <div class="text-center p-4 bg-gray-50 rounded-lg">
+
+                                <i class="fas fa-cog text-2xl text-[#8357C5] mb-2"></i>
+
+                                <h4 class="font-semibold text-gray-900">Esenciales</h4>
+
+                                <p class="text-sm text-gray-600">Necesarias para el funcionamiento básico del sitio</p>
+
+                            </div>
+
+                            <div class="text-center p-4 bg-gray-50 rounded-lg">
+
+                                <i class="fas fa-chart-bar text-2xl text-[#8357C5] mb-2"></i>
+
+                                <h4 class="font-semibold text-gray-900">Analíticas</h4>
+
+                                <p class="text-sm text-gray-600">Para entender cómo utilizas nuestro sitio</p>
+
+                            </div>
+
+                            <div class="text-center p-4 bg-gray-50 rounded-lg">
+
+                                <i class="fas fa-ad text-2xl text-[#8357C5] mb-2"></i>
+
+                                <h4 class="font-semibold text-gray-900">Marketing</h4>
+
+                                <p class="text-sm text-gray-600">Para mostrar contenido relevante</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mt-6 p-4 bg-yellow-50 rounded-lg">
+
+                            <p class="text-yellow-800 text-sm">
+
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+
+                                Puedes gestionar tus preferencias de cookies en la configuración de tu navegador o en
+                                nuestra página de configuración.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Contacto -->
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+
+                        <i class="fas fa-envelope mr-3 text-[#8357C5]"></i>
+
+                        Contacto y Preguntas
+
+                    </h2>
+
+                    <div class="prose prose-lg max-w-none">
+
+                        <p class="text-gray-700 mb-4">
+
+                            Si tienes preguntas sobre esta política de privacidad o sobre cómo manejamos tu información
+                            personal,
+
+                            no dudes en contactarnos:
+
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+
+                            <div class="p-4 bg-gray-50 rounded-lg">
+
+                                <h4 class="font-semibold text-gray-900 mb-2">Email</h4>
+
+                                <a href="mailto:aaavenidaaa@gmail.com" class="text-[#8357C5] hover:text-[#6B46C1]">
+                                    aaavenidaaa@gmail.com
+                                </a>
+
+                            </div>
+
+                            <div class="p-4 bg-gray-50 rounded-lg">
+
+                                <h4 class="font-semibold text-gray-900 mb-2">Teléfono</h4>
+
+                                <a href="tel:+595982713971" class="text-[#8357C5] hover:text-[#6B46C1]">
+                                    +595 982 713971
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+
+                            <p class="text-blue-800 text-sm">
+
+                                <i class="fas fa-clock mr-2"></i>
+
+                                <strong>Horario de atención:</strong> Lunes a Viernes de 9:00 AM a 6:00 PM (GMT-5)
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ======================= FOOTER ======================= -->
+    <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Columna 1: Info -->
+                <div>
+                    <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-12 mb-6">
+                    <p class="text-gray-400 mb-6">
+                        Elevando el estilo urbano con diseños exclusivos y calidad premium.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/aaavenidaaa/" target="_blank"
+                            class="text-white hover:text-[#8357C5] transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@aaavenidaaa" target="_blank"
+                            class="text-white hover:text-[#8357C5] transition-colors">
+                            <i class="fab fa-tiktok text-xl"></i>
+                        </a>
+                        <a href="https://wa.me/595982713971" target="_blank"
+                            class="text-white hover:text-[#8357C5] transition-colors">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Enlaces -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Enlaces Rápidos</h4>
+                    <ul class="space-y-4">
+                        <li><a href="index.html" class="text-gray-400 hover:text-[#8357C5] transition-colors">Inicio</a>
+                        </li>
+                        <li><a href="index.html#product-grid"
+                                class="text-gray-400 hover:text-[#8357C5] transition-colors">Colección</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-[#8357C5] transition-colors">Sobre
+                                Nosotros</a></li>
+                        <li><a href="https://wa.me/595982713971"
+                                class="text-gray-400 hover:text-[#8357C5] transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Legal -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Legal</h4>
+                    <ul class="space-y-4">
+                        <li><a href="terms.html" class="text-gray-400 hover:text-[#8357C5] transition-colors">Términos y
+                                Condiciones</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-[#8357C5] transition-colors">Política
+                                de Privacidad</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-[#8357C5] transition-colors">Política
+                                de Devoluciones</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Newsletter -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Suscríbete para recibir ofertas exclusivas.</p>
+                    <form class="flex flex-col space-y-3">
+                        <input type="email" placeholder="Tu email"
+                            class="bg-[#2a2a2a] text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8357C5]">
+                        <button type="submit"
+                            class="bg-[#8357C5] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6e48a9] transition-colors">
+                            Suscribirse
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-500">&copy; 2026 AVENIDA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de registro -->
+
+    <div id="register-modal" class="modal-overlay">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Registrarse</h2>
+                <button class="close-modal">&times;</button>
+
+            </div>
+
+            <form id="register-form">
+
+                <div class="form-group">
+
+                    <label for="register-name">Nombre completo</label>
+
+                    <input type="text" id="register-name" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="register-email">Email</label>
+
+                    <input type="email" id="register-email" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="register-password">Contraseña</label>
+
+                    <input type="password" id="register-password" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="register-confirm-password">Confirmar contraseña</label>
+
+                    <input type="password" id="register-confirm-password" required>
+
+                </div>
+
+                <button type="submit" class="btn-primary">Registrarse</button>
+
+            </form>
+
+            <div class="modal-footer">
+
+                <p>¿Ya tienes cuenta? <a href="#" id="show-login">Iniciar sesión</a></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal de inicio de sesión -->
+
+    <div id="login-modal" class="modal-overlay">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 border-[#8357C5] pb-2">Iniciar Sesión
+                </h2>
+                <button class="close-modal">&times;</button>
+
+            </div>
+
+            <form id="login-form">
+
+                <div class="form-group">
+
+                    <label for="login-email">Email</label>
+
+                    <input type="email" id="login-email" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="login-password">Contraseña</label>
+
+                    <input type="password" id="login-password" required>
+
+                </div>
+
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+
+            </form>
+
+            <div class="modal-footer">
+
+                <p>¿No tienes cuenta? <a href="#" id="show-register">Registrarse</a></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script src="firebase-config.js"></script>
+
+    <!-- Scripts unificados -->
+
+    <!-- Script para funcionalidad del sidebar y header -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar funcionalidad del sidebar
+            initializeSidebar();
+
+            // Inicializar funcionalidad del header
+            initializeHeader();
+        });
+
+        // ======================= FUNCIONALIDAD DEL SIDEBAR =======================
+        function initializeSidebar() {
+            console.log('Inicializando sidebar...');
+
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            // Abrir sidebar
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function () {
+                    console.log('Botón menú clickeado');
+                    sidebar.classList.add('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('hidden');
+                        sidebarOverlay.classList.add('active');
+                    }
+                    console.log('Sidebar abierto');
+
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(true);
+                    }
+                });
+            }
+
+            // Cerrar sidebar
+            if (closeSidebar && sidebar) {
+                closeSidebar.addEventListener('click', function () {
+                    console.log('Botón cerrar clickeado');
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                    console.log('Sidebar cerrado');
+
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            }
+
+            // Cerrar sidebar al hacer clic en el overlay
+            if (sidebarOverlay && sidebar) {
+                sidebarOverlay.addEventListener('click', function () {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.add('hidden');
+                    sidebarOverlay.classList.remove('active');
+
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            }
+
+            // Cerrar sidebar al hacer clic en enlaces
+            const sidebarLinks = sidebar.querySelectorAll('a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+
+                    // Llamar a la función global del sidebar si existe
+                    if (window.onSidebarToggle) {
+                        window.onSidebarToggle(false);
+                    }
+                });
+            });
+
+            console.log('Sidebar configurado correctamente');
+        }
+
+        // ======================= FUNCIONALIDAD DEL HEADER =======================
+        function initializeHeader() {
+            console.log('Inicializando header...');
+
+            const header = document.getElementById('main-header');
+
+            if (header) {
+                const onScroll = () => {
+                    const scrolled = window.scrollY > 50;
+                    header.classList.toggle('scrolled', scrolled);
+                };
+
+                // Event listeners
+                window.addEventListener('scroll', onScroll, { passive: true });
+                window.addEventListener('resize', onScroll, { passive: true });
+
+                onScroll(); // Ejecutar inmediatamente para establecer el estado inicial
+
+                console.log('Header configurado correctamente');
+            } else {
+                console.error('âŒ Header no encontrado');
+            }
+        }
+    </script>
+    <script src="script.js?v=7"></script>
+
+    <!-- Script para establecer el logo inicial inmediatamente -->
+    <script>
+        // Script para establecer el logo inicial inmediatamente
+        document.addEventListener('DOMContentLoaded', function () {
+            // Logo logic removed
+        });
+    </script>
+</body>
+
+</html>
