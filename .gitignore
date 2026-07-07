@@ -3,3 +3,5 @@ node_modules/
 *.zip
 *.rar
 *.bat
+firebase-config.js
+emailjs-config.js
