@@ -291,10 +291,10 @@
 
             <!-- Fila Inferior: Categorías (Solo Desktop) -->
             <nav id="category-nav" class="hidden md:flex items-center justify-center space-x-14 pb-4 transition-all duration-300">
-                <a href="#" onclick="filterProducts('Nuevo Drop', event)" class="category-link active-category">Nuevo Drop</a>
-                <a href="#" onclick="filterProducts('Superior', event)" class="category-link">Superior</a>
-                <a href="#" onclick="filterProducts('Inferior', event)" class="category-link">Inferior</a>
-                <a href="#" onclick="filterProducts('Todas las prendas', event)" class="category-link">Todas las prendas</a>
+                <a href="shop.html?category=Nuevo Drop" class="category-link">Nuevo Drop</a>
+                <a href="shop.html?category=Superior" class="category-link">Superior</a>
+                <a href="shop.html?category=Inferior" class="category-link">Inferior</a>
+                <a href="shop.html?category=Todas las prendas" class="category-link">Todas las prendas</a>
             </nav>
         </div>
     </header>
@@ -427,25 +427,25 @@
                     </li>
 
                     <li>
-                        <a href="#" onclick="filterProducts('Todas las prendas', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                        <a href="shop.html?category=Todas las prendas" class="flex items-center text-white hover:text-gray-200 py-2">
                             <i class="fas fa-th-large mr-3"></i>
                             <span>Todas las prendas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" onclick="filterProducts('Nuevo Drop', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                        <a href="shop.html?category=Nuevo Drop" class="flex items-center text-white hover:text-gray-200 py-2">
                             <i class="fas fa-star mr-3"></i>
                             <span>Nuevo Drop</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" onclick="filterProducts('Superior', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                        <a href="shop.html?category=Superior" class="flex items-center text-white hover:text-gray-200 py-2">
                             <i class="fas fa-tshirt mr-3"></i>
                             <span>Superior</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" onclick="filterProducts('Inferior', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                        <a href="shop.html?category=Inferior" class="flex items-center text-white hover:text-gray-200 py-2">
                             <i class="fas fa-tshirt mr-3"></i>
                             <span>Inferior</span>
                         </a>
@@ -453,7 +453,7 @@
 
                     <li>
 
-                        <a href="#lookbook-section" class="flex items-center text-white hover:text-gray-200 py-2">
+                        <a href="shop.html#lookbook-section" class="flex items-center text-white hover:text-gray-200 py-2">
 
                             <i class="fas fa-images mr-3"></i>
 
@@ -551,427 +551,46 @@
 
 
     <!-- Envoltura principal para todo el contenido que se desplaza -->
-
     <div id="page-content">
 
-        <!-- ======================= BANNER CAROUSEL ======================= -->
-        <section id="banner-carousel">
+        <!-- ======================= BANNER VIDEO FULLSCREEN ======================= -->
+        <section id="hero-video-fullscreen" class="relative w-full h-screen overflow-hidden">
+            <!-- Video de Fondo -->
+            <video id="hero-video" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+                <source src="videos/Avda TEASER I CORTE FINAL.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
 
-            <div class="carousel-container">
-                <div class="carousel-slide" style="background-image: url('banner/nuevo banner 2026/DSC_0214.webp');">
-                </div>
-                <div class="carousel-slide" style="background-image: url('banner/nuevo banner 2026/DSC_0217.webp');">
-                </div>
-                <div class="carousel-slide"
-                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-18-18A.jpeg');"></div>
-                <div class="carousel-slide"
-                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-27-9A.jpeg');"></div>
-                <div class="carousel-slide"
-                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-33-3A.jpeg');"></div>
-            </div>
-
-
-
-            <!-- Botones de navegación -->
-
-            <button id="prev-btn" class="carousel-arrow" aria-label="Slide anterior">
-
-                <i class="fas fa-chevron-left"></i>
-
-            </button>
-
-            <button id="next-btn" class="carousel-arrow" aria-label="Slide siguiente">
-
-                <i class="fas fa-chevron-right"></i>
-
-            </button>
-
-
-
-            <!-- Indicadores de navegación -->
-
-            <div class="carousel-indicators">
-
-                <button class="carousel-indicator" data-slide="0" aria-label="Ir al slide 1"></button>
-                <button class="carousel-indicator" data-slide="1" aria-label="Ir al slide 2"></button>
-                <button class="carousel-indicator" data-slide="2" aria-label="Ir al slide 3"></button>
-                <button class="carousel-indicator" data-slide="3" aria-label="Ir al slide 4"></button>
-                <button class="carousel-indicator" data-slide="4" aria-label="Ir al slide 5"></button>
-
-            </div>
-
-        </section>
-
-
-        <!-- ======================= CATÁLOGO DE PRODUCTOS ======================= -->
-
-        <main class="container mx-auto py-24">
-
-
-
-            <!-- Video Hero Section -->
-            <div
-                class="hero-video-container relative w-full mb-16 overflow-hidden rounded-none md:rounded-xl shadow-2xl group">
-                <!-- Video de Fondo -->
-                <video id="hero-video" autoplay muted loop playsinline poster="banner/banner1.jpeg"
-                    class="w-full h-[50vh] md:h-[70vh] object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[2s]">
-                    <source src="videos/Avda TEASER I CORTE FINAL.mp4" type="video/mp4">
-                    Tu navegador no soporta el elemento de video.
-                </video>
-
-                <!-- Overlay Oscuro (Mejora legibilidad) -->
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none">
-                </div>
-
-                <!-- Contenido Central (Texto y CTA) -->
-                <div
-                    class="absolute inset-0 flex flex-col items-center justify-center text-white z-10 text-center px-4">
-                    <span
-                        class="text-xs md:text-sm font-medium tracking-[0.5em] uppercase mb-4 opacity-0 animate-fade-in-up text-white/80"
-                        style="animation-delay: 0.5s; animation-fill-mode: forwards;">COLECCIÓN 2026</span>
-                    <h2 class="font-rip text-4xl md:text-6xl mb-8 opacity-0 animate-fade-in-up leading-none tracking-tighter flex items-center justify-center gap-4"
-                        style="animation-delay: 0.7s; animation-fill-mode: forwards;">
-                        <span class="text-white">VERANO</span>
-                        <span class="text-gradient" style="text-shadow: 0 10px 30px rgba(131,87,197,0.3);">ETERNO</span>
-                    </h2>
-
-                    <a href="#product-grid"
-                        class="group/btn relative px-8 py-3 bg-white text-black font-bold uppercase tracking-wider overflow-hidden transition-all hover:bg-[#8357C5] hover:text-white opacity-0 animate-fade-in-up shadow-lg hover:shadow-purple-500/50 rounded-sm"
-                        style="animation-delay: 0.9s; animation-fill-mode: forwards;">
-                        <span class="relative z-10">Ver Catálogo</span>
+            <!-- Capa de oscurecimiento -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80 pointer-events-none"></div>
+            
+            <!-- Contenido superpuesto -->
+            <div class="absolute inset-0 flex flex-col items-center justify-between text-white text-center py-24 px-4 z-10">
+                <!-- Espaciador para centrar -->
+                <div></div>
+                
+                <!-- Título y Subtítulo -->
+                <div class="animate-fade-in-up">
+                    <span class="text-xs md:text-sm font-medium tracking-[0.6em] uppercase mb-4 opacity-80 block">DROP 02 / JULIO 2026</span>
+                    <h1 class="font-rip text-6xl md:text-9xl leading-none tracking-tighter mb-8 text-shadow-lg">
+                        AVENIDA
+                    </h1>
+                    <a href="shop.html" class="px-10 py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-[#8357C5] hover:text-white transition-all duration-300 rounded-sm inline-block shadow-2xl text-sm border-2 border-white hover:border-[#8357C5]">
+                        INGRESAR A LA TIENDA
                     </a>
                 </div>
-
-                <!-- Botón de Sonido -->
-                <button id="video-sound-btn"
-                    class="absolute bottom-6 right-6 bg-black/40 hover:bg-black/70 text-white w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 backdrop-blur-md z-20 cursor-pointer border border-white/10 hover:scale-110">
-                    <i class="fas fa-volume-mute text-lg"></i>
-                </button>
+                
+                <!-- Flecha indicadora de scroll que lleva al footer / tienda -->
+                <a href="shop.html" class="flex flex-col items-center gap-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity decoration-none text-white">
+                    <span class="text-[9px] tracking-[0.3em] uppercase">Entrar</span>
+                    <i class="fas fa-chevron-down animate-bounce text-lg"></i>
+                </a>
             </div>
-
-            <h2 id="product-grid-title" class="text-center text-4xl font-bold text-gray-900 mb-16 px-6 md:px-0">
-                Nuevo Drop</h2>
-
-            <section id="product-grid"
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
-                <!-- Las tarjetas de productos se generarán dinámicamente desde script.js -->
-            </section>
-
-            <!-- Sección Verano Eterno -->
-            <h2 id="old-grid-title" class="text-center text-4xl font-bold text-gray-900 mt-32 mb-16 px-6 md:px-0">
-                Verano Eterno</h2>
-
-            <section id="old-product-grid"
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
-                <!-- Las tarjetas de productos se generarán dinámicamente desde script.js -->
-            </section>
-
-            <div id="view-all-container" class="flex justify-center mt-12 mb-20">
-                <button onclick="showOlderDrops(event)" 
-                    class="px-10 py-4 border-2 border-white text-white font-black uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-[#8357C5] transition-all duration-300 shadow-xl hover:shadow-white/20 text-sm">
-                    Ver todos los productos
-                </button>
-            </div>
-
-            <!-- Sección Drops Antiguos (Oculta por defecto) -->
-            <div id="older-drops-section" style="display: none;">
-                <h2 class="text-center text-4xl font-bold text-gray-900 mt-16 mb-16 px-6 md:px-0">
-                    Primer Drop</h2>
-
-                <section id="older-product-grid"
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
-                    <!-- Las tarjetas de productos se generarán dinámicamente desde script.js -->
-                </section>
-            </div>
-
-        </main>
-
-
-        <!-- ======================= SECCIÓN LOOKBOOK ======================= -->
-        <section id="lookbook-section" class="container mx-auto py-20 px-6">
-            <div class="bg-white text-gray-900 rounded-3xl shadow-2xl p-8 md:p-12 max-w-[900px] mx-auto">
-
-            <!-- Instagram Profile Header -->
-            <div class="max-w-[700px] mx-auto mb-8 text-[#262626]">
-                <div class="flex flex-col md:flex-row items-start md:gap-20 px-4 mb-8">
-                    <!-- Profile Picture -->
-                    <div class="flex-shrink-0 mx-auto md:mx-0 mb-6 md:mb-0">
-                        <div
-                            class="w-[150px] h-[150px] rounded-full p-[2px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] relative">
-                            <div
-                                class="w-full h-full rounded-full border-[3px] border-white overflow-hidden bg-[#8357C5] flex items-center justify-center">
-                                <img src="logo/logo blanco.png" alt="AVDA" class="w-[100px] h-auto object-contain">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Profile Info Column -->
-                    <div class="flex-1 w-full">
-                        <!-- Top Row: Username + Actions (Desktop) -->
-                        <div class="flex flex-col md:flex-row items-center md:items-start gap-4 mb-5">
-                            <div class="flex items-center gap-4">
-                                <h2 class="text-xl md:text-2xl font-normal">aaavenidaaa</h2>
-                                <i class="fas fa-ellipsis-h text-sm cursor-pointer hover:opacity-50"></i>
-                            </div>
-                        </div>
-
-                        <!-- Info Block (Mobile Order) -->
-                        <div class="text-center md:text-left mb-6">
-                            <h3 class="font-bold text-[16px]">AVENIDA ®</h3>
-
-                            <!-- Stats Row -->
-                            <div class="flex justify-center md:justify-start gap-10 my-4 text-[16px]">
-                                <div><span class="font-bold">18</span> publicaciones</div>
-                                <div><span class="font-bold">1328</span> seguidores</div>
-                                <div><span class="font-bold">46</span> seguidos</div>
-                            </div>
-
-                            <p class="text-gray-500 font-medium">Ropa (marca)</p>
-                            <div class="text-[14px] whitespace-pre-line mt-1">⏳ ⌚</div>
-                            <a href="https://aaavenidaaa.com"
-                                class="text-[#00376b] font-semibold text-[14px] hover:underline block mt-1">
-                                <i class="fas fa-link text-xs mr-1"></i>www.aaavenidaaa.com
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Action Buttons (Mobile/Desktop consistent) -->
-                <div class="flex gap-2 px-4 mb-10 text-sm font-semibold">
-                    <button
-                        class="flex-1 bg-[#efefef] hover:bg-[#dbdbdb] py-1.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-1">
-                        Siguiendo <i class="fas fa-chevron-down text-xs"></i>
-                    </button>
-                    <button class="flex-1 bg-[#efefef] hover:bg-[#dbdbdb] py-1.5 px-4 rounded-lg transition-colors">
-                        Enviar mensaje
-                    </button>
-                    <button class="bg-[#efefef] hover:bg-[#dbdbdb] py-1.5 px-3 rounded-lg transition-colors">
-                        <i class="fas fa-user-plus text-xs"></i>
-                    </button>
-                </div>
-
-                <!-- Story Highlights -->
-                <div class="flex gap-10 px-4 mb-12 overflow-x-auto pb-2 scrollbar-hide justify-start md:justify-start">
-                    <!-- Highlight 1 -->
-                    <div class="flex flex-col items-center gap-2 cursor-pointer min-w-[70px]">
-                        <div class="w-[77px] h-[77px] rounded-full p-[1px] border border-gray-300">
-                            <div class="w-full h-full rounded-full bg-gray-100 p-0.5">
-                                <img src="catalogo/boxer avenida/modelos/avda restock vertical op cmbyn-6.jpg"
-                                    class="w-full h-full object-cover rounded-full border border-gray-100">
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold truncate w-full text-center">Comunidad 💜</span>
-                    </div>
-
-                    <!-- Highlight 2 -->
-                    <div class="flex flex-col items-center gap-2 cursor-pointer min-w-[70px]">
-                        <div class="w-[77px] h-[77px] rounded-full p-[1px] border border-gray-300">
-                            <div class="w-full h-full rounded-full bg-gray-100 p-0.5">
-                                <img src="catalogo/jeans holgados/baggy tag.png"
-                                    class="w-full h-full object-cover rounded-full border border-gray-100">
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold truncate w-full text-center">Talles</span>
-                    </div>
-
-                    <!-- Highlight 3 -->
-                    <div class="flex flex-col items-center gap-2 cursor-pointer min-w-[70px]">
-                        <div class="w-[77px] h-[77px] rounded-full p-[1px] border border-gray-300">
-                            <div class="w-full h-full rounded-full bg-gray-100 p-0.5">
-                                <img src="catalogo/jeans rectos/straight etiqueta.png"
-                                    class="w-full h-full object-cover rounded-full border border-gray-100">
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold truncate w-full text-center">DROP #01</span>
-                    </div>
-                </div>
-
-                <!-- Feed Tabs -->
-                <div class="border-t border-gray-300">
-                    <div class="flex justify-center gap-14">
-                        <button
-                            class="flex items-center gap-2 py-4 border-t-2 border-black -mt-px text-xs font-semibold tracking-widest text-[#262626]">
-                            <svg aria-label="" class="_ab6-" color="#000000" fill="#000000" height="12" role="img"
-                                viewBox="0 0 24 24" width="12">
-                                <rect fill="none" height="18" stroke="currentColor" stroke-linecap="round"
-                                    stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3"></rect>
-                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" x1="9.015" x2="9.015" y1="3" y2="21"></line>
-                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" x1="14.985" x2="14.985" y1="3" y2="21"></line>
-                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" x1="21" x2="3" y1="9.015" y2="9.015"></line>
-                                <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" x1="21" x2="3" y1="14.985" y2="14.985"></line>
-                            </svg>
-                            PUBLICACIONES
-                        </button>
-                        <button
-                            class="flex items-center gap-2 py-4 text-xs font-semibold tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
-                            <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img"
-                                viewBox="0 0 24 24" width="12">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
-                                </path>
-                                <path
-                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
-                                </path>
-                            </svg>
-                            REELS
-                        </button>
-                        <button
-                            class="flex items-center gap-2 py-4 text-xs font-semibold tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
-                            <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img"
-                                viewBox="0 0 24 24" width="12">
-                                <path
-                                    d="M10.201 3.797L12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465z"
-                                    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"></path>
-                                <path
-                                    d="M18.598 22.002V21.4a3.949 3.949 0 0 0-3.948-3.949H9.495A3.949 3.949 0 0 0 5.546 21.4v.603"
-                                    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"></path>
-                                <circle cx="12.072" cy="11.075" fill="none" r="3.556" stroke="currentColor"
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-                            </svg>
-                            ETIQUETAS
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Instagram Grid -->
-            <div class="instagram-grid max-w-[700px] mx-auto mb-20">
-                <!-- Post 1 -->
-                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
-                    <img src="lookbook/avenida x 2004_nuevo.JPG" alt="Post" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
-                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 243</span>
-                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 12</span>
-                    </div>
-                    <!-- Multiple items icon -->
-                    <div class="absolute top-2 right-2 text-white/90 drop-shadow-sm">
-                        <svg aria-label="Carrusel" class="_ab6-" color="#ffffff" fill="#ffffff" height="15" role="img"
-                            viewBox="0 0 48 48" width="15">
-                            <path
-                                d="M34.8 29.7V11c0-2.9-2.3-5.2-5.2-5.2H11c-2.9 0-5.2 2.3-5.2 5.2v18.7c0 2.9 2.3 5.2 5.2 5.2h18.7c2.8-.1 5.1-2.4 5.1-5.2zM38.2 15H39c2.9 0 5.2 2.3 5.2 5.2v18.7c0 2.9-2.3 5.2-5.2 5.2H20.3c-2.9 0-5.2-2.3-5.2-5.2v-.8c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v.8c0 1.2 1 2.2 2.2 2.2h18.7c1.2 0 2.2-1 2.2-2.2V20.2c0-1.2-1-2.2-2.2-2.2h-.8c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Post 2 -->
-                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
-                    <img src="lookbook/avenida x 2004_29 (1).JPG" alt="Post" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
-                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 156</span>
-                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 8</span>
-                    </div>
-                </div>
-
-                <!-- Post 3 -->
-                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
-                    <img src="lookbook/avenida x 2004_27.JPG" alt="Post" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
-                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 342</span>
-                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 24</span>
-                    </div>
-                </div>
-
-                <!-- Post 4 -->
-                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
-                    <img src="lookbook/avenida x 2004_22.JPG" alt="Post" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
-                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 198</span>
-                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 15</span>
-                    </div>
-                    <div class="absolute top-2 right-2 text-white/90 drop-shadow-sm">
-                        <svg aria-label="Carrusel" class="_ab6-" color="#ffffff" fill="#ffffff" height="15" role="img"
-                            viewBox="0 0 48 48" width="15">
-                            <path
-                                d="M34.8 29.7V11c0-2.9-2.3-5.2-5.2-5.2H11c-2.9 0-5.2 2.3-5.2 5.2v18.7c0 2.9 2.3 5.2 5.2 5.2h18.7c2.8-.1 5.1-2.4 5.1-5.2zM38.2 15H39c2.9 0 5.2 2.3 5.2 5.2v18.7c0 2.9-2.3 5.2-5.2 5.2H20.3c-2.9 0-5.2-2.3-5.2-5.2v-.8c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v.8c0 1.2 1 2.2 2.2 2.2h18.7c1.2 0 2.2-1 2.2-2.2V20.2c0-1.2-1-2.2-2.2-2.2h-.8c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Post 5 -->
-                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
-                    <img src="lookbook/avenida x 2004_16.JPG" alt="Post" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
-                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 412</span>
-                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 32</span>
-                    </div>
-                </div>
-
-                <!-- Post 6 -->
-                <div class="insta-post group relative aspect-square overflow-hidden bg-gray-100 cursor-pointer">
-                    <img src="lookbook/avenida x 2004_50.JPG" alt="Post" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6 text-white text-lg font-bold">
-                        <span class="flex items-center gap-2"><i class="fas fa-heart"></i> 287</span>
-                        <span class="flex items-center gap-2"><i class="fas fa-comment"></i> 19</span>
-                    </div>
-                    <div class="absolute top-3 right-3 text-white drop-shadow-md">
-                        <i class="fas fa-images"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-        <!-- ======================= SECCIÓN TIKTOK ======================= -->
-        <section id="tiktok-section" class="py-20 px-6 bg-[#8357C5] text-white">
-            <div class="container mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold mb-4">Conoce Nuestra Historia</h2>
-                    <p class="text-lg opacity-80 mb-8">Mira nuestro video en TikTok y descubre cómo surgió AVENIDA</p>
-                </div>
-                <div class="flex justify-center">
-                    <div class="tiktok-video-container">
-                        <!-- Video HTML5 -->
-                        <video class="tiktok-video" autoplay muted loop playsinline preload="auto">
-                            <source src="videos/tiktok-video.mp4" type="video/mp4">
-                        </video>
-                        <div class="tiktok-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-external-link-alt"></i>
-                            </div>
-                            <p class="tiktok-text">Haz clic para ver en TikTok</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======================= SECCIÓN COMUNIDAD ======================= -->
-        <section id="comunidad-section" class="py-24 bg-[#8357C5] border-t border-white/10">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl mx-auto text-center text-white">
-                    <h2 class="text-5xl font-black mb-6 tracking-tighter">COMUNIDAD AVENIDA</h2>
-                    <p class="text-xl opacity-80 mb-12 font-medium">CONOCE NUESTROS PRÓXIMOS LANZAMIENTOS EXCLUSIVOS
-                    </p>
-
-                    <form id="newsletter-form-main" class="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
-                        <input type="text" id="newsletter-name-main" placeholder="TU NOMBRE" required
-                            class="flex-1 px-6 py-4 border-2 border-gray-100 rounded-xl focus:border-[#8357C5] outline-none transition-all text-lg font-medium">
-                        <input type="email" id="newsletter-email-main" placeholder="TU@EMAIL.COM" required
-                            class="flex-1 px-6 py-4 border-2 border-gray-100 rounded-xl focus:border-[#8357C5] outline-none transition-all text-lg font-medium">
-                        <button type="submit" id="newsletter-submit-main"
-                            class="bg-[#8357C5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-black transition-all shadow-lg hover:shadow-[#8357C5]/20">
-                            UNIRSE
-                        </button>
-                    </form>
-                    <p class="mt-6 text-white/40 text-sm">Al unirte, aceptas nuestra política de privacidad y términos
-                        de servicio.</p>
-                </div>
-            </div>
+            
+            <!-- Botón de sonido flotante -->
+            <button id="video-sound-btn" class="absolute bottom-6 right-6 bg-black/40 hover:bg-[#8357C5] text-white w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 backdrop-blur-md z-20 border border-white/10">
+                <i class="fas fa-volume-mute text-lg"></i>
+            </button>
         </section>
 
         <!-- ======================= FOOTER ======================= -->
@@ -1010,7 +629,7 @@
                             <li><a href="about.html"
                                     class="text-gray-400 hover:text-[#8357C5] transition-colors">Nosotros</a>
                             </li>
-                            <li><a href="#productos"
+                            <li><a href="shop.html"
                                     class="text-gray-400 hover:text-[#8357C5] transition-colors">Productos</a></li>
                             <li><a href="#" id="contacto-btn-footer"
                                     class="text-gray-400 hover:text-[#8357C5] transition-colors">Contacto</a></li>

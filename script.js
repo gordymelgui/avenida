@@ -16,6 +16,7 @@
     // Lista de páginas permitidas (que no redirigen)
     const allowedPages = [
         'index.html',
+        'shop.html',
         '',
         'admin.html',
         'admin-panel.html',
@@ -250,8 +251,9 @@ window.products = [
         name: 'JEAN FLARED',
         price: 350000,
         images: [
-            'logo/logo blanco.png',
-            'logo/logo blanco.png'
+            'WEB-drop-julio/IMG_6198.jpg',
+            'WEB-drop-julio/IMG_6192 (1).jpg',
+            'WEB-drop-julio/IMG_6181.jpg'
         ],
         description: 'Nuevo Jean Flared de Avenida. Detalles próximamente.',
         availableSizes: ['36', '40', '44', '48'],
@@ -270,8 +272,9 @@ window.products = [
         name: 'REMERA MANGAS LARGAS',
         price: 200000,
         images: [
-            'logo/logo blanco.png',
-            'logo/logo blanco.png'
+            'WEB-drop-julio/IMG_6203 (1).jpg',
+            'WEB-drop-julio/IMG_6206.jpg',
+            'WEB-drop-julio/IMG_6204.jpg'
         ],
         description: 'Nueva Remera Mangas Largas de Avenida. Detalles próximamente.',
         availableSizes: ['P', 'M', 'G'],
@@ -290,8 +293,9 @@ window.products = [
         name: 'REMERA SLIM FIT',
         price: 180000,
         images: [
-            'logo/logo blanco.png',
-            'logo/logo blanco.png'
+            'WEB-drop-julio/IMG_6181.jpg',
+            'WEB-drop-julio/IMG_6212.jpg',
+            'WEB-drop-julio/IMG_6225.jpg'
         ],
         description: 'Nueva Remera Slim Fit de Avenida. Detalles próximamente.',
         availableSizes: ['P', 'M', 'G'],
@@ -1699,6 +1703,18 @@ async function initApp() {
                 placeOrderBtn.disabled = false;
             }
         }
+    }
+
+    // Filtrar por categoría desde parámetros de URL al iniciar (redirecciones)
+    const urlParams = new URLSearchParams(window.location.search);
+    const catParam = urlParams.get('category');
+    if (catParam) {
+        console.log('🎯 Filtrando por categoría desde parámetro URL:', catParam);
+        setTimeout(() => {
+            if (typeof window.filterProducts === 'function') {
+                window.filterProducts(catParam);
+            }
+        }, 150);
     }
 } // cierre de initApp
 
