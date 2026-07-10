@@ -4,25 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AVDA – Armá tu Outfit</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --purple: #6B21A8;
-    --purple-light: #A855F7;
-    --purple-dark: #3B0764;
+@font-face {
+    font-family: 'Rip Regular';
+    src: url('./rip-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+<style>
+    :root {
+    --purple: #8357C5;
+    --purple-light: #9d7bd8;
+    --purple-dark: #6e48a9;
     --cream: #F5F0E8;
-    --dark: #0A0A0F;
-    --border: #2A1A3E;
+    --dark: #1a1a1a;
+    --border: #1a1a1a;
+    --brutal-shadow: 6px 6px 0px var(--dark);
+    --brutal-shadow-hover: 3px 3px 0px var(--dark);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    background: var(--dark);
-    color: var(--cream);
+    background: var(--purple-light);
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center center;
+    color: var(--dark);
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
     cursor: url('AP/cursor_mano_AP_32.png'), auto;
   }
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+  }
+
   a, button, .item-card, .action-btn {
     cursor: url('AP/cursor_mano_AP_32.png'), pointer !important;
   }
@@ -33,33 +54,48 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 36px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(10,10,15,0.95);
-    backdrop-filter: blur(12px);
+    border-bottom: 4px solid var(--dark);
+    background: var(--purple);
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 4px 0 var(--dark);
   }
   .logo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.12em;
-    background: linear-gradient(135deg, #fff 30%, var(--purple-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-family: 'Rip Regular', sans-serif;
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 3px 3px 0 var(--dark);
+    letter-spacing: 2px;
   }
   .logo-sub {
-    font-size: 0.62rem;
-    letter-spacing: 0.28em;
-    color: var(--purple-light);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--dark);
     text-transform: uppercase;
-    margin-top: -4px;
+    font-weight: 900;
+    margin-top: -8px;
+    background: #fff;
+    padding: 2px 6px;
+    border: 2px solid var(--dark);
+    border-radius: 4px;
+    display: inline-block;
   }
   .header-tag {
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    color: #444;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    color: #fff;
     text-transform: uppercase;
+    background: var(--dark);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 rgba(255,255,255,0.3);
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
   }
 
   /* MAIN GRID */
@@ -69,54 +105,56 @@
     min-height: calc(100vh - 65px);
   }
 
-  /* SIDE PANELS */
+    /* SIDE PANELS */
   .panel {
-    background: rgba(14,14,22,0.98);
-    border-right: 1px solid var(--border);
+    background: var(--cream);
+    border-right: 4px solid var(--border);
     padding: 20px 14px;
     overflow-y: auto;
   }
-  .panel.right { border-right: none; border-left: 1px solid var(--border); }
+  .panel.right { border-right: none; border-left: 4px solid var(--border); }
   .panel-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.22em;
-    color: var(--purple-light);
+    font-family: 'Rip Regular', sans-serif;
+    font-size: 1.5rem;
+    color: var(--dark);
     margin-bottom: 14px;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 4px solid var(--border);
   }
 
-  /* ITEM CARDS */
-  .items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    /* ITEM CARDS */
+  .items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .item-card {
-    background: rgba(25,15,45,0.7);
-    border: 2px solid var(--border);
-    border-radius: 12px;
+    background: #fff;
+    border: 3px solid var(--border);
+    border-radius: 8px;
     padding: 12px 6px 8px;
     cursor: pointer;
     text-align: center;
-    transition: all 0.2s ease;
+    transition: all 0.1s ease;
     position: relative;
     user-select: none;
+    box-shadow: var(--brutal-shadow);
   }
   .item-card:hover {
-    border-color: var(--purple-light);
-    background: rgba(107,33,168,0.2);
-    transform: translateY(-2px);
+    background: var(--purple-light);
+    transform: translate(2px, 2px);
+    box-shadow: var(--brutal-shadow-hover);
   }
   .item-card.active {
-    border-color: var(--purple-light);
-    background: rgba(107,33,168,0.3);
-    box-shadow: 0 0 18px rgba(168,85,247,0.35);
+    background: var(--purple);
+    color: #fff;
+    transform: translate(4px, 4px);
+    box-shadow: 2px 2px 0px var(--dark);
   }
   .item-card.active::after {
-    content: '✓';
+    content: '★';
     position: absolute;
-    top: 5px; right: 7px;
-    font-size: 0.7rem;
-    color: var(--purple-light);
-    font-weight: 700;
+    top: -10px; right: -10px;
+    font-size: 1.2rem;
+    color: #ffd700;
+    text-shadow: 2px 2px 0 var(--dark);
+    animation: float 2s infinite;
   }
   .item-emoji {
     font-size: 2.4rem;
@@ -126,18 +164,17 @@
     justify-content: center;
     transition: transform 0.2s;
   }
-  .item-card:hover .item-emoji { transform: scale(1.15) rotate(-5deg); }
-  .item-card.active .item-emoji { transform: scale(1.08); }
+  .item-card:hover .item-emoji { transform: scale(1.15) rotate(-10deg); }
+  .item-card.active .item-emoji { transform: scale(1.1); }
   .item-label {
-    font-size: 0.64rem;
-    letter-spacing: 0.08em;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    color: #888;
-    font-weight: 600;
+    color: var(--dark);
+    font-weight: 800;
     display: block;
     line-height: 1.3;
   }
-  .item-card.active .item-label { color: var(--purple-light); }
+  .item-card.active .item-label { color: #fff; }
 
   /* CENTER */
   .center {
@@ -156,28 +193,40 @@
     text-transform: uppercase;
   }
 
-  /* CHARACTER CANVAS */
-  /* White rounded card — clothing images have white bg so they blend perfectly */
+    /* CHARACTER CANVAS */
   .char-card {
-    background: #f8f6f0;
-    border-radius: 24px;
-    box-shadow:
-      0 0 0 1px rgba(107,33,168,0.25),
-      0 24px 60px rgba(0,0,0,0.6),
-      0 0 80px rgba(107,33,168,0.12);
+    background: #fff;
+    border: 4px solid var(--dark);
+    border-radius: 16px;
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.2);
     padding: 24px 20px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .char-wrapper {
     position: relative;
-    width: 280px;
-    height: 420px;
+    overflow: hidden;
+  }
+  .char-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(131,87,197,0.05) 10px,
+      rgba(131,87,197,0.05) 20px
+    );
+    pointer-events: none;
   }
 
-  /* Every layer: same size, stacked */
+    .char-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 280 / 420;
+    z-index: 2;
+  }
   .char-wrapper img {
     position: absolute;
     inset: 0;
@@ -185,8 +234,6 @@
     height: 100%;
     object-fit: contain;
   }
-
-  /* Clothing items: positioned precisely over character body */
   .char-wrapper img.clothing-layer {
     transition: opacity 0.2s ease;
   }
@@ -194,40 +241,24 @@
     opacity: 0;
     pointer-events: none;
   }
-  /* Sprite based positioning */
   .char-wrapper img.sprite-layer {
     width: auto !important;
     height: auto !important;
     object-fit: none !important;
     z-index: 10 !important;
-    /* Ensure inset doesn't override top/left */
     top: auto; left: auto; bottom: auto; right: auto;
-    pointer-events: none; /* Done with dragging */
-  }
-  
-  /* Dev Helper Overlay */
-  #dev-helper {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(0,0,0,0.9);
-    border: 1px solid var(--purple-light);
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 11px;
-    z-index: 9999;
-    display: none;
     pointer-events: none;
   }
-  #dev-helper b { color: var(--purple-light); }
 
   .char-badge {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #bbb;
-    margin-top: 10px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5rem;
+    color: var(--purple);
+    margin-top: 15px;
+    padding: 4px 8px;
+    border: 2px solid var(--purple);
+    border-radius: 4px;
+    background: rgba(131,87,197,0.1);
   }
 
   /* ACTION BUTTONS */
@@ -350,10 +381,67 @@
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
   @media (max-width: 860px) {
-    .stage { grid-template-columns: 1fr; }
-    .panel { border: none; border-bottom: 1px solid var(--border); }
-    .panel.right { border: none; border-top: 1px solid var(--border); }
-    .items-grid { grid-template-columns: repeat(5, 1fr); }
+    body { padding: 0; margin: 0; }
+    
+    header { 
+      flex-direction: column; 
+      align-items: flex-start; 
+      gap: 10px; 
+      padding: 10px 15px; 
+    }
+    .logo-text { font-size: 2rem; }
+    .header-tag { align-self: flex-start; font-size: 0.55rem; padding: 6px 10px; }
+    
+    .stage { 
+      display: grid; 
+      grid-template-columns: 100px 1fr;
+      grid-template-rows: auto auto;
+      grid-template-areas: 
+        "items character"
+        "tools tools";
+      align-items: start; /* PREVENTS VERTICAL STRETCHING OF PANELS */
+    }
+    
+    .panel { 
+      grid-area: items; 
+      border: none; 
+      border-right: 3px solid var(--border); 
+      padding: 10px 5px; 
+      height: 100%; /* Fill the column height */
+    }
+    .center { 
+      grid-area: character; 
+      padding: 15px 5px; 
+      align-items: flex-start; /* keep character card at top */
+    }
+    .panel.right { 
+      grid-area: tools; 
+      border: none; 
+      border-top: 3px solid var(--border); 
+      padding: 15px; 
+    }
+    
+    .items-grid { 
+      display: flex; 
+      flex-direction: column;
+      gap: 8px; 
+    }
+    
+    .item-card { 
+      min-width: 0;
+      padding: 8px 4px;
+    }
+    .item-emoji { height: 45px !important; }
+    .item-label { font-size: 0.55rem; }
+    
+    .char-card {
+      padding: 15px 10px 10px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .char-wrapper {
+      /* No scaling hacks needed now thanks to aspect-ratio */
+    }
   }
   #dev-helper button {
     background: var(--purple-light);
@@ -530,6 +618,7 @@ const ITEMS = [
   {
     id: 'camisaavdasprite',
     label: 'Camisa AVDA',
+    image: 'catalogo/camisas/cami A portada principal.png',
     emoji: '👕',
     layer: 'layer-camisaavdasprite',
     sprite: { x: 2, y: 76, scale: 0.22, z: 10 }
@@ -537,6 +626,7 @@ const ITEMS = [
   {
     id: 'jortsiprite',
     label: 'Jorts AVDA',
+    image: 'catalogo/jorts/jort denim portada principal.png',
     emoji: '🩳',
     layer: 'layer-jortsiprite',
     sprite: { x: 2, y: 78, scale: 0.22, z: 10 }
@@ -544,6 +634,7 @@ const ITEMS = [
   {
     id: 'baggysprite',
     label: 'Baggy AVDA',
+    image: 'catalogo/jeans holgados/portada baggy.png',
     emoji: '👖',
     layer: 'layer-baggysprite',
     sprite: { x: -3, y: 68, scale: 0.23, z: 10 }
@@ -551,6 +642,7 @@ const ITEMS = [
   {
     id: 'jortsvestirsprite',
     label: 'Jort Vestir AVDA',
+    image: 'catalogo/jorts/vestir portada principal.png',
     emoji: '🩳',
     layer: 'layer-jortsvestirsprite',
     sprite: { x: -3, y: 65, scale: 0.23, z: 10 }
@@ -558,6 +650,7 @@ const ITEMS = [
   {
     id: 'camisalogosprite',
     label: 'Camisa Logo',
+    image: 'catalogo/camisas/cami B portada principal.png',
     emoji: '👕',
     layer: 'layer-camisalogosprite',
     sprite: { x: 3, y: 80, scale: 0.22, z: 10 }
@@ -565,6 +658,7 @@ const ITEMS = [
   {
     id: 'cap',
     label: 'Snapback',
+    image: 'AP/item_cap.png',
     emoji: '🧢',
     layer: 'layer-cap',
   },
@@ -611,11 +705,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = document.createElement('div');
     card.className = 'item-card';
     card.id = 'card-' + item.id;
+    const emojiHtml = item.image ? `<img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.label}">` : item.emoji;
     card.innerHTML = `
-      <div class="item-emoji">${item.emoji}</div>
+      <div class="item-emoji" style="height:64px; overflow:hidden;">${emojiHtml}</div>
       <span class="item-label">${item.label}</span>
     `;
     card.addEventListener('click', () => toggle(item));
+    
+    // DRAG AND DROP: dragstart
+    card.draggable = true;
+        card.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', item.id);
+      
+      // Set the drag image to the actual clothing item image
+      const img = card.querySelector('img');
+      if (img) {
+        // Create a temporary clone for a better "hanging" effect if desired, 
+        // but passing the existing img directly is usually enough for the browser ghost.
+        // We set the offset to the middle-top of the image so it looks like you are holding it by the hanger
+        e.dataTransfer.setDragImage(img, img.width / 2, 10);
+      }
+    });
     grid.appendChild(card);
   });
   
@@ -674,6 +784,19 @@ function toggle(item) {
 // ── POSITIONING TOOL (DRAG & SCALE) ───────────────────
 let isDragging = false;
 const wrapper = document.getElementById('charWrapper');
+
+// DRAG AND DROP: drop target
+wrapper.addEventListener('dragover', (e) => {
+  e.preventDefault();
+});
+wrapper.addEventListener('drop', (e) => {
+  e.preventDefault();
+  const id = e.dataTransfer.getData('text/plain');
+  const item = ITEMS.find(i => i.id === id);
+  if (item && !selected.has(item.id)) {
+    toggle(item);
+  }
+});
 
 wrapper.addEventListener('mousedown', (e) => {
   if (activeSprite) {
@@ -736,7 +859,8 @@ function renderList() {
   ITEMS.filter(i => selected.has(i.id)).forEach(item => {
     const el = document.createElement('div');
     el.className = 'selected-item';
-    el.innerHTML = `<div class="dot"></div>${item.emoji} ${item.label}`;
+    const imgHtml = item.image ? `<img src="${item.image}" style="width:16px;height:16px;object-fit:cover;border-radius:4px;">` : item.emoji;
+    el.innerHTML = `<div class="dot"></div>${imgHtml} ${item.label}`;
     list.appendChild(el);
   });
 }

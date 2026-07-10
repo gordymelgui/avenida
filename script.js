@@ -17,6 +17,7 @@
     const allowedPages = [
         'index.html',
         'shop.html',
+        'outfit.html',
         '',
         'admin.html',
         'admin-panel.html',
