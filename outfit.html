@@ -393,54 +393,50 @@
     .header-tag { align-self: flex-start; font-size: 0.55rem; padding: 6px 10px; }
     
     .stage { 
-      display: grid; 
-      grid-template-columns: 100px 1fr;
-      grid-template-rows: auto auto;
-      grid-template-areas: 
-        "items character"
-        "tools tools";
-      align-items: start; /* PREVENTS VERTICAL STRETCHING OF PANELS */
+      display: flex; 
+      flex-direction: column;
+    }
+    
+    /* Center character goes to the top */
+    .center { 
+      order: -1; 
+      padding: 15px 10px; 
+      border-bottom: 3px solid var(--border); 
     }
     
     .panel { 
-      grid-area: items; 
       border: none; 
-      border-right: 3px solid var(--border); 
-      padding: 10px 5px; 
-      height: 100%; /* Fill the column height */
-    }
-    .center { 
-      grid-area: character; 
+      border-bottom: 3px solid var(--border); 
       padding: 15px 5px; 
-      align-items: flex-start; /* keep character card at top */
     }
     .panel.right { 
-      grid-area: tools; 
-      border: none; 
-      border-top: 3px solid var(--border); 
+      border-bottom: none; 
       padding: 15px; 
     }
     
+    /* Horizontal scroll for items grid */
     .items-grid { 
       display: flex; 
-      flex-direction: column;
-      gap: 8px; 
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto; 
+      gap: 12px; 
+      padding-bottom: 15px;
+      -webkit-overflow-scrolling: touch;
     }
     
     .item-card { 
-      min-width: 0;
+      min-width: 90px;
+      flex-shrink: 0;
       padding: 8px 4px;
     }
-    .item-emoji { height: 45px !important; }
+    .item-emoji { height: 50px !important; }
     .item-label { font-size: 0.55rem; }
     
     .char-card {
       padding: 15px 10px 10px;
       margin: 0 auto;
       width: 100%;
-    }
-    .char-wrapper {
-      /* No scaling hacks needed now thanks to aspect-ratio */
     }
   }
   #dev-helper button {

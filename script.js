@@ -62,6 +62,7 @@ window.products = [
             'catalogo/jeans holgados/avenida baggy modelo4.JPG'
         ],
         description: 'Un baggy cómodo y con estilo, perfecto para cualquier ocasión. Hecho con denim de alta resistencia y diseñado para ofrecer la máxima comodidad sin sacrificar el estilo. Ideal para el día a día y ocasiones casuales.',
+        sizeChart: 'size chart/size chart holgado.png',
         availableSizes: ['P', 'M', 'G'],
         stock: { P: 10, M: 10, G: 10 },
         features: [
@@ -93,6 +94,7 @@ window.products = [
             'catalogo/jeans rectos/avenida straight modelo4.JPG'
         ],
         description: 'Pantalones rectos clásicos con un toque moderno. El corte perfecto para un look limpio y elegante. Fabricados con materiales de primera calidad para garantizar durabilidad y confort.',
+        sizeChart: 'size chart/size chart recto.png',
         availableSizes: ['P', 'M', 'G'],
         stock: { P: 10, M: 10, G: 10 },
         features: [
@@ -128,6 +130,7 @@ window.products = [
             'catalogo/boxer avenida/modelos/avda restock vertical op cmbyn-7.jpg'
         ],
         description: 'Boxer de alta calidad con diseño exclusivo Avenida. Comodidad y estilo para tu día a día. Fabricado con algodón premium para máxima suavidad.',
+        sizeChart: 'size chart/size chart boxer.png',
         availableSizes: ['P', 'M', 'G'],
         // Stock inicializado vacío para cargar desde Firebase
         stock: { P: 0, M: 0, G: 0 },
@@ -249,66 +252,101 @@ window.products = [
     },
     {
         id: 7,
-        name: 'JEAN FLARED',
+        name: 'Campana Avenida 26\' (Al cuerpo)',
         price: 350000,
         images: [
-            'WEB-drop-julio/IMG_6198.jpg',
-            'WEB-drop-julio/IMG_6192 (1).jpg',
-            'WEB-drop-julio/IMG_6181.jpg'
+            'catalogo/jean flared/portada jean flared.png',
+            'catalogo/jean flared/jean flared reverso.png',
+            'catalogo/jean flared/jean flared etiqueta av.jpg',
+            'catalogo/jean flared/jean flared detalle bolsillos.jpg'
         ],
-        description: 'Nuevo Jean Flared de Avenida. Detalles próximamente.',
+        description: 'El nuevo Jean Flared de Avenida combina el corte acampanado clásico con la estética urbana contemporánea. Confeccionado con denim de máxima resistencia.',
+        sizeChart: 'size chart/1 1 campana slim.png',
         availableSizes: ['36', '40', '44', '48'],
         stock: { '36': 0, '40': 0, '44': 0, '48': 0 },
         features: [
-            'Detalles próximamente',
-            'Material premium'
+            'Corte Flared acampanado',
+            'Denim de alta calidad',
+            'Etiqueta y detalles bordados Avenida',
+            'Diseño urbano atemporal'
         ],
-        material: 'Denim',
+        material: 'Denim Premium',
         care: 'Lavar con agua fría',
         status: 'Próximamente',
         category: 'Inferior'
     },
     {
         id: 8,
-        name: 'REMERA MANGAS LARGAS',
+        name: 'Manga Avenida 26\'',
         price: 200000,
         images: [
-            'WEB-drop-julio/IMG_6203 (1).jpg',
-            'WEB-drop-julio/IMG_6206.jpg',
-            'WEB-drop-julio/IMG_6204.jpg'
+            'catalogo/remera mangas largas/portada remera mangas largas.png',
+            'catalogo/remera mangas largas/remera mangas largas etiqueta cuello.jpg',
+            'catalogo/remera mangas largas/remera mangas largas etiqueta composicion.jpg'
         ],
-        description: 'Nueva Remera Mangas Largas de Avenida. Detalles próximamente.',
+        description: 'Remera mangas largas oversize confeccionada en algodón suave de alto gramaje. Ideal para combinar en capas o vestir de forma casual.',
+        sizeChart: 'size chart/1 1 raglan.png',
         availableSizes: ['P', 'M', 'G'],
         stock: { P: 0, M: 0, G: 0 },
         features: [
-            'Detalles próximamente',
-            'Material premium'
+            'Algodón pesado premium',
+            'Corte relajado / oversize',
+            'Puños acanalados',
+            'Etiqueta Avenida distintiva'
         ],
-        material: 'Algodón',
+        material: 'Algodón 100%',
         care: 'Lavar con agua fría',
         status: 'Próximamente',
         category: 'Superior'
     },
     {
         id: 9,
-        name: 'REMERA SLIM FIT',
+        name: 'Remera Avenida 26\'',
         price: 180000,
         images: [
-            'WEB-drop-julio/IMG_6181.jpg',
-            'WEB-drop-julio/IMG_6212.jpg',
-            'WEB-drop-julio/IMG_6225.jpg'
+            'catalogo/remera slim fit/portada remera slim fit.png',
+            'catalogo/remera slim fit/remera slim fit reverso.png',
+            'catalogo/remera slim fit/remera slim fit etiqueta cuello.jpg'
         ],
-        description: 'Nueva Remera Slim Fit de Avenida. Detalles próximamente.',
+        description: 'Remera estilo ringer Slim Fit con detalles en cuello y mangas. Ajuste anatómico perfecto que realza la silueta.',
+        sizeChart: 'size chart/1 1 ringerrr.png',
         availableSizes: ['P', 'M', 'G'],
         stock: { P: 0, M: 0, G: 0 },
         features: [
-            'Detalles próximamente',
-            'Material premium'
+            'Corte Slim Fit acentuado',
+            'Detalle de cuello ringer contrastado',
+            'Algodón con elastano para máxima flexibilidad',
+            'Bordado y etiqueta exclusiva'
         ],
-        material: 'Algodón',
+        material: 'Algodón / Elastano',
         care: 'Lavar con agua fría',
         status: 'Próximamente',
         category: 'Superior'
+    },
+    {
+        id: 10,
+        name: 'Campana Avenida 26\' (Relajado)',
+        price: 350000,
+        images: [
+            'catalogo/campana relajado/portada campana relajado.png',
+            'catalogo/campana relajado/reverso campana relajado.png',
+            'catalogo/jean flared/jean flared etiqueta av.jpg',
+            'catalogo/jean flared/jean flared detalle bolsillos.jpg'
+        ],
+        description: 'El nuevo Campana Avenida 26\' (Relajado) combina el corte acampanado clásico con la estética urbana contemporánea, ofreciendo un calce más suelto y relajado.',
+        sizeChart: 'size chart/1 1 campana slim.png',
+        availableSizes: ['36', '40', '44', '48'],
+        stock: { '36': 0, '40': 0, '44': 0, '48': 0 },
+        features: [
+            'Corte Flared relajado',
+            'Denim de alta calidad',
+            'Etiqueta y detalles bordados Avenida',
+            'Diseño urbano atemporal'
+        ],
+        material: 'Denim Premium',
+        care: 'Lavar con agua fría',
+        status: 'Próximamente',
+        category: 'Inferior'
     }
 ];
 
@@ -317,7 +355,7 @@ async function initApp() {
     console.log('🚀 Inicializando aplicación...');
 
     // VERIFICAR VERSIÓN Y LIMPIAR LOCALSTORAGE SI ES NECESARIO
-    const APP_VERSION = '3.5';
+    const APP_VERSION = '4.1';
     const storedVersion = localStorage.getItem('appVersion');
     if (storedVersion !== APP_VERSION) {
         console.log(`🔄 Nueva versión detectada (${APP_VERSION}). Limpiando localStorage...`);
@@ -891,7 +929,7 @@ async function initApp() {
             if (oldProductGrid) oldProductGrid.style.display = 'grid';
             if (viewAllContainer) viewAllContainer.style.display = 'flex';
 
-            const novedades = window.products.filter(p => p.id === 7 || p.id === 8 || p.id === 9);
+            const novedades = window.products.filter(p => p.id === 7 || p.id === 8 || p.id === 9 || p.id === 10);
             productGridContainer.innerHTML = generateProductsHTML(novedades);
 
             if (oldProductGrid) {
@@ -940,11 +978,11 @@ async function initApp() {
                    </div>`
                 : `
                     <!-- Imagen Principal -->
-                    <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover object-center main-image ${outOfStockClass}">
+                    <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full ${product.images[0] && product.images[0].endsWith('.png') ? 'object-contain p-2' : 'object-cover'} object-center main-image ${outOfStockClass}">
                     
                     <!-- Imagen de Hover -->
                     ${product.images.length > 1 ? `
-                    <img src="${product.images[product.images.length > 4 ? 4 : 1]}" alt="${product.name} lifestyle" class="w-full h-full object-cover object-center hover-image absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out ${outOfStockClass}">
+                    <img src="${product.images[product.images.length > 4 ? 4 : 1]}" alt="${product.name} lifestyle" class="w-full h-full ${product.images[1] && product.images[1].endsWith('.png') ? 'object-contain p-2' : 'object-cover'} object-center hover-image absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out ${outOfStockClass}">
                     ` : ''}
                 `;
 
@@ -2166,37 +2204,55 @@ function setupProductRealtimeListeners() {
     }
 }
 
-// Función para forzar nombres correctos en todos los productos
+// Función para forzar nombres correctos y guía de talles en todos los productos
 function forceCorrectProductNames() {
-    console.log('🔒 FORZANDO nombres correctos en todos los productos...');
+    console.log('🔒 FORZANDO nombres y guía de talles correctos en todos los productos...');
 
     window.products.forEach(product => {
         const originalName = product.name;
 
         if (product.id === 1) {
             product.name = 'JEANS HOLGADOS AVDA \'25';
+            product.sizeChart = 'size chart/size chart holgado.png';
         } else if (product.id === 2) {
             product.name = 'JEANS RECTOS AVDA \'25';
+            product.sizeChart = 'size chart/size chart recto.png';
         } else if (product.id === 3) {
             product.name = 'BOXER AVDA \'25';
+            product.sizeChart = 'size chart/size chart boxer.png';
         } else if (product.id === 4) {
             product.name = 'JORT DENIM AVDA \'26';
+            product.sizeChart = 'size chart/jorts/size chart jort.png';
             product.description = 'El Jort es para todos los amantes del streetwear. Para esos días de calor o incluso para aquellos en los que te apetece un look más casual, el jort se convierte en tu mejor acompañante. Esta prenda indiscutiblemente es una carta de amor al primer drop de AVENIDA.';
         } else if (product.id === 5) {
             product.name = "CAMISA AVDA X NNEGATIVO '26";
+            product.sizeChart = 'size chart/camisas/size chart cami A.png';
+            if (!product.designSizeCharts) {
+                product.designSizeCharts = {
+                    'Diseño A': 'size chart/camisas/size chart cami A.png',
+                    'Diseño B': 'size chart/camisas/size chart cami B.png'
+                };
+            }
             product.description = 'La Camisa del segundo drop sale de una colaboración con la marca de intervenciones "nnegativo". El color vino representa el morado de avenida, haciéndolo más elegante, y el diseño con A.P. junto al estilo de negativo da ese toque casual y urbano que tanto nos gusta. Es realmente una prenda flexible y cómoda que podrás usar en cualquier situación de tu día a día.';
         } else if (product.id === 6) {
             product.name = 'CAPRI AVDA \'26';
+            product.sizeChart = 'size chart/jorts/size chart vestir.png';
             product.description = 'El Capri es la representación de la flexibilidad en este drop, es tan cómodo que podrías terminar usándolo en tu casa sin darte cuenta. Al mismo tiempo su carácter osado y elegante hace que siempre sea una pieza que te incita a ser modelada.';
         } else if (product.id === 7) {
-            product.name = 'JEAN FLARED';
-            product.description = 'Nuevo Jean Flared de Avenida. Detalles próximamente.';
+            product.name = 'Campana Avenida 26\' (Al cuerpo)';
+            product.sizeChart = 'size chart/1 1 campana slim.png';
         } else if (product.id === 8) {
-            product.name = 'REMERA MANGAS LARGAS';
-            product.description = 'Nueva Remera Mangas Largas de Avenida. Detalles próximamente.';
+            product.name = 'Manga Avenida 26\'';
+            product.sizeChart = 'size chart/1 1 raglan.png';
+            if (product.images) {
+                product.images = product.images.filter(img => !img.includes('remera mangas largas reverso.jpg'));
+            }
         } else if (product.id === 9) {
-            product.name = 'REMERA SLIM FIT';
-            product.description = 'Nueva Remera Slim Fit de Avenida. Detalles próximamente.';
+            product.name = 'Remera Avenida 26\'';
+            product.sizeChart = 'size chart/1 1 ringerrr.png';
+        } else if (product.id === 10) {
+            product.name = 'Campana Avenida 26\' (Relajado)';
+            product.sizeChart = 'size chart/1 1 campana slim.png';
         }
 
         if (originalName !== product.name) {
@@ -2204,7 +2260,7 @@ function forceCorrectProductNames() {
         }
     });
 
-    console.log('✅ Nombres correctos forzados en todos los productos');
+    console.log('✅ Nombres y guía de talles forzados en todos los productos');
 }
 
 // Función para forzar el renderizado de productos (fallback para móviles)
@@ -2237,7 +2293,7 @@ function forceRenderProducts() {
     if (productGrid) productGrid.style.display = 'grid';
 
     // Renderizar novedades (ID 7, 8 y 9)
-    const novedades = window.products.filter(p => p.id === 7 || p.id === 8 || p.id === 9);
+    const novedades = window.products.filter(p => p.id === 7 || p.id === 8 || p.id === 9 || p.id === 10);
     productGrid.innerHTML = window.generateProductsHTML(novedades);
 
     // Renderizar colecciones anteriores (ID 4, 5 y 6)

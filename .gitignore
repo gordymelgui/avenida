@@ -5,3 +5,8 @@ node_modules/
 *.bat
 firebase-config.js
 emailjs-config.js
+scratch/raw_jpegs/
+scratch/raw_thumbs/
+scratch/thumbs/
+scratch/thumbs_raw/
+scratch/__pycache__/

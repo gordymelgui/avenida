@@ -44,7 +44,7 @@ if overlay:
                 img["src"] = "logo/logo blanco.png"
                 img["class"] = [c for c in img.get("class", []) if c not in ["invert", "brightness-0"]]
             elif "detail" in alt:
-                img["src"] = "WEB-drop-julio/IMG_6181.jpg"
+                img["src"] = "WEB-drop-julio/DSC_0753.jpg"
             elif "portrait" in alt:
                 img["src"] = "WEB-drop-julio/IMG_6206.jpg"
             elif "warped" in alt:
