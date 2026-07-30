@@ -1,399 +1,1006 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>AVENIDA | PRÓXIMO DROP</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Grotesk:wght@300;400;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-error": "#690005",
-                        "inverse-on-surface": "#313030",
-                        "industrial-purple": "#8357C5",
-                        "on-tertiary-fixed-variant": "#3d4d00",
-                        "surface-variant": "#353535",
-                        "signal-orange": "#FF4D00",
-                        "tertiary": "#aed500",
-                        "outline": "#988e90",
-                        "tertiary-fixed": "#c7f300",
-                        "surface-container-low": "#1c1b1b",
-                        "on-surface": "#e5e2e1",
-                        "secondary-fixed-dim": "#c6c6c7",
-                        "on-primary-fixed-variant": "#474747",
-                        "surface-container-high": "#2a2a2a",
-                        "on-tertiary": "#293500",
-                        "inverse-primary": "#5e5e5e",
-                        "on-background": "#e5e2e1",
-                        "concrete-gray": "#333333",
-                        "primary": "#c6c6c6",
-                        "outline-variant": "#4c4546",
-                        "surface-bright": "#393939",
-                        "surface": "#131313",
-                        "inverse-surface": "#e5e2e1",
-                        "background": "#131313",
-                        "on-primary-container": "#757575",
-                        "error-container": "#93000a",
-                        "surface-container-highest": "#353535",
-                        "on-tertiary-container": "#667e00",
-                        "on-error-container": "#ffdad6",
-                        "on-secondary": "#2f3131",
-                        "tertiary-fixed-dim": "#aed500",
-                        "on-primary-fixed": "#1b1b1b",
-                        "surface-container": "#20201f",
-                        "error": "#ffb4ab",
-                        "on-surface-variant": "#cfc4c5",
-                        "primary-fixed-dim": "#c6c6c6",
-                        "surface-tint": "#c6c6c6",
-                        "primary-container": "#000000",
-                        "surface-container-lowest": "#0e0e0e",
-                        "secondary-fixed": "#e2e2e2",
-                        "surface-dim": "#131313",
-                        "secondary": "#c6c6c7",
-                        "on-primary": "#303030",
-                        "on-tertiary-fixed": "#171e00",
-                        "on-secondary-fixed-variant": "#454747",
-                        "on-secondary-fixed": "#1a1c1c",
-                        "tertiary-container": "#000000",
-                        "on-secondary-container": "#b4b5b5",
-                        "primary-fixed": "#e2e2e2",
-                        "secondary-container": "#454747"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "unit": "4px",
-                        "margin-mobile": "20px",
-                        "grid-columns": "12",
-                        "margin-desktop": "64px",
-                        "gutter": "16px"
-                    },
-                    "fontFamily": {
-                        "rip": ["'Rip Regular'", "sans-serif"],
-                        "body-md": ["Space Grotesk"],
-                        "label-caps": ["Space Mono"],
-                        "display-xl": ["Anton"],
-                        "code-sm": ["Space Mono"],
-                        "headline-lg-mobile": ["Anton"],
-                        "headline-lg": ["Anton"]
-                    },
-                    "fontSize": {
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
-                        "display-xl": ["120px", {"lineHeight": "110px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
-                        "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "headline-lg-mobile": ["48px", {"lineHeight": "44px", "fontWeight": "400"}],
-                        "headline-lg": ["64px", {"lineHeight": "60px", "letterSpacing": "0.02em", "fontWeight": "400"}]
-                    }
-                },
-            },
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AVENIDA.</title>
+
+    <!-- Favicon - Logo de AVENIDA en la pestaña del navegador -->
+    <link rel="icon" type="image/png" href="favicom.png">
+    <link rel="apple-touch-icon" href="favicom.png">
+
+    <!-- Preload de la fuente principal para evitar parpadeos -->
+    <link rel="preload" href="rip-Regular.ttf" as="font" type="font/ttf" crossorigin>
+
+
+
+    <!-- Script para asegurar que la página se cargue correctamente -->
+
+    <script>
+
+        // Asegurar que la página se cargue correctamente desde cualquier URL
+
+        if (window.location.pathname === '/') {
+
+            window.location.pathname = '/index.html';
+
         }
+
     </script>
-<style>
-@font-face {
-    font-family: 'Rip Regular';
-    src: url('./rip-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-}
 
-        body {
-            background-color: #131313;
-            background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
-        }
-        
-        .grain-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.15;
-            background-image: url("https://www.transparenttextures.com/patterns/noisy-net.png");
-            mix-blend-mode: overlay;
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css?v=4.3">
+
+    <style>
+        /* Asegurar que las animaciones funcionen inmediatamente */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
         }
 
-        .tape-effect {
-            position: relative;
-        }
-        .tape-effect::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%) rotate(-2deg);
-            width: 120px;
-            height: 30px;
-            background-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            z-index: 20;
-            mix-blend-mode: screen;
-        }
-        .tape-effect-alt::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            right: -10px;
-            transform: rotate(45deg);
-            width: 80px;
-            height: 25px;
-            background-color: rgba(200, 200, 200, 0.3);
-            z-index: 20;
-        }
-
-        .sticker-slap {
-            transform: rotate(-3deg);
-            box-shadow: 2px 2px 0px #000;
-            border: 2px solid #e5e2e1;
-            background-color: #131313;
-        }
-        
-        .sticker-slap-purple {
-            transform: rotate(2deg);
-            box-shadow: 3px 3px 0px #131313;
-            border: 2px solid #131313;
-            background-color: #8357C5;
-            color: #131313;
-        }
-
-        .flicker-effect:hover {
-            animation: flicker 0.1s infinite;
-        }
-
-        @keyframes flicker {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; background-color: #e5e2e1; color: #131313; }
-            100% { opacity: 1; }
-        }
-
-        .glitch-text {
-            position: relative;
-        }
-        .glitch-text:hover::before {
-            content: attr(data-text);
-            position: absolute;
-            left: 2px;
-            text-shadow: -2px 0 #8357C5;
-            top: 0;
-            color: #e5e2e1;
-            background: #131313;
-            overflow: hidden;
-            clip: rect(0, 900px, 0, 0); 
-            animation: noise-anim-2 3s infinite linear alternate-reverse;
-        }
-
-        .no-radius { border-radius: 0 !important; }
-
-        .vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
     </style>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-<script src="firebase-config.js"></script>
+
+    <!-- Preload del Poster del Video para carga instantánea -->
+    <link rel="preload" as="image" href="banner/nuevo banner 2026/DSC_0214.webp">
+
+
+
+    <!-- Firebase SDK -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+
+
+    <!-- Lógica del modal y productos centralizada en script.js -->
+
 </head>
-<body class="bg-background text-on-background font-body-md selection:bg-industrial-purple selection:text-white">
-<div class="grain-overlay"></div>
-<!-- Background Decoration -->
-<div class="fixed top-0 left-0 w-full h-full border-[16px] border-industrial-purple/20 pointer-events-none z-10 hidden md:block mix-blend-screen"></div>
-<!-- Navigation Shell (TopAppBar) -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-background/95 border-b-4 border-industrial-purple backdrop-blur-md">
-<a href="shop.html" class="h-12 md:h-16 inline-block">
-    <img alt="AVENIDA" class="h-full w-auto object-contain" src="logo/logo blanco.png"/>
-</a>
-<div class="hidden md:flex gap-8 items-center">
-<a href="shop.html" class="font-code-sm text-code-sm uppercase tracking-widest text-on-surface-variant hover:text-industrial-purple transition-colors">001_TIENDA</a>
-<span class="font-code-sm text-code-sm uppercase tracking-widest text-industrial-purple bg-industrial-purple/10 px-2 py-1 sticker-slap">003_PRÓXIMO_DROP</span>
-<a href="outfit.html" class="font-code-sm text-code-sm uppercase tracking-widest text-on-surface-variant hover:text-industrial-purple transition-colors">004_OUTFIT_BUILDER</a>
-<a href="shop.html" class="w-10 h-10 flex items-center justify-center bg-industrial-purple text-background sticker-slap-purple">
-<span class="material-symbols-outlined">shopping_bag</span>
-</a>
-</div>
-<a href="shop.html" class="md:hidden bg-industrial-purple text-background p-2 sticker-slap-purple">
-<span class="material-symbols-outlined">shopping_bag</span>
-</a>
-</header>
-<main class="relative z-20 pt-20 md:pt-28 pb-12 min-h-screen flex flex-col items-center justify-center">
-<!-- Hero Section -->
-<section class="w-full px-margin-mobile md:px-margin-desktop flex flex-col items-center text-center mt-4 md:mt-0 max-w-5xl">
 
-<div class="space-y-6 mb-8 md:mb-12 relative">
-<div class="absolute -inset-4 bg-industrial-purple/20 blur-2xl z-0 rounded-full"></div>
-<h1 class="uppercase tracking-tighter leading-none relative z-10 text-white drop-shadow-[4px_4px_0_#8357C5] font-rip text-5xl md:text-8xl">NUEVO DROP PRONTO</h1>
-<p class="font-code-sm text-code-sm md:text-2xl text-industrial-purple tracking-widest uppercase bg-background inline-block px-4 py-2 border border-industrial-purple relative z-10 sticker-slap whitespace-nowrap">
-                    [ PREPARANDO_NUEVO_DROP_003 ]
-                </p>
-</div>
-<!-- Simplified Countdown -->
-<!-- CTA Section -->
-<div class="flex flex-col items-center gap-6 w-full max-w-md md:max-w-lg p-6 md:p-8 border-4 border-industrial-purple bg-background sticker-slap relative z-10">
-<div class="w-full relative">
-<input class="w-full bg-surface-container border-2 border-concrete-gray px-4 py-4 md:py-5 font-code-sm text-code-sm md:text-base uppercase focus:outline-none focus:border-industrial-purple text-center placeholder:text-concrete-gray text-white" id="avisame-email" placeholder="TU_CORREO@AQUÍ.COM" type="email"/>
-</div>
-<button class="w-full py-5 md:py-6 bg-industrial-purple text-black font-display-xl text-3xl md:text-4xl uppercase hover:bg-white transition-colors no-radius tracking-widest sticker-slap-purple cursor-pointer" id="avisame-btn">
-                    AVÍSAME
+<body class="bg-[#8357C5] text-white" style="cursor: url('AP/cursor_mano_AP_32.png'), auto;">
+    <style>
+        a, button, [onclick], .icon-link, .category-link, .whatsapp-button {
+            cursor: url('AP/cursor_mano_AP_32.png'), pointer !important;
+        }
+    </style>    
+
+    <style>
+        @keyframes loading {
+            0% {
+                transform: scaleX(0);
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0);
+                transform-origin: right;
+            }
+        }
+    </style>
+    </div>
+
+
+
+    <!-- ======================= HEADER ======================= -->
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-500">
+        <div class="container mx-auto">
+            <!-- Fila Superior: Logo y Utilidades -->
+            <div class="flex justify-between items-center py-2 px-3 md:py-3 md:px-6 h-14 md:h-20">
+                <!-- Izquierda (Menú) -->
+                <div class="flex-1 flex items-center justify-start z-20">
+                    <button id="menu-toggle" class="icon-link shrink-0">
+                        <i class="fas fa-bars text-lg md:text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Centro (Logo) -->
+                <div class="flex-none text-center flex items-center justify-center z-10 px-1">
+                    <a href="index.html" class="logo-link">
+                        <span id="header-logo-text"
+                            class="text-[14px] sm:text-[16px] md:text-3xl leading-none font-black uppercase">AVENIDA</span>
+                    </a>
+                </div>
+
+                <!-- Derecha (Botones) -->
+                <div class="flex-1 flex items-center justify-end space-x-2 md:space-x-5 z-20">
+                    <a href="#" id="user-btn" class="icon-link flex items-center justify-center shrink-0">
+                        <i class="fas fa-user text-[16px] sm:text-lg md:text-xl"></i>
+                    </a>
+                    <a href="cart.html" class="relative icon-link flex items-center justify-center shrink-0">
+                        <i class="fas fa-shopping-cart text-[16px] sm:text-lg md:text-xl"></i>
+                        <span id="cart-count" class="cart-counter hidden lg:flex">0</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fila Inferior: Categorías (Solo Desktop) -->
+            <nav id="category-nav" class="hidden md:flex items-center justify-center space-x-14 pb-4 transition-all duration-300">
+                <a href="#" onclick="filterProducts('Nuevo Drop', event)" class="category-link active-category">Nuevo Drop</a>
+                <a href="#" onclick="filterProducts('Superior', event)" class="category-link">Superior</a>
+                <a href="#" onclick="filterProducts('Inferior', event)" class="category-link">Inferior</a>
+                <a href="#" onclick="filterProducts('Todas las prendas', event)" class="category-link">Todas las prendas</a>
+            </nav>
+        </div>
+    </header>
+
+
+
+    <!-- Barra lateral desplegable -->
+
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#8357C5] z-50 overflow-y-auto">
+
+        <div class="p-6">
+
+            <!-- Cabecera del sidebar -->
+
+            <div class="flex justify-between items-center mb-8">
+
+                <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-20">
+                <button id="close-sidebar" class="text-white hover:text-gray-200">
+
+                    <i class="fas fa-times text-2xl"></i>
+
                 </button>
-<a href="shop.html" class="w-full text-center py-4 bg-white text-black font-bold text-xl uppercase hover:bg-industrial-purple hover:text-white transition-colors no-radius tracking-widest sticker-slap inline-block">
-                    ENTRAR A LA TIENDA →
-                </a>
-</div>
-</section>
-<!-- Lookbook Grid (Zine Style) -->
-<!-- Bottom Technical Section -->
-</main>
-<!-- Footer -->
-<footer class="w-full px-margin-mobile md:px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-center gap-gutter border-t-8 border-white bg-black relative z-30 text-white">
-<div class="font-label-caps text-label-caps bg-white text-black px-3 py-1 font-bold sticker-slap">
-            ©2026 AVENIDA
-        </div>
-<div class="flex gap-8 items-center mt-8 md:mt-0">
-<a class="font-code-sm text-code-sm uppercase hover:text-industrial-purple hover:line-through transition-colors" href="https://www.instagram.com/aaavenidaaa/" target="_blank">INSTAGRAM</a>
-<a class="font-code-sm text-code-sm uppercase hover:text-industrial-purple hover:line-through transition-colors" href="https://www.tiktok.com/@aaavenidaaa" target="_blank">TIKTOK</a>
-<a class="font-code-sm text-code-sm uppercase hover:text-industrial-purple hover:line-through transition-colors" href="https://wa.me/595982713971" target="_blank">WHATSAPP</a>
-</div>
-</footer>
-<!-- Side Navigation Blueprint (SideNavBar) -->
-<div class="hidden lg:flex fixed left-0 top-0 h-full w-16 z-[60] border-r-4 border-industrial-purple flex-col items-center justify-between py-12 bg-background/90 backdrop-blur-md">
-<div class="vertical-text font-display-xl text-3xl tracking-tighter text-industrial-purple/50 select-none transform rotate-180">
-            AVENIDA_URB
-        </div>
-<div class="flex flex-col gap-12">
-<div class="group relative flex items-center justify-center">
-<span class="material-symbols-outlined text-2xl text-industrial-purple">grid_view</span>
-</div>
-<div class="group relative flex items-center justify-center">
-<span class="material-symbols-outlined text-2xl text-on-surface-variant">history</span>
-</div>
-<div class="group relative flex items-center justify-center">
-<span class="material-symbols-outlined text-2xl text-on-surface-variant">person</span>
-</div>
-</div>
-<div class="w-8 h-8 bg-industrial-purple sticker-slap-purple"></div>
-</div>
-<script>
-    // === COUNTDOWN LÓGICA (HASTA MAÑANA A LA MEDIANOCHE) ===
-    function updateCountdown() {
-        const now = new Date();
-        // Set to tomorrow at 23:59:59
-        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 23, 59, 59);
-        const endDate = tomorrow.getTime();
-        
-        const update = () => {
-            const currentTime = new Date().getTime();
-            let distance = endDate - currentTime;
-            
-            if (distance < 0) return;
-            
-            // Calculate total hours remaining (includes days converted to hours)
-            const totalHours = Math.floor(distance / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            const set = (id, val) => {
-                const el = document.getElementById(id);
-                if (!el) return;
-                const str = val.toString().padStart(2, '0');
-                if (el.innerText !== str) {
-                    el.innerText = str;
-                }
-            };
-            
-            set('hours', totalHours); 
-            set('minutes', minutes); 
-            set('seconds', seconds);
-        };
-        
-        setInterval(update, 1000);
-        update();
-    }
-    
-    updateCountdown();
 
-    // === LÓGICA DE ACCESO (ADMIN) ===
-    const SESSION_KEY = "avenida_unlocked_v4";
-    
-    // Auto bypass for admin via URL or session
-    if (window.location.search.includes('admin=true')) {
-        sessionStorage.setItem(SESSION_KEY, 'true');
-    }
+            </div>
 
-    if (sessionStorage.getItem(SESSION_KEY) === 'true') {
-        window.location.replace('store.html');
-    } else {
-        // Secret unlock: click the top AVENIDA logo 5 times
-        let clickCount = 0;
-        const secretElement = document.querySelector('[data-text="AVENIDA"]');
-        if (secretElement) {
-            secretElement.addEventListener('click', () => {
-                clickCount++;
-                if (clickCount >= 5) {
-                    sessionStorage.setItem(SESSION_KEY, 'true');
-                    window.location.href = 'store.html';
-                }
+
+
+            <!-- Sección de usuario -->
+
+            <div class="user-section mb-8">
+
+                <div class="flex items-center space-x-4 mb-4">
+
+                    <div class="w-16 h-24 rounded-full bg-white/20 flex items-center justify-center">
+
+                        <i class="fas fa-user text-white text-2xl"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-white text-lg font-semibold" id="user-display-name">Usuario</h3>
+
+                        <p class="text-white/70" id="user-display-email">usuario@email.com</p>
+
+                    </div>
+
+                </div>
+
+                <div class="rounded-lg p-0">
+
+                    <ul class="space-y-3">
+
+                        <li>
+
+                            <a href="profile.html">
+
+                                <i class="fas fa-user-circle mr-3"></i>
+
+                                <span>Mi Perfil</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="orders.html">
+
+                                <i class="fas fa-shopping-bag mr-3"></i>
+
+                                <span>Mis Pedidos</span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="favorites.html">
+
+                                <i class="fas fa-heart mr-3"></i>
+
+                                <span>Favoritos</span>
+
+                            </a>
+
+                        </li>
+
+                        <!-- Botón de logout -->
+
+                        <li>
+
+                            <button id="logout-btn"
+                                class="flex items-center text-white hover:text-red-300 w-full text-left transition-colors duration-300"
+                                style="display: none;">
+
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+
+                                <span>Cerrar Sesión</span>
+
+                            </button>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Navegación principal -->
+
+            <nav class="mb-8">
+
+                <ul class="space-y-4">
+
+                    <li>
+
+                        <a href="index.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-home mr-3"></i>
+
+                            <span>Inicio</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="filterProducts('Todas las prendas', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-th-large mr-3"></i>
+                            <span>Todas las prendas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="filterProducts('Nuevo Drop', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-star mr-3"></i>
+                            <span>Nuevo Drop</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="filterProducts('Superior', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-tshirt mr-3"></i>
+                            <span>Superior</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="filterProducts('Inferior', event)" class="flex items-center text-white hover:text-gray-200 py-2">
+                            <i class="fas fa-tshirt mr-3"></i>
+                            <span>Inferior</span>
+                        </a>
+                    </li>
+
+                    <li>
+
+                        <a href="#lookbook-section" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-images mr-3"></i>
+
+                            <span>Lookbook</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="about.html" class="flex items-center text-white hover:text-gray-200 py-2">
+
+                            <i class="fas fa-info-circle mr-3"></i>
+
+                            <span>Sobre Nosotros</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <!-- Sección de Legal y Ayuda -->
+            <div class="config-section mb-8">
+                <h3 class="text-white text-lg font-semibold mb-4">Legal y Ayuda</h3>
+                <ul class="space-y-3 bg-white/10 rounded-lg p-4">
+                    <li>
+                        <a href="terms.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-file-contract mr-3"></i>
+                            <span>Términos y Condiciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="privacy.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-lock mr-3"></i>
+                            <span>Privacidad</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="returns.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-undo mr-3"></i>
+                            <span>Devoluciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="help.html" class="flex items-center text-white hover:text-gray-200">
+                            <i class="fas fa-question-circle mr-3"></i>
+                            <span>Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        
+        <!-- EASTER EGG CONTAINER -->
+        <div id="easter-egg-container" class="relative mt-4 mb-0 w-full h-[80px] flex justify-center overflow-hidden transition-all duration-500">
+            <!-- Botón Metálico -->
+            <img id="ee-btn" src="AP/boton_cierre.png" class="absolute top-2 w-16 h-auto z-30 cursor-pointer" alt="Secret Button">
+            
+            <div id="ee-zipper-wrapper" class="absolute inset-0 w-full h-full opacity-0 pointer-events-none transition-opacity duration-500 flex justify-center items-center">
+                <canvas id="ee-zipper-canvas" class="w-full h-full object-cover"></canvas>
+            </div>
+
+            <!-- Portal Sutil -->
+            <a id="ee-portal-btn" href="outfit.html" class="absolute inset-0 z-40 cursor-pointer pointer-events-none flex items-center justify-center" style="text-decoration: none;">
+                <div id="ee-portal-content" class="opacity-0 transform scale-50 transition-all duration-700 ease-out flex flex-col items-center justify-center hover:scale-110">
+                    <div class="relative group">
+                        <!-- Glow ring sutil -->
+                        <div class="absolute inset-0 bg-white rounded-full blur-sm opacity-10 animate-pulse"></div>
+                        <!-- Aspecto invisible/translúcido, más pequeño -->
+                        <div class="relative w-14 h-14 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                            <!-- Icono de percha SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 text-white/50 drop-shadow-sm">
+                                <path d="M22 15L12 10 2 15h20z" />
+                                <path d="M12 10V6c0-1.1.9-2 2-2s2 .9 2 2" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+
+
+    <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+
+
+    <!-- Envoltura principal para todo el contenido que se desplaza -->
+
+    <div id="page-content">
+
+        <!-- ======================= BANNER CAROUSEL ======================= -->
+        <section id="banner-carousel">
+
+            <div class="carousel-container">
+                <div class="carousel-slide" style="background-image: url('banner/nuevo banner 2026/DSC_0214.webp');">
+                </div>
+                <div class="carousel-slide" style="background-image: url('banner/nuevo banner 2026/DSC_0217.webp');">
+                </div>
+                <div class="carousel-slide"
+                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-18-18A.jpeg');"></div>
+                <div class="carousel-slide"
+                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-27-9A.jpeg');"></div>
+                <div class="carousel-slide"
+                    style="background-image: url('banner/nuevo banner 2026/A001337-R1-33-3A.jpeg');"></div>
+            </div>
+
+
+
+            <!-- Botones de navegación -->
+
+            <button id="prev-btn" class="carousel-arrow" aria-label="Slide anterior">
+
+                <i class="fas fa-chevron-left"></i>
+
+            </button>
+
+            <button id="next-btn" class="carousel-arrow" aria-label="Slide siguiente">
+
+                <i class="fas fa-chevron-right"></i>
+
+            </button>
+
+
+
+            <!-- Indicadores de navegación -->
+
+            <div class="carousel-indicators">
+
+                <button class="carousel-indicator" data-slide="0" aria-label="Ir al slide 1"></button>
+                <button class="carousel-indicator" data-slide="1" aria-label="Ir al slide 2"></button>
+                <button class="carousel-indicator" data-slide="2" aria-label="Ir al slide 3"></button>
+                <button class="carousel-indicator" data-slide="3" aria-label="Ir al slide 4"></button>
+                <button class="carousel-indicator" data-slide="4" aria-label="Ir al slide 5"></button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================= CATÁLOGO DE PRODUCTOS ======================= -->
+
+        <main class="container mx-auto py-24">
+
+
+
+            <!-- Video Hero Section -->
+            <div
+                class="hero-video-container relative w-full mb-16 overflow-hidden rounded-none md:rounded-xl shadow-2xl group">
+                <!-- Video de Fondo -->
+                <video id="hero-video" autoplay muted loop playsinline poster="banner/banner1.jpeg"
+                    class="w-full h-[50vh] md:h-[70vh] object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[2s]">
+                    <source src="videos/Avda TEASER I CORTE FINAL.mp4" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+
+                <!-- Overlay Oscuro (Mejora legibilidad) -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none">
+                </div>
+
+                <!-- Contenido Central (Texto y CTA) -->
+                <div
+                    class="absolute inset-0 flex flex-col items-center justify-center text-white z-10 text-center px-4">
+                    <span
+                        class="text-xs md:text-sm font-medium tracking-[0.5em] uppercase mb-4 opacity-0 animate-fade-in-up text-white/80"
+                        style="animation-delay: 0.5s; animation-fill-mode: forwards;">COLECCIÓN 2026</span>
+                    <h2 class="font-rip text-4xl md:text-6xl mb-8 opacity-0 animate-fade-in-up leading-none tracking-tighter flex items-center justify-center gap-4"
+                        style="animation-delay: 0.7s; animation-fill-mode: forwards;">
+                        <span class="text-white">VERANO</span>
+                        <span class="text-gradient" style="text-shadow: 0 10px 30px rgba(131,87,197,0.3);">ETERNO</span>
+                    </h2>
+
+                    <a href="#product-grid"
+                        class="group/btn relative px-8 py-3 bg-white text-black font-bold uppercase tracking-wider overflow-hidden transition-all hover:bg-[#8357C5] hover:text-white opacity-0 animate-fade-in-up shadow-lg hover:shadow-purple-500/50 rounded-sm"
+                        style="animation-delay: 0.9s; animation-fill-mode: forwards;">
+                        <span class="relative z-10">Ver Catálogo</span>
+                    </a>
+                </div>
+
+                <!-- Botón de Sonido -->
+                <button id="video-sound-btn"
+                    class="absolute bottom-6 right-6 bg-black/40 hover:bg-black/70 text-white w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 backdrop-blur-md z-20 cursor-pointer border border-white/10 hover:scale-110">
+                    <i class="fas fa-volume-mute text-lg"></i>
+                </button>
+            </div>
+
+            <h2 id="product-grid-title" class="text-center text-4xl font-bold text-gray-900 mb-16 px-6 md:px-0">
+                Nuevo Drop</h2>
+
+            <section id="product-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
+                <!-- Las tarjetas de productos se generarán dinámicamente desde script.js -->
+            </section>
+
+            <!-- Sección Verano Eterno -->
+            <h2 id="old-grid-title" class="text-center text-4xl font-bold text-gray-900 mt-32 mb-16 px-6 md:px-0">
+                Verano Eterno</h2>
+
+            <section id="old-product-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
+                <!-- Las tarjetas de productos se generarán dinámicamente desde script.js -->
+            </section>
+
+            <div id="view-all-container" class="flex justify-center mt-12 mb-20">
+                <button onclick="showOlderDrops(event)" 
+                    class="px-10 py-4 border-2 border-white text-white font-black uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-[#8357C5] transition-all duration-300 shadow-xl hover:shadow-white/20 text-sm">
+                    Ver todos los productos
+                </button>
+            </div>
+
+            <!-- Sección Drops Antiguos (Oculta por defecto) -->
+            <div id="older-drops-section" style="display: none;">
+                <h2 class="text-center text-4xl font-bold text-gray-900 mt-16 mb-16 px-6 md:px-0">
+                    Primer Drop</h2>
+
+                <section id="older-product-grid"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-10 px-6 md:px-0">
+                    <!-- Las tarjetas de productos se generarán dinámicamente desde script.js -->
+                </section>
+            </div>
+
+        </main>
+
+
+                <!-- ======================= SECCIÓN LOOKBOOK ZINE ======================= -->
+        <div class="zine-lookbook-wrapper">
+        <section id="zine-lookbook-section" class="zine-container container mx-auto py-20 px-6 relative">
+            <div class="zine-grid relative z-10">
+                <!-- Zine Image 1 -->
+                <div class="zine-item item-1 group tape-effect zine-rotate-minus-1">
+                    <div class="zine-photo-card shadow-xl relative">
+                        <img src="WEB-drop-julio/DSC_0753.jpg" alt="Skate AVDA" class="zine-img zine-grayscale">
+                        <div class="zine-label zine-label-left">>> VOL. 1 / CALLE</div>
+                    </div>
+                </div>
+
+                <!-- Text Block -->
+                <div class="zine-item item-text flex-col justify-center zine-rotate-2">
+                    <div class="zine-text-box border-4 border-industrial-purple bg-background sticker-slap">
+                        <span class="zine-manifesto-badge">[MANIFIESTO]</span>
+                        <h3 class="zine-title" style="font-size: 2rem;">NUESTRO<br>MANIFIESTO</h3>
+                        <div class="zine-paragraph border-l-4 border-industrial-purple pl-4" style="text-transform: none; font-size: 0.9rem; line-height: 1.4;">
+                            <p class="mb-2"><strong>Avenida nace para quienes hacen de la calle su lugar y del estilo, una forma de estar en el mundo.</strong></p>
+                            <p class="mb-2">Creamos jeans y pantalones con identidad, pensados para el día a día del paraguayo, con cortes que combinan comodidad y actitud. Cada prenda está hecha a mano, en ediciones limitadas, porque creemos en lo auténtico y lo que tiene alma.</p>
+                            <p>Celebramos la ciudad, el movimiento, la comunidad. Nos inspiran los skaters, grafiteros, diseñadores y creadores del arte urbano. Gente que no solo viste, sino que expresa.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zine Image 2 -->
+                <div class="zine-item item-2 group tape-effect tape-effect-alt zine-rotate-1 zine-mt-mobile">
+                    <div class="zine-photo-card shadow-xl relative">
+                        <img src="WEB-drop-julio/IMG_6190.jpg" alt="Jort AVDA" class="zine-img zine-grayscale">
+                        <div class="zine-label zine-label-right">002 // GRIT</div>
+                    </div>
+                </div>
+
+                <!-- Zine Image 3 -->
+                <div class="zine-item item-3 group tape-effect zine-rotate-minus-2 zine-mt-large">
+                    <div class="zine-photo-card shadow-xl relative">
+                        <img src="WEB-drop-julio/IMG_6204.jpg" alt="Baggy AVDA" class="zine-img zine-grayscale">
+                        <div class="zine-label zine-label-left">DETALLE_TX</div>
+                        <div class="zine-slap-badge zine-rotate-12">100% RAW</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+<!-- ======================= FOOTER ======================= -->
+        <footer class="bg-[#1a1a1a] text-white pt-16 pb-8">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                    <!-- Columna 1: Info -->
+                    <div>
+                        <img src="logo/logo blanco.png" alt="Avenida Logo" class="h-12 mb-6">
+                        <p class="text-gray-400 mb-6">
+                            Elevando el estilo urbano con diseños exclusivos y calidad premium.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="https://www.instagram.com/aaavenidaaa/" target="_blank"
+                                class="text-white hover:text-[#8357C5] transition-colors">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@aaavenidaaa" target="_blank"
+                                class="text-white hover:text-[#8357C5] transition-colors">
+                                <i class="fab fa-tiktok text-xl"></i>
+                            </a>
+                            <a href="https://wa.me/595982713971" target="_blank"
+                                class="text-white hover:text-[#8357C5] transition-colors">
+                                <i class="fab fa-whatsapp text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Columna 2: Enlaces -->
+                    <div>
+                        <h4 class="text-lg font-bold mb-6">Enlaces Rápidos</h4>
+                        <ul class="space-y-4">
+                            <li><a href="index.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Inicio</a>
+                            </li>
+                            <li><a href="about.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Nosotros</a>
+                            </li>
+                            <li><a href="#productos"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Productos</a></li>
+                            <li><a href="#" id="contacto-btn-footer"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Contacto</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna 3: Legal -->
+                    <div>
+                        <h4 class="text-lg font-bold mb-6">Legal</h4>
+                        <ul class="space-y-4">
+                            <li><a href="terms.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Términos y
+                                    Condiciones</a></li>
+                            <li><a href="privacy.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Política de
+                                    Privacidad</a></li>
+                            <li><a href="returns.html"
+                                    class="text-gray-400 hover:text-[#8357C5] transition-colors">Política de
+                                    Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-800 pt-8 text-center">
+                    <p class="text-gray-500">&copy; 2026 AVENIDA. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+
+    <!-- Modales y otros elementos fijos -->
+
+    <div id="user-modal" class="modal-overlay"></div>
+
+    <div id="toast-notification"></div>
+
+
+
+    <!-- Modal de Registro -->
+
+    <div id="register-modal" class="modal-overlay">
+
+        <div class="modal-content w-11/12 max-w-md">
+
+            <div class="bg-white rounded-lg shadow-xl p-8">
+
+                <div class="flex justify-between items-center mb-6">
+
+                    <h2 class="text-2xl font-bold text-gray-900">Crear Cuenta</h2>
+
+                    <button id="close-register-btn" class="text-gray-400 hover:text-gray-600">
+
+                        <i class="fas fa-times text-xl"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <form id="register-form" class="space-y-4">
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+
+                        <input type="text" id="register-name" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+
+                        <input type="email" id="register-email" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+
+                        <input type="password" id="register-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+
+                        <input type="password" id="register-confirm-password" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8357C5] focus:border-transparent">
+
+                    </div>
+
+
+
+                    <div class="flex items-center">
+
+                        <input type="checkbox" id="register-terms" required
+                            class="h-4 w-4 text-[#8357C5] focus:ring-[#8357C5] border-gray-300 rounded">
+
+                        <label class="ml-2 block text-sm text-gray-900">
+
+                            Acepto los <a href="terms.html" class="text-[#8357C5] hover:underline">Términos y
+                                Condiciones</a>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <button type="submit"
+                        class="w-full bg-[#8357C5] text-white py-3 px-4 rounded-md hover:bg-[#6e48a9] transition-colors duration-300 font-semibold">
+
+                        Crear Cuenta
+
+                    </button>
+
+                </form>
+
+
+
+                <div class="mt-6 text-center">
+
+                    <p class="text-sm text-gray-600">
+
+                        ¿Ya tienes cuenta?
+
+                        <a href="#" id="login-link" class="text-[#8357C5] hover:underline font-medium">Iniciar
+                            Sesión</a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/595982713971?text=Hola! Me gustaría consultar sobre sus productos" class="whatsapp-button"
+        target="_blank">
+        <i class="fab fa-whatsapp text-4xl"></i>
+    </a>
+
+
+
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+
+    <!-- Sidebar & Header Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeSidebar();
+            initializeHeader();
+        });
+
+        function initializeSidebar() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.add('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('hidden');
+                        sidebarOverlay.classList.add('active');
+                    }
+                });
+            }
+
+            if (closeSidebar && sidebar) {
+                closeSidebar.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                });
+            }
+
+            if (sidebarOverlay && sidebar) {
+                sidebarOverlay.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.add('hidden');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+
+            const sidebarLinks = sidebar?.querySelectorAll('a');
+            sidebarLinks?.forEach(link => {
+                link.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('hidden');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                });
             });
         }
-    }
-</script><script>
-    // === AVISAME LÓGICA ===
-    const avisameBtn = document.getElementById('avisame-btn');
-    const avisameEmail = document.getElementById('avisame-email');
-    
-    if (avisameBtn && avisameEmail) {
-        avisameBtn.addEventListener('click', async () => {
-            const email = avisameEmail.value.trim();
-            if (!email || !email.includes('@')) {
-                alert('Por favor, ingresa un correo válido.');
-                return;
+
+        function initializeHeader() {
+            const header = document.getElementById('main-header');
+            if (header) {
+                const onScroll = () => {
+                    const scrolled = window.scrollY > 50;
+                    header.classList.toggle('scrolled', scrolled);
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll();
             }
-            
-            avisameBtn.disabled = true;
-            const originalText = avisameBtn.innerText;
-            avisameBtn.innerText = 'PROCESANDO...';
-            
-            try {
-                // Ensure Firebase is initialized
-                if (window.firebaseAuth && window.firebaseAuth.db) {
-                    await window.firebaseAuth.db.collection('orders').add({
-                        type: 'waitlist_email',
-                        email: email,
-                        source: 'Waitlist Drop 3',
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                } else if (typeof firebase !== 'undefined') {
-                    // Fallback if window.firebaseAuth is not fully set up on this page
-                    await firebase.firestore().collection('orders').add({
-                        type: 'waitlist_email',
-                        email: email,
-                        source: 'Waitlist Drop 3',
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }
+    </script>
+
+    <!-- Main Scripts -->
+    <script src="script.js?v=12" defer></script>
+    <script src="realtime-stock-listeners.js" defer></script>
+    <script async src="https://www.tiktok.com/embed.js"></script>
+
+    <!-- Hostinger & TikTok Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // TikTok Logic
+            const tiktokContainer = document.querySelector('.tiktok-video-container');
+            const video = document.querySelector('.tiktok-video');
+            const iframe = document.querySelector('.tiktok-iframe-fallback');
+
+            if (tiktokContainer) {
+                tiktokContainer.addEventListener('click', (e) => {
+                    if (e.target.closest('.tiktok-overlay')) {
+                        window.open('https://www.tiktok.com/@aaavenidaaa/video/7541185824721767686', '_blank');
+                    }
+                });
+
+                if (video) {
+                    video.addEventListener('error', () => {
+                        video.style.display = 'none';
+                        if (iframe) iframe.style.display = 'block';
                     });
                 }
-                
-                avisameBtn.innerText = '¡REGISTRADO!';
-                avisameBtn.classList.remove('bg-industrial-purple');
-                avisameBtn.classList.add('bg-white', 'text-black');
-                avisameEmail.value = '';
-            } catch (error) {
-                console.error("Error subscribing:", error);
-                alert('Hubo un error. Intenta nuevamente.');
-                avisameBtn.innerText = originalText;
-                avisameBtn.disabled = false;
+            }
+
+            // Hostinger Verification & Force Render
+            setTimeout(() => {
+                const productGrid = document.getElementById('product-grid');
+                if (productGrid && productGrid.children.length === 0 && window.products?.length > 0) {
+                    if (typeof window.forceRenderProducts === 'function') {
+                        window.forceRenderProducts();
+                    }
+                }
+            }, 3000);
+        });
+    </script>
+
+    <!-- Modal Guía de Tallas -->
+    <div id="size-chart-modal"
+        class="fixed inset-0 bg-black/70 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+        <div
+            class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl transform transition-all duration-300 scale-100">
+            <button id="close-size-chart"
+                class="absolute top-4 right-4 bg-white/80 rounded-full p-2 text-gray-800 hover:text-[#8357C5] hover:bg-white transition-all duration-300 shadow-md z-10">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="p-4 md:p-8 flex justify-center bg-gray-50">
+                <img id="size-chart-img" src="" alt="Guía de Tallas" class="max-w-full h-auto rounded-lg shadow-sm">
+            </div>
+        </div>
+    </div>
+    <!-- Modal Promocional ¡Felicidades! -->
+    <div id="promo-modal"
+        class="fixed inset-0 bg-black/60 z-[100] hidden overflow-y-auto backdrop-blur-sm transition-opacity duration-300">
+        <!-- Wrapper container inside to allow scrolling -->
+        <div class="flex min-h-screen p-4 py-12">
+            <!-- Contenedor relativo para posicionar el modal y emojis -->
+            <div class="relative w-full max-w-[360px] m-auto">
+                <!-- Emoji Arriba Izquierda -->
+                <div class="absolute -top-6 -left-6 z-10 transform -rotate-12 pointer-events-none">
+                    <span class="text-6xl" style="filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));">💜</span>
+                </div>
+
+                <!-- Emoji Abajo Derecha -->
+                <div class="absolute -bottom-6 -right-6 z-10 transform rotate-12 pointer-events-none">
+                    <span class="text-6xl" style="filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));">💜</span>
+                </div>
+
+                <!-- Caja Blanca del Modal -->
+                <div class="bg-white rounded-3xl p-8 py-10 text-center relative shadow-2xl z-0">
+                    <button id="close-promo"
+                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-300 text-3xl font-bold leading-none">&times;</button>
+
+                    <h2 class="text-[#8357C5] text-2xl md:text-3xl font-black mb-4 tracking-tight uppercase">
+                        ¡Felicidades!
+                    </h2>
+                    <p class="text-gray-600 text-[15px] mb-8 leading-relaxed px-2 font-medium">
+                        Sos uno de los pocos elegidos. Descubrí nuestra nueva temporada exclusiva de <strong
+                            class="text-gray-900 font-black">JORTS y CAMISAS</strong> antes que nadie.
+                    </p>
+                    <button id="promo-scroll-btn"
+                        class="w-full bg-[#8357C5] text-white py-4 rounded-xl font-bold text-sm tracking-wide hover:bg-[#6e48a9] transition-all duration-300 shadow-md">
+                        IR A LOS NUEVOS PRODUCTOS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Promocional -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const promoModal = document.getElementById('promo-modal');
+            const closePromo = document.getElementById('close-promo');
+            const scrollBtn = document.getElementById('promo-scroll-btn');
+
+            // Mostrar después de un pequeño retraso
+            // Solo mostrar el popup si todavía no llegó la fecha de lanzamiento público
+            const LAUNCH_DATE_POPUP = new Date('2026-03-01T18:00:00-03:00');
+            const isPublicLaunch = new Date() >= LAUNCH_DATE_POPUP;
+            setTimeout(() => {
+                if (promoModal && !sessionStorage.getItem('promoVistoAvenida') && !isPublicLaunch) {
+                    promoModal.classList.remove('hidden');
+                }
+            }, 800);
+
+            // Cerrar
+            const closeModal = () => {
+                promoModal.classList.add('hidden');
+                sessionStorage.setItem('promoVistoAvenida', 'true');
+            };
+
+            if (closePromo) closePromo.addEventListener('click', closeModal);
+
+            if (promoModal) {
+                promoModal.addEventListener('click', (e) => {
+                    if (e.target === promoModal) closeModal();
+                });
+            }
+
+            // Scroll y cerrar
+            if (scrollBtn) {
+                scrollBtn.addEventListener('click', () => {
+                    closeModal();
+                    // Buscar el grid de productos
+                    const productGrid = document.getElementById('product-grid');
+                    if (productGrid) {
+                        const targetSection = productGrid.closest('section') || productGrid;
+                        const headerOffset = 90; // Altura aproximada del header
+                        const elementPosition = targetSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             }
         });
-    }
-</script></body></html>
+    </script>
+
+</body>
+
+</html>
