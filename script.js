@@ -253,7 +253,7 @@ window.products = [
     {
         id: 7,
         name: 'Campana Avenida 26\' (Al cuerpo)',
-        price: 350000,
+        price: 380000,
         images: [
             'catalogo/jean flared/portada jean flared.png',
             'catalogo/jean flared/jean flared reverso.png',
@@ -305,7 +305,7 @@ window.products = [
     {
         id: 9,
         name: 'Remera Avenida 26\'',
-        price: 180000,
+        price: 170000,
         images: [
             'catalogo/remera slim fit/portada remera slim fit.png',
             'catalogo/remera slim fit/remera slim fit reverso.png',
@@ -333,7 +333,7 @@ window.products = [
     {
         id: 10,
         name: 'Campana Avenida 26\' (Relajado)',
-        price: 350000,
+        price: 380000,
         images: [
             'catalogo/campana relajado/portada campana relajado.png',
             'catalogo/campana relajado/reverso campana relajado.png',
@@ -362,7 +362,7 @@ async function initApp() {
     console.log('🚀 Inicializando aplicación...');
 
     // VERIFICAR VERSIÓN Y LIMPIAR LOCALSTORAGE SI ES NECESARIO
-    const APP_VERSION = '4.7';
+    const APP_VERSION = '4.8';
     const storedVersion = localStorage.getItem('appVersion');
     if (storedVersion !== APP_VERSION) {
         console.log(`🔄 Nueva versión detectada (${APP_VERSION}). Limpiando localStorage...`);
