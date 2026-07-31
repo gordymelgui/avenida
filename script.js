@@ -355,7 +355,7 @@ async function initApp() {
     console.log('🚀 Inicializando aplicación...');
 
     // VERIFICAR VERSIÓN Y LIMPIAR LOCALSTORAGE SI ES NECESARIO
-    const APP_VERSION = '4.1';
+    const APP_VERSION = '4.2';
     const storedVersion = localStorage.getItem('appVersion');
     if (storedVersion !== APP_VERSION) {
         console.log(`🔄 Nueva versión detectada (${APP_VERSION}). Limpiando localStorage...`);
