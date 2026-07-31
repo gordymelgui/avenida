@@ -257,6 +257,7 @@ window.products = [
         images: [
             'catalogo/jean flared/portada jean flared.png',
             'catalogo/jean flared/jean flared reverso.png',
+            'lookbook/fotolook1.jpg',
             'catalogo/jean flared/jean flared etiqueta av.jpg',
             'catalogo/jean flared/jean flared detalle bolsillos.jpg'
         ],
@@ -337,6 +338,7 @@ window.products = [
         images: [
             'catalogo/campana relajado/portada campana relajado.png',
             'catalogo/campana relajado/reverso campana relajado.png',
+            'lookbook/fotolook2.jpg',
             'catalogo/jean flared/jean flared etiqueta av.jpg',
             'catalogo/jean flared/jean flared detalle bolsillos.jpg'
         ],
@@ -362,7 +364,7 @@ async function initApp() {
     console.log('🚀 Inicializando aplicación...');
 
     // VERIFICAR VERSIÓN Y LIMPIAR LOCALSTORAGE SI ES NECESARIO
-    const APP_VERSION = '4.8';
+    const APP_VERSION = '4.9';
     const storedVersion = localStorage.getItem('appVersion');
     if (storedVersion !== APP_VERSION) {
         console.log(`🔄 Nueva versión detectada (${APP_VERSION}). Limpiando localStorage...`);
@@ -976,6 +978,25 @@ async function initApp() {
             // Verificar si el producto usa la imagen del logo como placeholder
             const isPlaceholder = product.images[0] && (product.images[0].includes('logo/logo') || product.images[0].includes('logo/logo blanco'));
 
+            // Determinar la imagen de hover (priorizar la foto del Modelo 1)
+            let hoverImageSrc = null;
+            if (product.images && product.images.length > 1) {
+                const model1Img = product.images.find(img => 
+                    img.includes('modelo1') || 
+                    img.includes('modelo 1') || 
+                    img.includes('manga larga1') || 
+                    img.includes('remera1') || 
+                    img.includes('fotolook1') ||
+                    img.includes('fotolook2')
+                );
+                if (model1Img) {
+                    hoverImageSrc = model1Img;
+                } else {
+                    const modelJpg = product.images.find(img => img.endsWith('.jpg') && !img.includes('etiqueta') && !img.includes('reverso'));
+                    hoverImageSrc = modelJpg || product.images[1];
+                }
+            }
+
             const imageHtml = isPlaceholder
                 ? `<div class="w-full h-full flex items-center justify-center bg-black/10 min-h-[250px]">
                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="w-16 h-16 text-white/30">
@@ -987,9 +1008,9 @@ async function initApp() {
                     <!-- Imagen Principal -->
                     <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full ${product.images[0] && product.images[0].endsWith('.png') ? 'object-contain p-2' : 'object-cover'} object-center main-image ${outOfStockClass}">
                     
-                    <!-- Imagen de Hover -->
-                    ${product.images.length > 1 ? `
-                    <img src="${product.images[product.images.length > 4 ? 4 : 1]}" alt="${product.name} lifestyle" class="w-full h-full ${product.images[1] && product.images[1].endsWith('.png') ? 'object-contain p-2' : 'object-cover'} object-center hover-image absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out ${outOfStockClass}">
+                    <!-- Imagen de Hover (Modelo 1) -->
+                    ${hoverImageSrc ? `
+                    <img src="${hoverImageSrc}" alt="${product.name} lifestyle" class="w-full h-full ${hoverImageSrc.endsWith('.png') ? 'object-contain p-2' : 'object-cover'} object-center hover-image absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out ${outOfStockClass}">
                     ` : ''}
                 `;
 
