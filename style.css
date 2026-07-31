@@ -882,12 +882,42 @@ footer {
         box-shadow: none !important;
     }
 
+    .carousel-arrow {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 0.95rem !important;
+    }
+
+    #prev-btn {
+        left: 0.75rem !important;
+    }
+
+    #next-btn {
+        right: 0.75rem !important;
+    }
+
     #banner-carousel {
         height: 70vh;
     }
 
     .tiktok-video-container {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-arrow {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 0.85rem !important;
+    }
+
+    #prev-btn {
+        left: 0.4rem !important;
+    }
+
+    #next-btn {
+        right: 0.4rem !important;
     }
 }
 
@@ -962,6 +992,8 @@ footer {
     .zine-item.item-text { grid-column: span 5 / span 5; }
     .zine-item.item-2 { grid-column: span 6 / span 6; }
     .zine-item.item-3 { grid-column: span 6 / span 6; }
+    .zine-item.item-4 { grid-column: span 6 / span 6; }
+    .zine-item.item-5 { grid-column: span 6 / span 6; }
     .zine-mt-mobile { margin-top: 0; }
     .zine-mt-large { margin-top: 6rem; }
 }

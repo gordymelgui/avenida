@@ -281,6 +281,9 @@ window.products = [
         price: 200000,
         images: [
             'catalogo/remera mangas largas/portada remera mangas largas.png',
+            'catalogo/remera mangas largas/foto modelo manga larga1.jpg',
+            'catalogo/remera mangas largas/foto modelo manga larga2.jpg',
+            'catalogo/remera mangas largas/foto modelo manga larga3.jpg',
             'catalogo/remera mangas largas/remera mangas largas etiqueta cuello.jpg',
             'catalogo/remera mangas largas/remera mangas largas etiqueta composicion.jpg'
         ],
@@ -306,6 +309,10 @@ window.products = [
         images: [
             'catalogo/remera slim fit/portada remera slim fit.png',
             'catalogo/remera slim fit/remera slim fit reverso.png',
+            'catalogo/remera slim fit/foto modelo remera1.jpg',
+            'catalogo/remera slim fit/foto modelo remera2.jpg',
+            'catalogo/remera slim fit/foto modelo remera3.jpg',
+            'catalogo/remera slim fit/foto modelo remera4.png',
             'catalogo/remera slim fit/remera slim fit etiqueta cuello.jpg'
         ],
         description: 'Remera estilo ringer Slim Fit con detalles en cuello y mangas. Ajuste anatómico perfecto que realza la silueta.',
@@ -355,7 +362,7 @@ async function initApp() {
     console.log('🚀 Inicializando aplicación...');
 
     // VERIFICAR VERSIÓN Y LIMPIAR LOCALSTORAGE SI ES NECESARIO
-    const APP_VERSION = '4.6';
+    const APP_VERSION = '4.7';
     const storedVersion = localStorage.getItem('appVersion');
     if (storedVersion !== APP_VERSION) {
         console.log(`🔄 Nueva versión detectada (${APP_VERSION}). Limpiando localStorage...`);
