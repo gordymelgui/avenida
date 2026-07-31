@@ -257,7 +257,8 @@ window.products = [
         images: [
             'catalogo/jean flared/portada jean flared.png',
             'catalogo/jean flared/jean flared reverso.png',
-            'lookbook/fotolook1.jpg',
+            'catalogo/jean flared/foto modelo acampanado al cuerpo1.jpg',
+            'catalogo/jean flared/foto modelo acampanado al cuerpo2.jpg',
             'catalogo/jean flared/jean flared etiqueta av.jpg',
             'catalogo/jean flared/jean flared detalle bolsillos.jpg'
         ],
@@ -338,7 +339,8 @@ window.products = [
         images: [
             'catalogo/campana relajado/portada campana relajado.png',
             'catalogo/campana relajado/reverso campana relajado.png',
-            'lookbook/fotolook2.jpg',
+            'catalogo/campana relajado/foto modelo relajado1.png',
+            'catalogo/campana relajado/foto modelo relajado2.png',
             'catalogo/jean flared/jean flared etiqueta av.jpg',
             'catalogo/jean flared/jean flared detalle bolsillos.jpg'
         ],
@@ -364,7 +366,7 @@ async function initApp() {
     console.log('🚀 Inicializando aplicación...');
 
     // VERIFICAR VERSIÓN Y LIMPIAR LOCALSTORAGE SI ES NECESARIO
-    const APP_VERSION = '4.9';
+    const APP_VERSION = '5.0';
     const storedVersion = localStorage.getItem('appVersion');
     if (storedVersion !== APP_VERSION) {
         console.log(`🔄 Nueva versión detectada (${APP_VERSION}). Limpiando localStorage...`);
@@ -984,16 +986,16 @@ async function initApp() {
                 const model1Img = product.images.find(img => 
                     img.includes('modelo1') || 
                     img.includes('modelo 1') || 
+                    img.includes('al cuerpo1') || 
+                    img.includes('relajado1') || 
                     img.includes('manga larga1') || 
-                    img.includes('remera1') || 
-                    img.includes('fotolook1') ||
-                    img.includes('fotolook2')
+                    img.includes('remera1')
                 );
                 if (model1Img) {
                     hoverImageSrc = model1Img;
                 } else {
-                    const modelJpg = product.images.find(img => img.endsWith('.jpg') && !img.includes('etiqueta') && !img.includes('reverso'));
-                    hoverImageSrc = modelJpg || product.images[1];
+                    const modelImg = product.images.find(img => !img.includes('portada') && !img.includes('etiqueta') && !img.includes('reverso'));
+                    hoverImageSrc = modelImg || product.images[1];
                 }
             }
 
